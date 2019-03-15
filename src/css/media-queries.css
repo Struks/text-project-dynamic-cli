@@ -1,0 +1,24 @@
+/*Medium size*/
+@media(max-width: 768px) {
+    .row h2 {
+        font-size: 20px;
+    }
+    
+}
+@media(max-width:425px){
+    /*banner*/
+    .banner{
+        padding: 10px !important;
+    }
+    h1{
+        font-size: 24px !important;
+    }
+    
+    /*google map*/
+    .google-map iframe{
+        height: 200px;
+    }
+
+}
+
+/*Small size*/

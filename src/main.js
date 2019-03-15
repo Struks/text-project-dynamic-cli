@@ -2,8 +2,27 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+let Bootstrap = require('bootstrap')
+global.Bootstrap = Bootstrap
+import jQuery from 'jquery'
+global.jQuery = jQuery
+import Vuelidate from 'vuelidate'
+import SvgIcon from 'vue-svgicon'
 
+
+
+Vue.use(Vuelidate)
 Vue.config.productionTip = false
+
+
+
+ //Default tag name is 'svgicon'
+Vue.use(SvgIcon, {
+    tagName: 'svgicon',
+    classPrefix: 'vue-svg',
+});
+
+
 
 new Vue({
   router,
