@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "es6-promise": "^4.2.6",
     "i": "^0.3.6",
     "popper.js": "^1.14.7",
     "vue": "^2.6.6",

@@ -82,7 +82,7 @@ export default {
             "Informations is good, informations is bad. Your choose is what you read."
         },
         {
-          src: "static/img/right1.png",
+          src: "/img/right1.png",
           alt: "words",
           title: "Words",
           content:
