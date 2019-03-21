@@ -30,6 +30,7 @@
           <div class="error" v-if="!$v.form.textarea.required && submitted">Content is required.</div>
           <div class="infoLeftChars" >You have used {{leftChars}} characters of {{$v.form.textarea.$params.maxLength.max}}.</div>
         </div>
+        <vue-recaptcha sitekey='6LeeI5kUAAAAAOhF1mK33NWeTqDjzZ0y8DHUilBY'></vue-recaptcha> 
         <button type="submit" class="form-button btn btn-success">SEND MESSAGE</button>
       </form>
     </div>
@@ -43,9 +44,10 @@
 
 <script>
 import { required, maxLength, email } from "vuelidate/lib/validators";
-
+import VueRecaptcha from 'vue-recaptcha';
 
 export default {
+   components: { VueRecaptcha },
   data() {
     return {
       paragraph:
@@ -123,7 +125,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 h2 {

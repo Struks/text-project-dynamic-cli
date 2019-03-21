@@ -83,6 +83,7 @@
 </template>
 
 <script>
+
 import SocialMedia from "./SocialMedia.vue";
 
 export default {
@@ -91,13 +92,6 @@ export default {
   },
   data() {
     return {
-      menues: [
-        { link: "/", name: "HOME", exact: true },
-        { link: "/About", name: "ABOUT", exact: false },
-        { link: "/Work", name: "WORK", exact: false },
-        { link: "/Contact", name: "CONTACT", exact: false },
-        { link: "/Link", name: "TEST", exact: false }
-      ],
       xmlns: "http://www.w3.org/2000/svg",
       socialMedia: [
         {
@@ -132,6 +126,11 @@ export default {
         }
       ]
     };
+  },
+  computed:{
+    menues(){
+      return this.$store.getters.menues;
+    }
   }
 };
 </script>

@@ -17,17 +17,8 @@
         <div class="row copy-right justify-content-between">
           <p>{{copyright}}</p>
           <ul class="footer-links nav">
-            <li class="nav-link">
-              <a href="/">HOME&NonBreakingSpace;&NonBreakingSpace;</a>/
-            </li>
-            <li class="nav-link">
-              <a href="/About">ABOUT&NonBreakingSpace;&NonBreakingSpace;</a>/
-            </li>
-            <li class="nav-link">
-              <a href="/Work">WORK&NonBreakingSpace;&NonBreakingSpace;</a>/
-            </li>
-            <li class="nav-link">
-              <a href="/Contact">CONTACT</a>
+            <li v-for="menu in menues" :key="menu.id" class="nav-link">
+              <a :href="menu.link">{{menu.name}}</a>
             </li>
           </ul>
         </div>
@@ -44,6 +35,11 @@ export default {
       buttonName: "CLICK HERE TO FIND OUT",
       copyright: "COPYRIGHT 2013 DISPLAY ALL RIGHTS RESERVED."
     };
+  },
+  computed:{
+    menues(){
+      return this.$store.getters.menues;
+    }
   }
 };
 </script>
@@ -90,6 +86,14 @@ button {
 }
 li {
   padding: 2px;
+}
+.footer-links li::after{
+  content: "/";
+  margin-left: 5px;
+  color: #7f7f7f ;
+}
+.footer-links li:last-child::after{
+  content: "";
 }
 /*media for footer*/
 
