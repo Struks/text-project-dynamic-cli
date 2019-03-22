@@ -30,8 +30,16 @@
           <div class="error" v-if="!$v.form.textarea.required && submitted">Content is required.</div>
           <div class="infoLeftChars" >You have used {{leftChars}} characters of {{$v.form.textarea.$params.maxLength.max}}.</div>
         </div>
-        <vue-recaptcha sitekey='6LeeI5kUAAAAAOhF1mK33NWeTqDjzZ0y8DHUilBY'></vue-recaptcha> 
-        <button type="submit" class="form-button btn btn-success">SEND MESSAGE</button>
+        <div class="row verifyForm">
+          <button :disabled='!receptchaChecked' type="submit" class="col-5 p-2 col-md-4 ml-3 mb-4 form-button btn btn-success">SEND MESSAGE</button>
+          <vue-recaptcha 
+            class="col-md-4 offset-md-1 recaptcha"
+            sitekey='6LcSSpkUAAAAAG6fJ0dWxXBkNnmUZPcPajLrhz5w'
+            ref="recaptcha"
+            @verify='verify'
+            @expired="onCaptchaExpired"
+          ></vue-recaptcha>
+        </div>
       </form>
     </div>
     <div id="loaders">
@@ -62,9 +70,9 @@ export default {
       leftChars: 0,
       submitted: false,
       image:{
-        mail:{src: '/img/mail.gif'},
-        
-      }
+        mail:{src:'/img/mail.gif'}, 
+      },
+      receptchaChecked:false,
     };
   },
   validations: {
@@ -76,11 +84,13 @@ export default {
     }
   },
   methods: {
-    submit(e) {
+    submit() {
+      
       this.submitted = true; 
       
       //stop here if form is invalid
       this.$v.$touch();
+    
       if(this.$v.$invalid) {
         return
       }
@@ -106,11 +116,9 @@ export default {
       setTimeout(function(){
         mail.style.display="none"
         document.querySelector('#loaders').appendChild(div);
-    
       },3000)
-      
-
-
+      //invoke the reRAPTCHA
+      this.$refs.recaptcha.execute();
     },
     charLeft(useChar) {
       //define left chars
@@ -121,9 +129,16 @@ export default {
       } else {
         document.querySelector('.infoLeftChars').style.color="gray";
       }
-    }
-  }
-};
+    },
+    //reCAPTCHA
+    onCaptchaExpired() {
+      this.$refs.recaptcha.reset();
+    },
+    verify(){this.receptchaChecked = true;}
+  },
+    
+}
+
 </script>
 
 <style scoped>
@@ -179,6 +194,9 @@ button {
   display: none;
   padding-top: 150px;
 }
+/* .recaptcha{
+  margin-left: 100%;
+} */
 </style>
 
 

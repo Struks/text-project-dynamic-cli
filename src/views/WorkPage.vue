@@ -97,7 +97,7 @@
 
 <script>
 import Banner from "../components/banner/Banner.vue";
-import {mapGetters, mapActions, mapMutations} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 export default {
   components: {
     "hero-banner": Banner
@@ -105,8 +105,7 @@ export default {
   data() {
     return {
       headline: "check out what i can do",
-      listContentView:false,
-      
+      listContentView:false,      
     };
   },
   computed: {
