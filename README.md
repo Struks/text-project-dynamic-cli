@@ -1,4 +1,4 @@
-# sprdacina
+# Vue.js project with vuex 
 
 ## Project setup
 ```
