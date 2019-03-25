@@ -6,7 +6,7 @@
           <img src="/img/logo.svg" alt="logo">
         </a>
       </div>
-      <social-media v-bind:socialMedia="socialMedia"></social-media>
+      <social-media ></social-media>
       <!--hamburger menu-->
       <button
         type="button"
@@ -69,6 +69,7 @@
     <nav class="navbar navbar-expand-sm pl-0 d-none d-md-block">
       <div class="main-menu">
         <ul class="navbar-nav main-navigation pt-2">
+        
           <li class="nav-item" v-for="(menu,index) in menues" :key="index">
             <router-link
               class="nav-link pl-md-0 pr-md-4"
@@ -83,55 +84,24 @@
 </template>
 
 <script>
-
 import SocialMedia from "./SocialMedia.vue";
-
+import {mapGetters} from 'vuex';
 export default {
   components: {
     "social-media": SocialMedia
   },
   data() {
     return {
-      xmlns: "http://www.w3.org/2000/svg",
-      socialMedia: [
-        {
-          href: "http://www.twitter.com",
-          name: "twitter",
-          class: "twitter",
-        },
-        {
-          href: "http://www.facebook.com",
-          name: "facebook",
-          class:'facebook'
-        },
-        {
-          href: "http://www.rss.com",
-          name: "rss",
-          class: "rss"
-        },
-        {
-          href: "http://www.pinterest.com",
-          name: "pinterest",
-          class: "pinterest",
-        },
-        {
-          href: "https://plus.google.com",
-          name: "google+",
-          class: "google"
-        },
-        {
-          href: "http://www.dribbble.com",
-          name: "tribbble",
-          class: "dribbble",
-        }
-      ]
     };
   },
   computed:{
-    menues(){
-      return this.$store.getters.menues;
-    }
-  }
+    ...mapGetters([
+      'menues',
+      'socialMedia'
+    ])
+  },
+  methods:{
+  },
 };
 </script>
 

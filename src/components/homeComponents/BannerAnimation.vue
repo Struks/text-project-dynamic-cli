@@ -14,21 +14,16 @@
     </div>
 </template>
 
-
 <script>
+import {mapGetters} from 'vuex'
 export default {
-    data(){
-        return {
-            devices: { 
-                src:"/img/devices.svg", 
-                alt:"devices", 
-                class:"devices img-fluid" 
-            },
-            paraph:{
-                text:'A peripheral is a “device that is used to put information into or get information out of the computer”.',
-                class:'text-uppercase font-weight-bold'
-            }
-        }
+    computed:{
+        // devices() {return this.$store.getters.devices},
+        // paraph: () => this.$store.getters.paraph
+        ...mapGetters([
+            'devices',
+            'paraph'
+        ])
     }
 }
 </script>

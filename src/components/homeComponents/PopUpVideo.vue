@@ -10,7 +10,7 @@
                         :alt="popupImage.alt" 
                         :data-toggle="popupImage.dataToggle"
                         :data-target="popupImage.dataTarget"
-                        @click="downloadVideo = true"
+                        @click="setupVideo"
                         >
             <!-- modal--><div class="modal fade" id="modal" tabidenex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog modal-lg" role="document">
@@ -40,31 +40,25 @@
 
 
 <script>
+import {mapGetters,mapMutations} from 'vuex'
 export default {
     data(){
         return{
-            popupImage:{
-                src:"/img/popup.svg",
-                alt:"popup-video",
-                dataToggle:"modal",
-                dataTarget:"#modal",
-                class:"img-popup img-fluid"
-            },
-            popup:{         
-                iframeSrc:"https://www.youtube-nocookie.com/embed/l9nh1l8ZIJQ?autoplay=1",
-                footerText:'Enjoy the vibrations of life',      
-            },
-            text:{
-                title:'GET TO KNOW US A LITTLE BETTER',
-                content:`
-                    <p><b>Computer science</b> is the study of processes that interact with data and that can be represented as data in the form of programs. It enables the use of algorithms to manipulate, store, and communicate digital information. A computer scientist studies the theory of computation and the practice of designing software systems.</p>
-                    <p>Programming language theory considers approaches to the description of computational processes, while computer programming itself involves the use of programming languages and complex systems.</p>
-                    <p>P.S. Enjoy in good vibe.</p>
-                `
-            },
-            downloadVideo:false,
         }
     },
+    computed:{
+        ...mapGetters([
+            'popupImage',
+            'popup',
+            'text',
+            'downloadVideo'
+        ])
+    },
+    methods:{
+        ...mapMutations([
+            'setupVideo'
+        ])
+    }
 }
 </script>
 

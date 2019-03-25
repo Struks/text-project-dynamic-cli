@@ -10,20 +10,9 @@
               <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown selected" role="button" data-toggle='dropdown' aria-haspopup='true' aria-expanded="false">Categories</a>
               <div class="portfolioFilter navbar-collapse mt-md-5 pb-md-5 dropdown-menu" aria-labelledby="navbarDropdown">
                 <ul class="sort-nav navbar-nav main-navigation">
-                 <label @click="active('all'), changeCategory('All')" :class="{active : activeCategory == 'all'}">
-                  <input type="radio" checked v-model="selectedCategory" value="All">ALL
-                </label>
-                <label @click="active('print'), changeCategory('Print')" :class="{active : activeCategory == 'print'}">
-                  <input type="radio" v-model="selectedCategory" value="Print">PRINT
-                </label>
-                <label @click="active('photography'), changeCategory('Photography')" :class="{active : activeCategory == 'photography'}">
-                  <input type="radio" v-model="selectedCategory" value="Photography">PHOTOGRAPHY
-                </label>
-                <label @click="active('web'), changeCategory('Web')" :class="{active : activeCategory == 'web'}">
-                  <input type="radio" v-model="selectedCategory" value="Web">WEB
-                </label>
-                <label @click="active('app'), changeCategory('Applications')" :class="{active : activeCategory == 'app'}">
-                  <input type="radio" v-model="selectedCategory" value="Applications">APPLICATIONS</label>
+                  <label v-for="input in inputs" :key="input.id" @click="active(input.value), changeCategory(input.value)" :class="{active : activeCategory == input.value}">
+                    <input type="radio" v-show="checked ='checked'"  v-model="selectedCategory" :value="input.value">{{input.text}}
+                  </label>
                 </ul>
               </div>
             </nav>
@@ -34,20 +23,8 @@
       <!-- categories for dekstop view-->
       <div class="categories d-none d-md-block">
         <div class="filter">
-          <label @click="active('all'), changeCategory('All')" :class="{active : activeCategory == 'all'}">
-            <input type="radio" checked v-model="selectedCategory" value="All">ALL
-          </label>
-          <label @click="active('print'), changeCategory('Print')" :class="{active : activeCategory =='print'}">
-            <input type="radio" v-model="selectedCategory" value="Print">PRINT
-          </label>
-          <label @click="active('photography'), changeCategory('Photography')" :class="{active : activeCategory == 'photography'}">
-            <input type="radio" v-model="selectedCategory" value="Photography">PHOTOGRAPHY
-          </label>
-          <label @click="active('web'), changeCategory('Web')" :class="{active : activeCategory == 'web'}">
-            <input type="radio" v-model="selectedCategory" value="Web">WEB
-          </label>
-          <label @click="active('app'), changeCategory('Applications')" :class="{active : activeCategory == 'app'}">
-            <input type="radio" v-model="selectedCategory" value="Applications">APPLICATIONS</label>
+          <label v-for="input in inputs" :key="input.id" @click="active(input.value), changeCategory(input.value)" :class="{active : activeCategory == input.value}">
+            <input type="radio" v-show="checked='checked'"  v-model="selectedCategory" :value="input.value">{{input.text}}</label>
         </div>
           
           <!-- list/grid icons -->
@@ -57,7 +34,6 @@
                 name="gridView"
                 id="grid-view"
                 @click="switchToGrid('grid'), listContentView = false" :class="{activeView : activeView == 'grid'}"
-
               ></svgicon>
             </a>
             <a class="nav-item" href="#list" >
@@ -115,11 +91,12 @@ export default {
     ...mapGetters([
       'filteredImages',
       'activeCategory',
-      'activeView'
+      'activeView',
+      'inputs'
     ]),
+    
   },
   methods:{
-    
     ...mapMutations([
       'changeCategory',
       'active',
@@ -161,7 +138,6 @@ label input[type="radio"]{
   content: "/";
   margin-left: 5px;
   color: #7f7f7f ;
-  
 }
 .filter label:last-child::after{
   content: ""

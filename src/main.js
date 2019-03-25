@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import {store} from './store/index' 
 let Bootstrap = require('bootstrap')
 global.Bootstrap = Bootstrap
 import jQuery from 'jquery'
@@ -12,7 +12,7 @@ import Vuex from 'vuex';
 
 
 Vue.use(Vuelidate)
-Vue.config.productionTip = false
+Vue.config.productionTip = false 
 
  //Default tag name is 'svgicon'
 Vue.use(SvgIcon, {

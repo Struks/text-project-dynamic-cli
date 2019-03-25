@@ -1,53 +1,49 @@
 <template>
   <div class="social-media d-none d-md-block">
     <a v-for="(media,index) in socialMedia" :key="index" :href="media.href" target="_blank">
-      <svgicon 
-        :name="media.name" 
-        width="35" 
-        height="35"
-        :class="media.class"
-        ></svgicon>
+      <svgicon :name="media.name" width="35" height="35" :class="media.class"></svgicon>
     </a>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-  props: {
-    socialMedia: {
-      type: Array,
-      required: true
-    },
-    xmlns: { type: String }
+  computed: {
+    socialMedia() {
+      return this.$store.getters.socialMedia
+    }
+    
+  },
+  methods:{
   }
 };
 </script>
 
 
 <style scoped>
-
 .social-media a {
   padding-right: 7px;
 }
-a svg{
+a svg {
   color: #dadada;
 }
-.twitter:hover{
+.twitter:hover {
   color: #00aced;
 }
-.facebook:hover{
+.facebook:hover {
   color: #3b5998;
 }
-.rss:hover{
+.rss:hover {
   color: #e79411;
 }
-.pinterest:hover{
+.pinterest:hover {
   color: #bd081c;
 }
-.google:hover{ 
+.google:hover {
   color: #ea6558;
 }
-.dribbble:hover{ 
+.dribbble:hover {
   color: #ea4c89;
 }
 </style>

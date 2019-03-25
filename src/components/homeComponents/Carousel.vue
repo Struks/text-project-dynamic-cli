@@ -56,119 +56,21 @@
 
 <script>
 import Slick from "vue-slick";
-import '@/assets/icons'
+import '@/assets/icons';
+import { mapGetters, mapMutations } from 'vuex';
 export default {
   components: { Slick },
   data() {
     return {
-      beforeSlide: {
-        title: "A couple of our featured projects",
-        content:
-          "The changes may be automatic and at regular intervals or they may be manually controlled by a presenter or the viewer. Slide shows originally consisted of a series of individual photographic slides projected onto a screen with a slide projector."
-      },
-      caoruselImages: [
-        {
-          src: "/img/mid.png",
-          alt: "form",
-          title: "Form",
-          content:
-            "Buttons, CheckBox, RadioButton, Bolean flag, etc; all in the form are important."
-        },
-        {
-          src: "/img/Right2.png",
-          alt: "media",
-          title: "Media",
-          content:
-            "Informations is good, informations is bad. Your choose is what you read."
-        },
-        {
-          src: "/img/right1.png",
-          alt: "words",
-          title: "Words",
-          content:
-            "Words create sentences. Sentences create paragraph. Parahraph create book. Books create life."
-        },
-        {
-          src: "/img/left1.png",
-          alt: "smile",
-          title: "Smile",
-          content:
-            "When would all people enjoy in the smile the world would be beautiful place."
-        },
-        {
-          src: "/img/left2.png",
-          alt: "love",
-          title: "Love",
-          content: "Love is greater that all pharaohs and pyramids."
-        },
-        {
-          src: "/img/gun.png",
-          alt: "gun",
-          title: "War",
-          content: "Make love, not warCRAFT."
-        },
-        {
-          src: "/img/band.png",
-          alt: "band",
-          title: "Crimy",
-          content:
-            "Criminal Minds is an American police procedural crime drama television series created and produced by Jeff Davis."
-        }
-      ],
-      slickOptions: {
-        variableWidth: true,
-        slidesToShow: 6,
-        slidesToScroll: 7,
-        arrows: false,
-        asNavFor: ".slick-paragraphs",
-        centerMode: true,
-        focusOnSelect: true,
-        responsive: [
-          {
-            breakpoint: 1058,
-            settings: {
-              slidesToShow: 1,
-              arrows: false,
-              centerMode: true,
-              centerPadding: "30px"
-            }
-          },
-          {
-            breakpoint: 720,
-            settings: {
-              slidesToShow: 1,
-              arrows: false,
-              centerMode: true,
-              centerPadding: "30px"
-            }
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              arrows: false,
-              centerMode: true,
-              centerPadding: "30px"
-            }
-          }
-        ]
-      },
-      slickOptions2: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        asNavFor: ".slick-images",
-        responsive: [
-          {
-            breakpoint: 540,
-            settings: {
-              arrows: false
-            }
-          }
-        ]
-      }
     };
+  },
+  computed:{
+    ...mapGetters([
+      'beforeSlide',
+      'caoruselImages',
+      'slickOptions',
+      'slickOptions2'
+    ])
   },
   methods: {
     next() {
