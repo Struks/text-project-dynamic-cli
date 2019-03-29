@@ -1,7 +1,7 @@
 <template>
   <div class>
-    <div class="container">
-      <div class="m-md-4 text-center">
+    <div class="container ">
+      <div class="m-md-4 text-center mt-4">
         <h2 class="pt-md-3">{{beforeSlide.title}}</h2>
         <p class="pt-md-2">{{beforeSlide.content}}</p>
       </div>

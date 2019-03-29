@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import BannerAnime from '../components/homeComponents/BannerAnimation.vue';
-import Popup from '../components/homeComponents/PopUpVideo.vue';
-import Carousel from '../components/homeComponents/Carousel.vue'
+import BannerAnime from '../components/home/BannerAnimation.vue';
+import Popup from '../components/home/PopUpVideo.vue';
+import Carousel from '../components/home/Carousel.vue'
 
 export default {
     components:{

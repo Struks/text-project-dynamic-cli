@@ -6,8 +6,8 @@
                     <img :src="image.src" :alt="image.alt">
                 </div>
                 <div class="single-post-content-wrapper">
-                    <p>{{paragraph1}}</p>
-                    <p>{{paragraph2}}</p>
+                    <p>{{text1}}</p>
+                    <p>{{text2}}</p>
                 </div>   
             </div>  
         </article>
@@ -23,10 +23,10 @@ export default {
             type:Object,
             
         },
-        paragraph1:{
+        text1:{
             type:String
         },
-        paragraph2:{
+        text2:{
             type:String
         }
     }

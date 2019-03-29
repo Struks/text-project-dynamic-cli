@@ -28,7 +28,7 @@
                             </div>
                         </div> <!--/modal -->
                     </div>
-                    <div class="single-post-content-wrapper">
+                    <div class="single-post-content-wrapper ">
                         <h2>{{text.title}}</h2>
                         <p v-html="text.content"></p> 
                     </div>

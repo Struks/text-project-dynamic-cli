@@ -31,19 +31,18 @@
           <div class="infoLeftChars" >You have used {{leftChars}} characters of {{$v.form.textarea.$params.maxLength.max}}.</div>
         </div>
         <div class="row verifyForm">
-          <button :disabled='!receptchaChecked' type="submit" class="col-5 p-2 col-md-4 ml-3 mb-4 form-button btn btn-success">SEND MESSAGE</button>
+          <button :disabled='!receptchaChecked'  type="submit" class="col-5 p-2 col-md-4 ml-3 mb-4 form-button btn btn-success">SEND MESSAGE</button>
           <vue-recaptcha 
             class="col-md-4 offset-md-1 recaptcha"
+            @verify='verify'           
             sitekey='6LcSSpkUAAAAAG6fJ0dWxXBkNnmUZPcPajLrhz5w'
-            ref="recaptcha"
-            @verify='verify'
-            @expired="onCaptchaExpired"
           ></vue-recaptcha>
+          
         </div>
       </form>
     </div>
     <div id="loaders">
-      <img id="mail" :src="image.mail.src" width="150">
+      <img id="mail" :src='src' width="150">
     </div>
   </div>
 </template>
@@ -52,27 +51,17 @@
 
 <script>
 import { required, maxLength, email } from "vuelidate/lib/validators";
+import {mapGetters,mapMutations} from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
+
 
 export default {
    components: { VueRecaptcha },
   data() {
     return {
-      paragraph:
-        "Be sure to use an appropriate type attribute on all inputs (e.g., email for email address or number for numerical information) to take advantage of newer input controls like email verification, number selection, and more.",
-      subTitle: "contact form",
-      form: {
-        name: "",
-        email: "",
-        subject: "",
-        textarea: "",
-      },
-      leftChars: 0,
-      submitted: false,
-      image:{
-        mail:{src:'/img/mail.gif'}, 
-      },
-      receptchaChecked:false,
+       leftChars: 0,
+       submitted: false,
+       receptchaChecked:false,
     };
   },
   validations: {
@@ -83,11 +72,17 @@ export default {
       textarea: { required, maxLength: maxLength(500) }
     }
   },
+  computed:{
+    ...mapGetters([
+      'paragraph',
+      'subTitle',
+      'form',
+      'src',
+    ])
+  },
   methods: {
-    submit() {
-      
-      this.submitted = true; 
-      
+    submit() {    
+      this.submitted = true;     
       //stop here if form is invalid
       this.$v.$touch();
     
@@ -117,8 +112,6 @@ export default {
         mail.style.display="none"
         document.querySelector('#loaders').appendChild(div);
       },3000)
-      //invoke the reRAPTCHA
-      this.$refs.recaptcha.execute();
     },
     charLeft(useChar) {
       //define left chars
@@ -131,10 +124,7 @@ export default {
       }
     },
     //reCAPTCHA
-    onCaptchaExpired() {
-      this.$refs.recaptcha.reset();
-    },
-    verify(){this.receptchaChecked = true;}
+    verify(){this.receptchaChecked = true;},
   },
     
 }
@@ -194,9 +184,7 @@ button {
   display: none;
   padding-top: 150px;
 }
-/* .recaptcha{
-  margin-left: 100%;
-} */
+
 </style>
 
 

@@ -191,6 +191,9 @@ label input[type="radio"]{
     margin-left: 5px;
   }
 }
+.z-hovr a{
+  text-decoration: none;
+}
 .z-hovr {
   opacity: 1;
   -webkit-transform: scale(1, 1);

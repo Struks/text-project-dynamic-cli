@@ -1,5 +1,5 @@
 const state = {
-     menues: [
+    menues: [
         { link: "/", name: "HOME", exact: true },
         { link: "/About", name: "ABOUT", exact: false },
         { link: "/Work", name: "WORK", exact: false },
@@ -8,18 +8,16 @@ const state = {
     ], 
 }
 
-    const getters = {        
-        menues(state) {return state.menues},
-    }
+const getters = {        
+    menues(state) {return state.menues},
+}
 
-    const mutations = {
-        // SET_MENU(state,payload){
-        //     state.menues = payload
-        // }
-    }
-    const actions = {
-       
-    }
+const mutations = {
+
+}
+const actions = {
+
+}
     
 export default{
     state,

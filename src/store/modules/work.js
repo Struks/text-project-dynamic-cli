@@ -72,7 +72,64 @@ const state = {
               category: "photography",
               title:'Criminal Mind',
               text:'Criminal Minds is an American police procedural crime drama television series created and produced by Jeff Davis.'
-            }
+            },
+            {
+              id: 10,
+              src: "/img/frame.png",
+              alt: "frame",
+              category: "print",
+              title:'Picture Frame',
+              text:'Fine art quality printing on paper or canvas, radiant prints on acrylic or metal and earthy and elegant prints on wood.'
+            },
+            {
+              id: 11,
+              src: "/img/light.png",
+              alt: "light",
+              category: "photography",
+              title:'Light On Picture',
+              text:'Light is a type of energy. It is a form of electromagnetic radiation of a wavelength which can be detected by the human eye.'
+            },
+            {
+              id: 12,
+              src: "/img/dice.png",
+              alt: "dice",
+              category: "applications",
+              title:'Dice Games',
+              text:'Dice games are fun! They are also one of the oldest of all kinds of games: there are records of dice being played over 5,000 years ago! Dice have been found in Egyptian tombs and were very popular in Roman times.'
+            },
+            {
+              id: 13,
+              src: "/img/superMario.png",
+              alt: "superMario",
+              category: "applications",
+              title:'Super Mario',
+              text:'The critics have spoken! Super Smash Bros. Ultimate is getting rave reviews. Play Super Smash Bros. Ultimate anytime, anywhere, only on the Nintendo Switch system.'
+            },
+            {
+              id: 14,
+              src: "/img/eye.png",
+              alt: "eye",
+              category: "web",
+              title:'Eyes',
+              text:'Just behind the iris and pupil lies the lens, which helps focus light on the back of your eye. Most of the eye is filled with a clear gel called the vitreous.'
+            },
+            // {
+            //   id: 15,
+            //   src: "/img/groot.png",
+            //   alt: "groot",
+            //   category: "print",
+            //   title:'Groot',
+            //   text:'Groot (/ɡruːt/) was a fictional superhero appearing in American comic books published by Marvel Comics. Created by Stan Lee, Larry Lieber and Jack Kirby, the character first appeared in Tales to Astonish #13 (November 1960). An extraterrestrial, sentient tree-like creature, the original Groot first appeared as an invader that intended to capture humans for experimentation.'
+            // },
+            {
+              id: 16,
+              src: "/img/pinguin.png",
+              alt: "pinguin",
+              category: "web",
+              title:'Linux',
+              text:'inux (/ˈlɪnəks/ (About this soundlisten) LIN-əks)[9][10] is a family of free and open-source software operating systems based on the Linux kernel,[11] an operating system kernel first released on September 17, 1991 by Linus Torvalds.[12][13][14] Linux is typically packaged in a Linux distribution (or distro for short).'
+            },
+            
           ],
           //categories
           inputs:[
@@ -134,7 +191,7 @@ const state = {
         changeCategory:(state,category)=>{
             state.selectedCategory = category;
         },
-        active:(state,activ)=>state.activeCategory = activ ,
+        active:(state,activ) => state.activeCategory = activ ,
         
         switchToGrid:(state,view)=>{
             let portfolioClass = document.getElementById('portfolio').classList;
@@ -144,7 +201,7 @@ const state = {
             }
             state.activeView = view;
         },
-        switchToList:function(state,view){
+        switchToList:(state,view) => {
             let portfolioClass = document.getElementById('portfolio').classList;
             if(portfolioClass.contains('grid-layout')){
             portfolioClass.remove('grid-layout');
@@ -152,10 +209,24 @@ const state = {
             }
             return state.activeView = view
         },
+        //onload
+        onLoad:() => {
+          const portfolio = document.getElementById('portfolio');
+          const button = document.createAttribute('button');
+          button.classList('btn btn-success');
+          if(state.category === 'all'){
+            portfolio.appendChild(button);
+          }
+        }
+    }
+    
+    const actions = {
+
     }
 
 export default {
   state,
   getters,
-  mutations
+  mutations,
+  actions
 }

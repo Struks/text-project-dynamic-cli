@@ -13,8 +13,9 @@
 
 <script>
 import Banner from '../components/banner/Banner.vue';
-import ContactForm from '../components/contactComponents/ContactForm.vue';
-import ContactInfo from '../components/contactComponents/ContactInfo.vue';
+import ContactForm from '../components/contact/ContactForm.vue';
+import ContactInfo from '../components/contact/ContactInfo.vue';
+import {mapGetters,mapMutations} from 'vuex';
 export default {
     components:{
         'hero-banner': Banner,
@@ -23,9 +24,13 @@ export default {
     },
     data(){
         return{
-           headline:'got a question or inquiry?',
-           googleShot:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1277.788937247671!2d-82.35576789251799!3d23.14456388617537!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88cd79b20a46e4f9%3A0xe0f0dc692e6d4ad5!2sMaximo+Gomez+Monument!5e0!3m2!1sen!2s!4v1550843672057'
+            headline:'got a question or inquiry?',
         }
+    },
+    computed:{
+        ...mapGetters([
+            'googleShot'
+        ])
     }
     
 }

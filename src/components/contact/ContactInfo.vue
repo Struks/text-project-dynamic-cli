@@ -22,24 +22,27 @@
 
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data(){
       return{
-        subtitle:'CONTACT INFO',
-        storeHours: 'STORE HOURS',
-        informations: 'For more information you can contact us on E-mail, phone or visit us on address.',
-        email: 'info@bild-studio.net',
-        phone: '+382 67 333 222',
-        street: 'st. Romanovih 36',
-        ZIP: '80000 Podogorica',
 
-        workDays: 'Monday-Friday',
-        workTime: '8 am - 6 pm',
-
-        noWork: 'Weekend & Holidays',
-        noTime: 'Closed'
-          
       }
+    },
+    computed:{
+        ...mapGetters([
+           'subtitle',
+           'storeHours',
+           'informations',
+           'email',
+           'phone',
+           'street',
+           'ZIP',
+           'workDays', 
+           'workTime',
+           'noWork',
+           'noTime',
+        ])
     }  
 }
 </script>
