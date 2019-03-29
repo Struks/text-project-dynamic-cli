@@ -51,7 +51,7 @@
 
 <script>
 import { required, maxLength, email } from "vuelidate/lib/validators";
-import {mapGetters,mapMutations} from 'vuex';
+import {mapGetters} from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
 
 
