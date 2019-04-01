@@ -163,10 +163,13 @@ const state = {
           selectedCategory: "all",
           activeCategory: 'all',
           activeView: 'grid',
+          imagesToShow: 3,
                 
     }
 
     const getters = {
+        images: state => state.images,
+        imagesToShow: state => state.imagesToShow,
         inputs: state => state.inputs,
         activeCategory: state => state.activeCategory,
         activeView: state => state.activeView,
@@ -187,41 +190,48 @@ const state = {
     }
 
     const mutations = {
-         //work
-        changeCategory:(state,category)=>{
-            state.selectedCategory = category;
-        },
-        active:(state,activ) => state.activeCategory = activ ,
-        
-        switchToGrid:(state,view)=>{
-            let portfolioClass = document.getElementById('portfolio').classList;
-            if(portfolioClass.contains('list-layout')){
-            portfolioClass.remove('list-layout');
-            portfolioClass.add('grid-layout')
-            }
-            state.activeView = view;
-        },
-        switchToList:(state,view) => {
-            let portfolioClass = document.getElementById('portfolio').classList;
-            if(portfolioClass.contains('grid-layout')){
-            portfolioClass.remove('grid-layout');
-            portfolioClass.add('list-layout')
-            }
-            return state.activeView = view
-        },
-        //onload
-        onLoad:() => {
-          const portfolio = document.getElementById('portfolio');
-          const button = document.createAttribute('button');
-          button.classList('btn btn-success');
-          if(state.category === 'all'){
-            portfolio.appendChild(button);
+        //work
+      changeCategory:(state,category)=>{
+          state.selectedCategory = category;
+      },
+      active:(state,activ) => state.activeCategory = activ ,
+      
+      switchToGrid:(state,view)=>{
+          let portfolioClass = document.getElementById('portfolio').classList;
+          if(portfolioClass.contains('list-layout')){
+          portfolioClass.remove('list-layout');
+          portfolioClass.add('grid-layout')
           }
-        }
+          state.activeView = view;
+      },
+      switchToList:(state,view) => {
+          let portfolioClass = document.getElementById('portfolio').classList;
+          if(portfolioClass.contains('grid-layout')){
+          portfolioClass.remove('grid-layout');
+          portfolioClass.add('list-layout')
+          }
+          return state.activeView = view
+      },
+      //onload
+      loadMore:(state) => {
+        state.imagesToShow *= 3
+      }
     }
     
     const actions = {
-
+      loadMore: context =>{
+        const loader = document.getElementById('loader');
+        let button = document.querySelector('.btn');
+        button.style.display='none';
+        loader.style.display='block';
+        setTimeout(()=>{
+          button.style.display='block';
+          loader.style.display='none';
+          
+          context.commit('loadMore')
+        },1500)
+        
+      }
     }
 
 export default {

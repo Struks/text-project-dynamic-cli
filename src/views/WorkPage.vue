@@ -49,15 +49,17 @@
       <div style="clear: both;"></div>
       <!-- grid view -->
       <div v-if="!listContentView" class="row portfolioContainer grid-layout" id="portfolio">
-        <div v-for="image in filteredImages" :key="image.id" class="col-lg-4 col-md-6 col-sm-12 z-hovr" >
+        <div v-for="image in filteredImages.slice(0,imagesToShow)" :key="image.id" class="col-lg-4 col-md-6 col-sm-12 z-hovr" >
           <a href="#">
             <img width="300px" :src="image.src" :alt="image.alt" class="group list-group-image">
           </a>
         </div>
+        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success">LOAD MORE</button>
+        <img src="/img/spinner.gif" alt="spinner" id="loader" style="display:none">
       </div>
       <!-- list-view -->
       <div v-if="listContentView" class="row portfolioContainer grid-layout" id="portfolio">
-        <div v-for="image in filteredImages" :key="image.id" class="z-hovr" >
+        <div v-for="image in filteredImages.slice(0,imagesToShow)" :key="image.id" class="z-hovr" >
           <a href="#">
             <img width="300px" :src="image.src" :alt="image.alt" class="group list-group-image mr-3 float-left">
             <div class="content">
@@ -66,6 +68,8 @@
             </div>
           </a>
         </div>
+        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success">LOAD MORE</button>
+        <img src="/img/spinner.gif" alt="spinner" id="loader" style="display:none">
       </div><!-- /list-view -->
     </div>
   </div>
@@ -73,7 +77,7 @@
 
 <script>
 import Banner from "../components/banner/Banner.vue";
-import {mapGetters, mapMutations} from 'vuex';
+import {mapGetters, mapMutations, mapActions} from 'vuex';
 export default {
   components: {
     "hero-banner": Banner
@@ -89,6 +93,8 @@ export default {
       return this.$store.getters.selectedCategory;
     },
     ...mapGetters([
+      'images',
+      'imagesToShow',
       'filteredImages',
       'activeCategory',
       'activeView',
@@ -98,12 +104,17 @@ export default {
   },
   methods:{
     ...mapMutations([
+
       'changeCategory',
       'active',
       'switchToGrid',
       'switchToList'
     ]),
-  }
+    ...mapActions([
+      'loadMore',
+    ])
+  },
+
 };
 </script>
 
@@ -190,6 +201,22 @@ label input[type="radio"]{
   label{
     margin-left: 5px;
   }
+}
+button{
+  font-family: "Novecentosan", Arial, sans-serif;
+  background: #2ecc71;
+  border: none;
+  border-radius: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 18px;
+  padding: 10px 30px;
+  margin-top: 10px;
+}
+#loader{
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .z-hovr a{
   text-decoration: none;
