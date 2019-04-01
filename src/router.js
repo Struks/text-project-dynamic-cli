@@ -5,6 +5,7 @@ import AboutPage from './views/AboutPage'
 import HomePage from './views/HomePage'
 import WorkPage from './views/WorkPage'
 import links from './components/notFound/links'
+import BlogPage from './views/BlogPage'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path:'/Work',    
       component: WorkPage,
       name:'Work Page'
+    },
+    {
+      path: '/Blog',
+      component: BlogPage,
+      name:'Blog Page'
     },
     // {
     //   path: '*',

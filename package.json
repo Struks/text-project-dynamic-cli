@@ -12,6 +12,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "es6-promise": "^4.2.6",
+    "firebase": "^5.9.2",
     "i": "^0.3.6",
     "npm": "^6.9.0",
     "popper.js": "^1.14.7",

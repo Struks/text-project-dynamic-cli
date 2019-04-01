@@ -9,19 +9,28 @@ global.jQuery = jQuery
 import Vuelidate from 'vuelidate'
 import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
+const firebase = require("firebase/app");
+require("firebase/firestore");
 
-
+//vuelidate
 Vue.use(Vuelidate)
 Vue.config.productionTip = false 
+
+//svgicon
  //Default tag name is 'svgicon'
 Vue.use(SvgIcon, {
     tagName: 'svgicon',
     classPrefix: 'vue-svg',
 });
 
-
-
+//vuex
 Vue.use(Vuex);
+
+//firebase
+let config = {
+  // ...
+};
+firebase.initializeApp(config);
 
 
 

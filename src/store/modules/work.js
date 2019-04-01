@@ -225,10 +225,9 @@ const state = {
         button.style.display='none';
         loader.style.display='block';
         setTimeout(()=>{
+          context.commit('loadMore')
           button.style.display='block';
           loader.style.display='none';
-          
-          context.commit('loadMore')
         },1500)
         
       }

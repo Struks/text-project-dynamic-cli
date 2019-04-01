@@ -54,8 +54,8 @@
             <img width="300px" :src="image.src" :alt="image.alt" class="group list-group-image">
           </a>
         </div>
-        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success">LOAD MORE</button>
-        <img src="/img/spinner.gif" alt="spinner" id="loader" style="display:none">
+        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success mt-md-5">LOAD MORE</button>
+        <img src="/img/spinner.gif" alt="spinner" class="img img-fluid" id="loader" style="display:none">
       </div>
       <!-- list-view -->
       <div v-if="listContentView" class="row portfolioContainer grid-layout" id="portfolio">
@@ -68,8 +68,8 @@
             </div>
           </a>
         </div>
-        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success">LOAD MORE</button>
-        <img src="/img/spinner.gif" alt="spinner" id="loader" style="display:none">
+        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success mt-md-5">LOAD MORE</button>
+        <img src="/img/spinner.gif" alt="spinner" class="img img-fluid" id="loader" style="display:none">
       </div><!-- /list-view -->
     </div>
   </div>
