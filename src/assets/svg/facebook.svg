@@ -5,7 +5,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="34" viewBox="0 0 3
 </defs>
 <g>
     <g transform="translate(-968 -46)">
-        <use fill="#dadada" xlink:href="#facebook" />
+        <use  xlink:href="#facebook" />
     </g>
 </g>
 </svg>

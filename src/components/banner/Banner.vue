@@ -1,6 +1,12 @@
 <template>
     <div class="banner">
         <div class="container">
+            <svgicon v-if="src"
+                name='blog'
+                width='30'
+                color="white"
+                class="icon "
+            />
             <h1>{{headline}}</h1>
         </div>
     </div>
@@ -11,6 +17,9 @@ export default {
     props:{
         headline:{
             type:String
+        },
+        src:{
+            type:Boolean
         }
     }
 }
@@ -26,9 +35,12 @@ export default {
         font-family: 'Novecentosan', Arial, sans-serif;
         font-size: 30px;
         text-transform: uppercase;
-        color: #fff;
-        
+        color: #fff;  
     }
+    .icon{
+        float: left;
+    }
+
 </style>
 
 

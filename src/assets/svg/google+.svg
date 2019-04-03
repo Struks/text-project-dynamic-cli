@@ -5,7 +5,7 @@
     </defs>
     <g>
         <g transform="translate(-1093 -46)">
-            <use fill="#dadada" xlink:href="#google" />
+            <use xlink:href="#google" />
         </g>
     </g>
 </svg>

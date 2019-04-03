@@ -1,6 +1,7 @@
 /* eslint-disable */
 require('./aboutUs')
 require('./applicationsTab')
+require('./blog')
 require('./facebook')
 require('./google+')
 require('./gridView')

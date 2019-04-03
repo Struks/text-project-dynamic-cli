@@ -4,8 +4,9 @@ import ContactPage from './views/ContactPage'
 import AboutPage from './views/AboutPage'
 import HomePage from './views/HomePage'
 import WorkPage from './views/WorkPage'
-import links from './components/notFound/links'
+// import links from './components/notFound/links'
 import BlogPage from './views/BlogPage'
+import newPost from './components/blog/newPost'
 
 Vue.use(Router)
 
@@ -35,6 +36,10 @@ export default new Router({
       component: BlogPage,
       name:'Blog Page'
     },
+    {
+      path: '/Blog/newPost',
+      component: newPost 
+    }
     // {
     //   path: '*',
     //   component: NotFound
@@ -44,10 +49,10 @@ export default new Router({
       name: 'HelloWorld',
       component: HelloWorld
     },*/
-    {
-      path: '/Link',
-      name: 'links',
-      component: links
-    }
+    // {
+    //   path: '/Link',
+    //   name: 'links',
+    //   component: links
+    // }
   ]
 })

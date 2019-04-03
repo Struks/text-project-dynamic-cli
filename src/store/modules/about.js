@@ -63,7 +63,7 @@ const state = {
             activeTab:'',
             showText:'',
             template:`
-                <p><b>Search engine optimization (SEO)</b> is the process of affecting the online visibility of a website or a web page in a web search engine\'s unpaid results—often referred to as "natural", "organic", or "earned" results. In general, the earlier (or higher ranked on the search results page), and more frequently a website appears in the search results list, the more visitors it will receive from the search engine\'s users; these visitors can then be converted into customers.</p>
+                <p><b>Search engine optimization (SEO)</b> is the process of affecting the online visibility of a website or a web page in a web search engine/'s unpaid results—often referred to as "natural", "organic", or "earned" results. In general, the earlier (or higher ranked on the search results page), and more frequently a website appears in the search results list, the more visitors it will receive from the search engine/'s users; these visitors can then be converted into customers.</p>
                 <p>As an Internet marketing strategy, SEO considers how search engines work, the computer programmed algorithms which dictate search engine behavior, what people search for, the actual search terms or keywords typed into search engines, and which search engines are preferred by their targeted audience.</p>
             `
         },
@@ -132,7 +132,7 @@ const state = {
             name:'SEO',
             classBody:'collapse',
             template:`
-                <p><b>Search engine optimization (SEO)</b> is the process of affecting the online visibility of button website or button web page in button web search engine\'s unpaid results—often referred to as "natural", "organic", or "earned" results. In general, the earlier (or higher ranked on the search results page), and more frequently button website appears in the search results list, the more visitors it will receive from the search engine\'s users; these visitors can then be converted into customers.</p>
+                <p><b>Search engine optimization (SEO)</b> is the process of affecting the online visibility of button website or button web page in button web search engine/'s unpaid results—often referred to as "natural", "organic", or "earned" results. In general, the earlier (or higher ranked on the search results page), and more frequently button website appears in the search results list, the more visitors it will receive from the search engine's users; these visitors can then be converted into customers.</p>
                 <p>As an Internet marketing strategy, SEO considers how search engines work, the computer programmed algorithms which dictate search engine behavior, what people search for, the actual search terms or keywords typed into search engines, and which search engines are preferred by their targeted audience.</p>
             `
         },

@@ -9,8 +9,10 @@ global.jQuery = jQuery
 import Vuelidate from 'vuelidate'
 import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
-const firebase = require("firebase/app");
-require("firebase/firestore");
+const firebase = require("firebase");
+global.firebase = firebase
+// Required for side-effects
+// require("firebase/firestore");
 
 //vuelidate
 Vue.use(Vuelidate)
@@ -25,13 +27,6 @@ Vue.use(SvgIcon, {
 
 //vuex
 Vue.use(Vuex);
-
-//firebase
-let config = {
-  // ...
-};
-firebase.initializeApp(config);
-
 
 
 new Vue({

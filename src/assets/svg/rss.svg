@@ -5,7 +5,7 @@
     </defs>
     <g>
         <g transform="translate(-1010 -46)">
-            <use fill="#dadada" xlink:href="#rss" />
+            <use xlink:href="#rss" />
         </g>
     </g>
 </svg>
