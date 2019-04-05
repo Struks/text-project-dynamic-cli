@@ -73,6 +73,7 @@ export default {
     }
   },
   computed:{
+    
     ...mapGetters([
       'paragraph',
       'subTitle',

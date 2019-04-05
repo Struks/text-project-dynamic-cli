@@ -11,6 +11,7 @@ import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
 const firebase = require("firebase");
 global.firebase = firebase
+
 // Required for side-effects
 // require("firebase/firestore");
 

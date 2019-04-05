@@ -1,8 +1,8 @@
 import db from '../../firebase/init'
 
 const state ={
-    posts:[],
-    blogInputs:[
+    
+    blogCategories:[
         {
             value:'all',
             checked:true,
@@ -35,8 +35,7 @@ const state ={
 }
 
 const getters = {
-    posts: state => state.posts,
-    blogInputs: state => state.blogInputs,
+    blogCategories: state => state.blogCategories,
     activeCategoryBlog: state => state.activeCategoryBlog,
     // filteredBlogs: state =>{
     //     let category = state.selectedCategoryBlog;

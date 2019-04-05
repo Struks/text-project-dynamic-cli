@@ -1,11 +1,11 @@
 const state = {
     menues: [
         { link: "/", name: "HOME", exact: true },
-        { link: "/About", name: "ABOUT", exact: false },
-        { link: "/Work", name: "WORK", exact: false },
-        { link: "/Contact", name: "CONTACT", exact: false },
+        { link: "/about", name: "ABOUT", exact: false },
+        { link: "/work", name: "WORK", exact: false },
+        { link: "/contact", name: "CONTACT", exact: false },
         // { link: "/Link", name: "TEST", exact: false },
-        { link: '/Blog', name: 'BLOG', exact: false }
+        { link: '/blog', name: 'BLOG', exact: false }
     ], 
 }
 

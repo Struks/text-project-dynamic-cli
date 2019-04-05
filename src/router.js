@@ -7,6 +7,7 @@ import WorkPage from './views/WorkPage'
 // import links from './components/notFound/links'
 import BlogPage from './views/BlogPage'
 import newPost from './components/blog/newPost'
+import showPost from './components/blog/showPost'
 
 Vue.use(Router)
 
@@ -15,11 +16,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path:'/Contact',      
+      path:'/contact',      
       component: ContactPage
     },
     {
-      path:'/About',   
+      path:'/about',   
       component: AboutPage
     },
     {
@@ -27,28 +28,29 @@ export default new Router({
       component: HomePage
     },
     {
-      path:'/Work',    
+      path:'/work',    
       component: WorkPage,
-      name:'Work Page'
+      name:'WorkPage'
     },
-    {
-      path: '/Blog',
+    { 
+      path: '/blog',
       component: BlogPage,
-      name:'Blog Page'
+      name:'blog-page'
     },
     {
-      path: '/Blog/newPost',
-      component: newPost 
+      path: '/blog/newPost',
+      component: newPost,
+      name:'new-post'
+    },
+    {
+      path:'blog/:id/:success?',
+      component: showPost,
+      name: 'show-post'
     }
     // {
     //   path: '*',
     //   component: NotFound
-    // }
-    /*{
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },*/
+    // },
     // {
     //   path: '/Link',
     //   name: 'links',

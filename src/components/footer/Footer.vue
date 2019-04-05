@@ -6,7 +6,7 @@
          <span class="ml-xl-3">{{name}}</span> 
           <button
             type="button"
-            onclick="location.href='/Work';"
+            @click="goToWork()"
             class="btn btn-success"
           >{{buttonName}}</button>
         </div>
@@ -46,7 +46,9 @@ export default {
     ])
   },
   methods:{
-    
+    goToWork(){
+      this.$router.push({path:'/work'})
+    }
   }
 };
 </script>
@@ -60,7 +62,6 @@ footer {
   /*height: 200px;*/
   background-color: #f5f5f5;
 }
-
 .text-muted {
   margin: 20px 0;
 }
@@ -70,7 +71,6 @@ footer {
   font-size: 24px;
   color: #efefef;
 }
-
 button {
   padding: auto;
   font-size: 14px;

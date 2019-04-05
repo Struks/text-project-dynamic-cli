@@ -89,22 +89,17 @@ export default {
     };
   },
   computed: {
-    selectedCategory(){
-      return this.$store.getters.selectedCategory;
-    },
-    ...mapGetters([
-      'images',
-      'imagesToShow',
-      'filteredImages',
-      'activeCategory',
-      'activeView',
-      'inputs'
-    ]),
+    selectedCategory(){return this.$store.getters.selectedCategory;},
+    images(){ return this.$store.getters.images},
+    imagesToShow(){ return this.$store.getters.imagesToShow},
+    filteredImages(){ return this.$store.getters.filteredImages},
+    activeCategory(){ return this.$store.getters.activeCategory},
+    activeView(){ return this.$store.getters.activeView},
+    inputs(){ return this.$store.getters.inputs}, 
     
   },
   methods:{
     ...mapMutations([
-
       'changeCategory',
       'active',
       'switchToGrid',
@@ -113,8 +108,12 @@ export default {
     ...mapActions([
       'loadMore',
     ])
+    // changeCategory(){ this.$store.commit('selectedCategory')},
+    // active(){ this.$store.commit('active')},
+    // switchToGrid(){ this.$store.commit('switchToGrid')},
+    // switchToList(){ this.$store.commit('switchToList')},
+    // loadMore(){ this.$store.dispatch('loadMore')},
   },
-
 };
 </script>
 
