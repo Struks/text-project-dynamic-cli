@@ -1,4 +1,4 @@
-import db from '../../firebase/init'
+// import db from '../../firebase/init'
 
 const state ={
     
@@ -37,13 +37,6 @@ const state ={
 const getters = {
     blogCategories: state => state.blogCategories,
     activeCategoryBlog: state => state.activeCategoryBlog,
-    // filteredBlogs: state =>{
-    //     let category = state.selectedCategoryBlog;
-    //     let result = [];
-    //     if(category !== 'all'){
-            
-    //     }
-    // }
 }
 
 const mutations = {
@@ -52,16 +45,8 @@ const mutations = {
 }
 
 const actions = {
-    getPosts: ({commit}) =>{
-        db.collection('blog').onSnapshot(snapshot =>{
-            let posts=[];
-            snapshot.docs.forEach(doc => posts.push(doc.data()));
-
-            // console.log(posts);
-            commit('setPosts',posts)
-        })
         
-    }
+    
 }
 
 export default{

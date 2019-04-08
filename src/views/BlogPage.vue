@@ -14,15 +14,19 @@
                 <a href="#">Login</a>
               </div> -->
             </div>
-            <article v-for="post in blog" :key="post.id" class="article">
-              <router-link to="blog/success" class="link-for-blog">
-                <img width="300px" :src="post.url" class="group list-group-image mr-3 float-left z-hovr">
-                <div class="content">
-                  <h2>{{post.title}}</h2>
-                  <p v-html="post.text"></p>
-                </div> 
-              </router-link>
-            </article>
+            <div class="postList">
+              <article v-for="post in blog" :key="post.id" class="article">
+                <button type="button" class="float-right btn-delete" @click="deletePost(post.id)">X</button>
+                  <router-link :to="'/blog/' + post.id" class="link-for-blog">
+                    <div class="content">           
+                      <img width="340px" height="280px" :src="post.url" class="group list-group-image mr-3 float-left z-hovr">
+                      <h2>{{post.title}}</h2>
+                      <p class="text m-2" v-html="post.text"></p>
+                    </div> 
+                  </router-link>
+              </article>
+              <!-- <button type="button" v-if="blog.length > 3 && postToShow < blog.length" @click="loadMore()" class="btn btn-success mt-md-5">Load More</button> -->
+            </div>
 
         </div>
     </div>
@@ -31,32 +35,34 @@
 
 
 <script>
-import db from '@/firebase/init'
+import db from '@/firebase/init';
 import Banner from '../components/banner/Banner.vue';
 import newPost from '../components/blog/newPost.vue';
-import { inspect } from 'util';
-import {mapMutations} from 'vuex'
+// import { inspect } from 'util';
+import {mapMutations} from 'vuex';
+import { setTimeout } from 'timers';
 export default {
     components:{
-        'hero-banner':Banner,
+      'hero-banner':Banner,
     },
     data(){
         return{
-            headline:'My Pretty Blog',
-            key:'',
-            blog:[],
-            loading: true,
-         
+          headline:'My Pretty Blog',
+          key:'',
+          blog:[],
+          loading: true,
+  
         }
     },
     computed:{
       blogCategories(){return this.$store.getters.blogCategories},
       activeCategoryBlog(){return this.$store.getters.activeCategoryBlog},  
+
+
     },
     created(){
       db.collection('blog').onSnapshot(res =>{
         const changes = res.docChanges();
-
         changes.forEach(change => {
           if(change.type === 'added'){
             this.blog.push({
@@ -64,12 +70,23 @@ export default {
               id: change.doc.id
             })
           }
+          else if(change.type === 'removed'){
+            console.log('Removed post: ', change.doc.data());
+            window.location.reload();
+          }
         })
       })
     },
     methods:{
       newPost(){
         this.$router.push({path:'/blog/newPost'})
+      },
+      deletePost(id){
+        if(confirm('Are you sure ? ')){
+          db.collection("blog").doc(id).delete();
+        }
+        
+        
       },
       ...mapMutations([
         'activeBlog'
@@ -79,7 +96,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style >
 .margin-bottom{
   margin-bottom: 220px;
 }
@@ -122,30 +139,41 @@ label input[type="radio"]{
   color: #2ecc71;
 }
 button{
-    font-family: "Novecentosan", Arial, sans-serif;
-    background: #2ecc71;
-    border: none;
-    border-radius: 0px;
+  font-family: "Novecentosan", Arial, sans-serif;
+  background: #2ecc71;
+  border: none;
+  border-radius: 0px;
 }
 /* login and register */
 .loginAndRegister a{
-    font-family: "Novecentosan", Arial, sans-serif;
-    margin-left: 10px;
-    color: #7f7f7f;
-    text-transform: uppercase;
-    text-decoration-line:none;
+  font-family: "Novecentosan", Arial, sans-serif;
+  margin-left: 10px;
+  color: #7f7f7f;
+  text-transform: uppercase;
+  text-decoration-line:none;
     
 }
 /* blogs */
 .article{
+  margin-top: 20px;
+  overflow: hidden;
   background:whitesmoke;
   -webkit-box-shadow: 3px 3px 5px 6px #7f7f7f;  
-    -moz-box-shadow:    3px 3px 5px 6px #7f7f7f;  
-    box-shadow:         3px 3px 5px 6px #7f7f7f;
+  -moz-box-shadow:    3px 3px 5px 6px #7f7f7f;  
+  box-shadow:         3px 3px 5px 6px #7f7f7f;
+
 }
 .link-for-blog{
-  text-decoration: none;
+  text-decoration: none!important;
 }
+
+.text p{
+  display: none;
+}
+.text p:first-child{
+  display: block;
+}
+
 .z-hovr {
   opacity: 1;
   -webkit-transform: scale(1, 1);
@@ -171,5 +199,9 @@ button{
   -moz-transition-duration: 250ms;
   position: relative;
   z-index: 99;
+}
+.btn-delete{
+  color: aliceblue;
+  cursor: pointer;
 }
 </style>

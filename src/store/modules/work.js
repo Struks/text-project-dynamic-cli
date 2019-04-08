@@ -113,16 +113,8 @@ const state = {
         title:'Eyes',
         text:'Just behind the iris and pupil lies the lens, which helps focus light on the back of your eye. Most of the eye is filled with a clear gel called the vitreous.'
       },
-      // {
-      //   id: 15,
-      //   src: "/img/groot.png",
-      //   alt: "groot",
-      //   category: "print",
-      //   title:'Groot',
-      //   text:'Groot (/ɡruːt/) was a fictional superhero appearing in American comic books published by Marvel Comics. Created by Stan Lee, Larry Lieber and Jack Kirby, the character first appeared in Tales to Astonish #13 (November 1960). An extraterrestrial, sentient tree-like creature, the original Groot first appeared as an invader that intended to capture humans for experimentation.'
-      // },
       {
-        id: 16,
+        id: 15,
         src: "/img/pinguin.png",
         alt: "pinguin",
         category: "web",

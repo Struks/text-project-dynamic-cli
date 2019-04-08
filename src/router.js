@@ -8,6 +8,7 @@ import WorkPage from './views/WorkPage'
 import BlogPage from './views/BlogPage'
 import newPost from './components/blog/newPost'
 import showPost from './components/blog/showPost'
+import editPost from './components/blog/editPost'
 
 Vue.use(Router)
 
@@ -43,10 +44,16 @@ export default new Router({
       name:'new-post'
     },
     {
-      path:'blog/:id/:success?',
+      path:'/blog/:id',
       component: showPost,
       name: 'show-post'
+    },
+    {
+      path:'/blog/:id/edit',
+      component: editPost,
+      name: 'edit-post'
     }
+
     // {
     //   path: '*',
     //   component: NotFound

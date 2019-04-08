@@ -81,8 +81,8 @@ export default {
                 url: this.url,
             }).then((docRef) =>{ 
                 console.log('Document written with ID: ', docRef.id);
-                 this.$router.push(`blog/${slug}/success`)
-                })
+                this.$router.push(`${docRef.id}`)
+            })
             .catch((error) => console.error('Error adding document: ', error))
             //blog is added
             if(!this.$v.$invalid){
