@@ -14,9 +14,9 @@
                 <a href="#">Login</a>
               </div> -->
             </div>
-            <div class="postList">
-              <article v-for="post in blog" :key="post.id" class="article">
-                <button type="button" class="float-right btn-delete" @click="deletePost(post.id)">X</button>
+            <div class="postList" id="postList">
+              <article v-for="post in blog" :key="post.id" :class="'article ' + post.id">
+                <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(post.id)">X</button>
                   <router-link :to="'/blog/' + post.id" class="link-for-blog">
                     <div class="content">           
                       <img width="340px" height="280px" :src="post.url" class="group list-group-image mr-3 float-left z-hovr">
@@ -24,8 +24,10 @@
                       <p class="text m-2" v-html="post.text"></p>
                     </div> 
                   </router-link>
+                  <button type="button" class="btn btn-primary editPost" @click="editPost(post.id)">Edit Post</button>
+                  <span>{{post.timestamp}}</span>
               </article>
-              <!-- <button type="button" v-if="blog.length > 3 && postToShow < blog.length" @click="loadMore()" class="btn btn-success mt-md-5">Load More</button> -->
+              <button type="button" @click="loadMore()" class="btn btn-success mt-md-5">Load More</button>
             </div>
 
         </div>
@@ -36,7 +38,7 @@
 
 <script>
 import db from '@/firebase/init';
-import Banner from '../components/banner/Banner.vue';
+import Banner from '@/components/banner/Banner.vue';
 import newPost from '../components/blog/newPost.vue';
 // import { inspect } from 'util';
 import {mapMutations} from 'vuex';
@@ -51,6 +53,7 @@ export default {
           key:'',
           blog:[],
           loading: true,
+          lastVisible:''
   
         }
     },
@@ -61,7 +64,7 @@ export default {
 
     },
     created(){
-      db.collection('blog').onSnapshot(res =>{
+      db.collection('blog').orderBy('title','desc').onSnapshot(res =>{
         const changes = res.docChanges();
         changes.forEach(change => {
           if(change.type === 'added'){
@@ -72,7 +75,7 @@ export default {
           }
           else if(change.type === 'removed'){
             console.log('Removed post: ', change.doc.data());
-            window.location.reload();
+            document.querySelector('.article').remove()
           }
         })
       })
@@ -85,7 +88,11 @@ export default {
         if(confirm('Are you sure ? ')){
           db.collection("blog").doc(id).delete();
         }
-        
+      },
+      editPost(id){
+        this.$router.push({path:`/blog/${id}/edit`})
+      },
+      loadMore(){
         
       },
       ...mapMutations([
@@ -96,7 +103,7 @@ export default {
 </script>
 
 
-<style >
+<style>
 .margin-bottom{
   margin-bottom: 220px;
 }

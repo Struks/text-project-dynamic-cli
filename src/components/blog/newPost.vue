@@ -3,10 +3,7 @@
        
         <div class="container">
             <div class="backgroundPost bg-dark">
-                <banner :src='src' :headline="headline" class="text-center">
-                   
-                </banner>
-                
+                <banner :src='src' :headline="headline" class="text-center"/>
                 <div class="newPost">
                         <input 
                             class="title" 
@@ -26,8 +23,8 @@
                             :class="{error: $v.url.$error}"
                         >
                         <p class="error-message" v-if="!$v.url.required && $v.url.$dirty">Thumbnails field is required.</p>
-                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model='text'></textarea>
-                        <div class="afterbtn"><button class="btn btn-success" @click="addPost">ADD POST</button></div>
+                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model = 'text'></textarea>
+                        <div class="afterbtn"><button type="button" class="btn btn-success" @click="addPost">ADD POST</button></div>
                    
                 </div>
             </div>
@@ -38,7 +35,7 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
-import Banner from '../banner/Banner.vue';
+import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
 const moment = require('moment')
 export default {
@@ -50,16 +47,16 @@ export default {
             moment:moment,
             headline:'add new post',
             title:'',
-            text: null,
+            text:'',
             url:'',
             src:true,
+            timestamp:''
             
         }
     },
     validations:{
         title:{ required },
         url:{ required }
-        
     },
     computed:{
         
@@ -79,6 +76,7 @@ export default {
                 title: this.title,
                 text: CKEDITOR.instances.ckeditor.getData(),
                 url: this.url,
+                timestamp: new Date()
             }).then((docRef) =>{ 
                 console.log('Document written with ID: ', docRef.id);
                 this.$router.push(`${docRef.id}`)
@@ -120,7 +118,7 @@ textarea{
     width:70%;
     margin: 20px 0px;
 }
-button{
+.btn{
     font-family: "Novecentosan", Arial, sans-serif;
     background: #2ecc71;
     border: none;
