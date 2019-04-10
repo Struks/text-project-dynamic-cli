@@ -22,10 +22,10 @@ export default {
     name: "show-post",
     data(){
         return{
-            title:null,
-            url:null,
-            text:null,
-            timestamp:null,           
+            title:'',
+            url:'',
+            text:'',
+            timestamp:'',           
             headline:'My single post'
             
         }

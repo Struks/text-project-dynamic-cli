@@ -14,7 +14,7 @@
         data-toggle="collapse"
         data-target="#navbarCollapse"
       >
-        <span class="navbar-icon">
+        <div class="navbar-icon">
           <svg
             height="32px"
             id="Layer_1"
@@ -30,7 +30,7 @@
               d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"
             ></path>
           </svg>
-        </span>
+        </div>
       </button>
       <nav class="navbar navbar-expand-sm pl-0 d-md-none">
         <div class="main-menu collapse navbar-collapse" id="navbarCollapse">
@@ -77,7 +77,13 @@
               :exact="menu.exact"
             >{{menu.name}}</router-link>
           </li>
+          
         </ul>
+        <ul class="auth-links navbar-nav main-navigation" >
+          <li v-for="link in auth" :key="link.id">
+            <a :href="link.link">{{link.name}}</a>
+          </li>
+         </ul>
       </div>
     </nav>
   </div>
@@ -85,7 +91,6 @@
 
 <script>
 import SocialMedia from "./SocialMedia.vue";
-import {mapGetters} from 'vuex';
 export default {
   components: {
     "social-media": SocialMedia
@@ -95,10 +100,9 @@ export default {
     };
   },
   computed:{
-    ...mapGetters([
-      'menues',
-      'socialMedia'
-    ])
+    menues(){return this.$store.getters.menues},
+    socialMedia(){return this.$store.getters.socialMedia},
+    auth(){return this.$store.getters.auth},
   },
   methods:{
   },
@@ -117,6 +121,15 @@ hr {
 }
 .navbar {
   margin-top: -15px;
+}
+.auth-links{
+  margin-top: -35px;
+  float:right;
+  
+}
+.auth-links a{
+  padding-left: 30px;
+  text-decoration: none;
 }
 .router-link-active {
   color: #2ecc71 !important;

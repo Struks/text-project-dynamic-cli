@@ -51,34 +51,21 @@ export default {
         return{
           headline:'My Pretty Blog',
           key:'',
-          blog:[],
+          // blog:[],
           loading: true,
-          lastVisible:''
-  
         }
     },
     computed:{
       blogCategories(){return this.$store.getters.blogCategories},
-      activeCategoryBlog(){return this.$store.getters.activeCategoryBlog},  
+      activeCategoryBlog(){return this.$store.getters.activeCategoryBlog},
+      blog(){return this.$store.getters.blog},
 
 
     },
     created(){
-      db.collection('blog').orderBy('title','desc').onSnapshot(res =>{
-        const changes = res.docChanges();
-        changes.forEach(change => {
-          if(change.type === 'added'){
-            this.blog.push({
-              ...change.doc.data(),
-              id: change.doc.id
-            })
-          }
-          else if(change.type === 'removed'){
-            console.log('Removed post: ', change.doc.data());
-            document.querySelector('.article').remove()
-          }
-        })
-      })
+      setTimeout(()=>{
+        this.$store.dispatch('getBlogs')
+      },400)
     },
     methods:{
       newPost(){
@@ -87,6 +74,10 @@ export default {
       deletePost(id){
         if(confirm('Are you sure ? ')){
           db.collection("blog").doc(id).delete();
+          setTimeout(() => {
+            document.querySelector('.article').remove()
+          }, 400);
+            
         }
       },
       editPost(id){
@@ -97,7 +88,8 @@ export default {
       },
       ...mapMutations([
         'activeBlog'
-      ])
+      ]),
+    
     }, 
 }
 </script>

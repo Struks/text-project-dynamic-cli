@@ -1,4 +1,4 @@
-// import db from '../../firebase/init'
+import db from '@/firebase/init'
 
 const state ={
     
@@ -30,22 +30,42 @@ const state ={
         },
     ],
     selectedCategoryBlog: "all",
-    activeCategoryBlog: 'all'
+    activeCategoryBlog: 'all',
+    blog:[],
 
 }
 
 const getters = {
     blogCategories: state => state.blogCategories,
     activeCategoryBlog: state => state.activeCategoryBlog,
+    blog: state => state.blog,
+
+
 }
 
 const mutations = {
     setPosts: (state, payload) => state.posts = payload,
-    activeBlog:(state,active) => state.activeCategoryBlog = active,    
+    activeBlog:(state,active) => state.activeCategoryBlog = active, 
+    getBlogs(state, payload){state.blog = payload},  
+  
 }
 
 const actions = {
-        
+    getBlogs({commit}){
+        const blog= []
+        db.collection('blog').orderBy('title','desc').onSnapshot(res =>{
+            const changes = res.docChanges();
+            changes.forEach(change => {
+              if(change.type === 'added'){
+                blog.push({
+                  ...change.doc.data(),
+                  id: change.doc.id
+                })
+              }
+              commit('getBlogs',blog)
+            })
+          })
+    }
     
 }
 

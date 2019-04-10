@@ -9,21 +9,15 @@
                             v-model="post.title"
                             type="text" 
                             placeholder="Title"
-                            
-                            :class="{error: $v.title.$error}"
                         >
-                        <p class="error-message" v-if="!$v.title.required && $v.title.$dirty">Title field is required.</p>
                         <input 
                             class="url" 
                             v-model="post.url" 
                             type="text" 
                             placeholder="Thumbnails URL"
-                            @blur="$v.url.$touch()"
-                            :class="{error: $v.url.$error}"
                         >
-                        <p class="error-message" v-if="!$v.url.required && $v.url.$dirty">Thumbnails field is required.</p>
-                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model = 'post.text'></textarea>
-                        <div class="afterbtn"><button type="button" class="btn btn-success" @click="editPost()">EDIT POST</button></div>
+                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model="post.text"></textarea>
+                        <div class="afterbtn"><button type="button" class="btn btn-success" @click="editPost(post.id)">EDIT POST</button></div>
                    
                 </div>
             </div>
@@ -33,53 +27,50 @@
 
 
 <script>
-import { required } from "vuelidate/lib/validators";
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
+import { setTimeout } from 'timers';
+import {store} from '@/store/index' 
 export default {
     components:{
         'banner':Banner
     },
     data(){
         return{
-           post:{},
+        post:{},
            headline: 'Edit post',
            src:true,
             
         }
     },
-    validations:{
-        title:{ required },
-        url:{ required }
-    },
+
     mounted(){
         CKEDITOR.replace( 'ckeditor' )
     },
     created(){
         db.collection("blog").doc(this.$route.params.id)
         .onSnapshot((doc) => {
-            
-           let source = doc.metadata.hasPendingWrites ? "Local" : "Server";
-            console.log(source, " data: ", doc.data());
             this.post ={
                 title: doc.data().title,
                 url:doc.data().url,
-                text:doc.data().text.html
-            }
+                text:doc.data().text
+            }  
         })
     },
+    computed:{
+        // post(){return this.$store.getters.post}
+    },
     methods:{
-        editPost(){
-            
+        editPost(){       
+            db.collection('blog').doc(this.$route.params.id).set(this.post).then((docRef)=>{
+                this.post.title = this.title,
+                this.post.text = CKEDITOR.instances.ckeditor.getData(),
+                this.post.url = this.url,
+                this.post.timestamp = new Date()
+                
+            })
 
-            // db.collection('blog').doc(this.$route.params.id).set({
-            //     title: this.title,
-            //     text: CKEDITOR.instances.ckeditor.getData(),
-            //     url: this.url,
-            //     timestamp: new Date()
-            // }).then(docRef =>{
-            // this.$router.push(`${docRef.id}`)
-            // });
+            
         }
     }
 }

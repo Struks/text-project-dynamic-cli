@@ -77,7 +77,7 @@
 
 <script>
 import Banner from "../components/banner/Banner.vue";
-import {mapGetters, mapMutations, mapActions} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 export default {
   components: {
     "hero-banner": Banner
@@ -105,14 +105,11 @@ export default {
       'switchToGrid',
       'switchToList'
     ]),
-    ...mapActions([
-      'loadMore',
-    ])
-    // changeCategory(){ this.$store.commit('selectedCategory')},
-    // active(){ this.$store.commit('active')},
-    // switchToGrid(){ this.$store.commit('switchToGrid')},
-    // switchToList(){ this.$store.commit('switchToList')},
-    // loadMore(){ this.$store.dispatch('loadMore')},
+    // changeCategory(){ return this.$store.commit('selectedCategory')},
+    // active(){ return this.$store.commit('active')},
+    // switchToGrid(){ return this.$store.commit('switchToGrid')},
+    // switchToList(){ return this.$store.commit('switchToList')},
+    loadMore(){return this.$store.dispatch('loadMore')},
   },
 };
 </script>
