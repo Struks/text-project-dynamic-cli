@@ -1,30 +1,35 @@
 <template>
     <div class="marginBottom">
-       
+       <banner :src='src' :headline="headline"/>
         <div class="container">
-            <div class="backgroundPost bg-dark">
-                <banner :src='src' :headline="headline" class="text-center"/>
-                <div class="newPost">
-                        <input 
-                            class="title" 
-                            v-model='title' 
-                            type="text" 
-                            placeholder="Title"
-                            @blur="$v.title.$touch()"
-                            :class="{error: $v.title.$error}"
-                        >
-                        <p class="error-message" v-if="!$v.title.required && $v.title.$dirty">Title field is required.</p>
-                        <input 
-                            class="url" 
-                            v-model='url' 
-                            type="text" 
-                            placeholder="Thumbnails URL"
-                            @blur="$v.url.$touch()"
-                            :class="{error: $v.url.$error}"
-                        >
-                        <p class="error-message" v-if="!$v.url.required && $v.url.$dirty">Thumbnails field is required.</p>
-                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model = 'text'></textarea>
-                        <div class="afterbtn"><button type="button" class="btn btn-success" @click="addPost">ADD POST</button></div>
+            <div class="backgroundPost">
+                
+                <div class="newPost pt-5">
+                    <label for="title">Title:</label><br/>
+                    <input 
+                        id="title"
+                        class="title" 
+                        v-model='title' 
+                        type="text" 
+                        placeholder="Title"
+                        @blur="$v.title.$touch()"
+                        :class="{error: $v.title.$error}"
+                    ><br/>
+                    <p class="error-message" v-if="!$v.title.required && $v.title.$dirty">Title field is required.</p>
+                    <label for="url">URL:</label><br/>
+                    <input 
+                        id="url"
+                        class="url" 
+                        v-model='url' 
+                        type="text" 
+                        placeholder="Thumbnails URL"
+                        @blur="$v.url.$touch()"
+                        :class="{error: $v.url.$error}"
+                    >
+                    <p class="error-message" v-if="!$v.url.required && $v.url.$dirty">Thumbnails field is required.</p>
+                    <p class="error-message" v-if="!$v.url.url && $v.url.$dirty">URL is not valid.</p>
+                    <vue-ckeditor v-model="text"></vue-ckeditor>
+                    <div class="afterbtn"><button type="button" class="btn btn-success" @click="addPost">ADD POST</button></div>
                    
                 </div>
             </div>
@@ -34,13 +39,15 @@
 
 
 <script>
-import { required } from "vuelidate/lib/validators";
+import VueCkeditor from 'vue-ckeditor2';
+import { required,url } from "vuelidate/lib/validators";
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
 const moment = require('moment')
 export default {
     components:{
         'banner':Banner,
+        VueCkeditor
     },
     data(){
         return{
@@ -56,14 +63,12 @@ export default {
     },
     validations:{
         title:{ required },
-        url:{ required }
+        url:{ required,url }
     },
     computed:{
         
     },
-    mounted(){
-        CKEDITOR.replace( 'ckeditor' )
-    },
+
     methods:{
         addPost() {
             this.$v.$touch();
@@ -71,10 +76,9 @@ export default {
                 return
             }
             //connection inputs on fire store
-            const slug = this.generateUUID()
             db.collection('blog').add({
                 title: this.title,
-                text: CKEDITOR.instances.ckeditor.getData(),
+                text: this.text,
                 url: this.url,
                 timestamp: new Date()
             }).then((docRef) =>{ 
@@ -86,15 +90,6 @@ export default {
             if(!this.$v.$invalid){
                 alert('Blog is added.')
             }
-        },
-        generateUUID(){
-            let d = new Date().getTime()
-            let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                let r = (d + Math.random() * 16) % 16 | 0
-                d = Math.floor(d / 16)
-                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
-            })
-            return uuid
         },
     }
 }
@@ -109,7 +104,7 @@ input{
     width: 70%;
     margin: 20px 0px;
     padding: 20px;
-    border: 3px solid #212529;
+    border: 1px solid #212529;
 }
 p{
     margin-top: -15px;
@@ -120,21 +115,18 @@ textarea{
 }
 .btn{
     font-family: "Novecentosan", Arial, sans-serif;
-    background: #2ecc71;
     border: none;
     border-radius: 0px;
     padding: 10px 40px;
     margin-top: 20px;
 }
-.newPost{
+/* .newPost{
    text-align: center;
-}
+} */
 .marginBottom{
     margin-bottom: 250px;
 }
-.afterbtn{
-    padding-bottom: 20px;
-}
+
 .error-message {
   color: red;
   font-size: 12px;
@@ -142,11 +134,16 @@ textarea{
 .error{
   border-color: red;
 }
-.backgroundPost{
-    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  
-    -moz-box-shadow:    3px 3px 5px 6px #ccc;  
-    box-shadow:         3px 3px 5px 6px #ccc;
+.title,.url{
+    margin-top: -0px
 }
+label{
+    margin: 0px;
+    text-transform :none;
+    font-size:15px;
+    font-family:"Helvetica", Arial, sans-serif
+}
+
 
 </style>
 

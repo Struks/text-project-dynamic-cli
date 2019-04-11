@@ -17,16 +17,17 @@
             <div class="postList" id="postList">
               <article v-for="post in blog" :key="post.id" :class="'article ' + post.id">
                 <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(post.id)">X</button>
-                  <router-link :to="'/blog/' + post.id" class="link-for-blog">
-                    <div class="content">           
-                      <img width="340px" height="280px" :src="post.url" class="group list-group-image mr-3 float-left z-hovr">
-                      <h2>{{post.title}}</h2>
-                      <p class="text m-2" v-html="post.text"></p>
-                    </div> 
-                  </router-link>
-                  <button type="button" class="btn btn-primary editPost" @click="editPost(post.id)">Edit Post</button>
-                  <span>{{post.timestamp}}</span>
+                <i class="fa fa-edit float-right  mr-1" style="font-size:30px" title="Edit" @click="editPost(post.id)"></i>
+                <router-link :to="'/blog/' + post.id" class="link-for-blog">
+                  <div class="content">           
+                    <img width="340px" height="280px" :src="post.url" class="group list-group-image mr-3 float-left z-hovr">
+                    <h2>{{post.title}}</h2>
+                    <p class="text m-2" v-html="post.text"></p>
+                  </div> 
+                </router-link>
+                <span class="badge badge-secondary">{{post.timestamp}}</span>
               </article>
+              
               <button type="button" @click="loadMore()" class="btn btn-success mt-md-5">Load More</button>
             </div>
 
@@ -156,23 +157,17 @@ button{
 .article{
   margin-top: 20px;
   overflow: hidden;
-  background:whitesmoke;
-  -webkit-box-shadow: 3px 3px 5px 6px #7f7f7f;  
-  -moz-box-shadow:    3px 3px 5px 6px #7f7f7f;  
-  box-shadow:         3px 3px 5px 6px #7f7f7f;
 
 }
 .link-for-blog{
   text-decoration: none!important;
 }
-
 .text p{
   display: none;
 }
 .text p:first-child{
   display: block;
 }
-
 .z-hovr {
   opacity: 1;
   -webkit-transform: scale(1, 1);
@@ -200,7 +195,14 @@ button{
   z-index: 99;
 }
 .btn-delete{
-  color: aliceblue;
+  color:antiquewhite;
   cursor: pointer;
+  padding: 1px 6px 1px 6px;
+}
+.fa{
+  cursor: pointer;
+}
+.fa:hover{
+  opacity: .7;
 }
 </style>

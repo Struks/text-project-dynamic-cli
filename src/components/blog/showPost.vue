@@ -3,10 +3,10 @@
         <banner :headline='headline'/>
         <div class="container">
             <article class="mt-5">
-                <img :src='url' class="group list-group-image mr-3 float-left">
+                <img :src='url' class="img group list-group-image mr-3 float-left">
                 <h2 class="mb-4">{{title}}</h2>
                 <p class="paragraph" v-html="text"></p>
-                <span>{{timestamp}}</span>
+                <span class="badge badge-secondary">{{timestamp}}</span>
             </article>
         </div>    
     </div>
@@ -47,5 +47,8 @@ export default {
 <style scoped>
 .margin-bottom{
     margin-bottom: 400px;
+}
+.img{
+    max-width: 100%;
 }
 </style>

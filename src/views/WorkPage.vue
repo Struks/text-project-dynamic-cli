@@ -68,7 +68,7 @@
             </div>
           </a>
         </div>
-        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success mt-md-5">LOAD MORE</button>
+        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore()" class="btn btn-success mt-md-5">LOAD MORE</button>
         <img src="/img/spinner.gif" alt="spinner" class="img img-fluid" id="loader" style="display:none">
       </div><!-- /list-view -->
     </div>

@@ -1,6 +1,7 @@
 // import db from '@/firebase/init'
 const state = {
-    // post:{},
+    post:{},
+    id:0
    
 }
 
@@ -9,12 +10,24 @@ const getters = {
 }
 
 const mutations = {
-    // editPost(state,payload){
-    //     state.post = payload
+    // editPost(state,payload){       
+    //     db.collection('blog').doc(payload)
+    //     .set(state.post).then((docRef)=>{
+    //         this.post.title = this.title,
+    //         this.post.text = this.text,
+    //         this.post.url = this.url,
+    //         this.post.timestamp = new Date()    
+    //     })    
     // }
 }
 
 const actions = {
+    // editPost(context,payload){
+    //     setTimeout(()=>{
+    //         context.commit('editPost',payload)
+    //     },500)
+    // }
+    
     // getEditPost({commit,payload}){
     //     let post = {}
     //     db.collection("blog").doc(payload)

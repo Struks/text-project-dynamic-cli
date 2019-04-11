@@ -20,6 +20,7 @@
     "run": "^1.4.0",
     "serve": "^10.1.2",
     "vue": "^2.6.6",
+    "vue-ckeditor2": "^2.1.5",
     "vue-recaptcha": "^1.1.1",
     "vue-router": "^3.0.1",
     "vue-slick": "^1.1.15",

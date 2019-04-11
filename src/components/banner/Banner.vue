@@ -3,9 +3,9 @@
         <div class="container">
             <svgicon v-if="src"
                 name='blog'
-                width='30'
+                width='25'
                 color="white"
-                class="icon "
+                class="icon mr-2"
             />
             <h1>{{headline}}</h1>
         </div>
@@ -39,6 +39,8 @@ export default {
     }
     .icon{
         float: left;
+        margin-top: 8px;
+        
     }
 
 </style>

@@ -1,23 +1,33 @@
 <template>
     <div class="marginBottom">    
-        <div class="container align-center">
-            <div class="backgroundPost bg-dark">
-                <banner :src='src' :headline='headline' class="text-center"/>
-                <div class="editPost">
-                        <input 
-                            class="title" 
-                            v-model="post.title"
-                            type="text" 
-                            placeholder="Title"
-                        >
-                        <input 
-                            class="url" 
-                            v-model="post.url" 
-                            type="text" 
-                            placeholder="Thumbnails URL"
-                        >
-                        <textarea class="textarea" name="ckeditor" id="ckeditor" v-model="post.text"></textarea>
-                        <div class="afterbtn"><button type="button" class="btn btn-success" @click="editPost(post.id)">EDIT POST</button></div>
+        <banner :src='src' :headline='headline'/>
+        <div class="container">
+            <div class="backgroundPost">
+                
+                <div class="editPost pt-5">
+                    <label for="title">Title:</label><br/>
+                    <input 
+                        id="title"
+                        class="title" 
+                        v-model="post.title"
+                        type="text" 
+                        placeholder="Title"
+                    ><br/>
+                    <label for="url">URL:</label><br/>
+                    <input 
+                        id="url"
+                        class="url" 
+                        v-model="post.url" 
+                        type="text" 
+                        placeholder="Thumbnails URL"
+                    >
+                    <vue-ckeditor v-model="post.text"></vue-ckeditor>
+
+                    <!-- <textarea class="textarea" name="ckeditor" id="ckeditor" v-model="post.text"></textarea> -->
+                    <div class="afterbtn">
+                        <button type="button" class="btn btn-success" @click="editPost(post.id)">EDIT POST</button>
+                        <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(post.id)">DELETE</button>
+                    </div>
                    
                 </div>
             </div>
@@ -27,13 +37,15 @@
 
 
 <script>
+import VueCkeditor from 'vue-ckeditor2';
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
 import { setTimeout } from 'timers';
 import {store} from '@/store/index' 
 export default {
     components:{
-        'banner':Banner
+        'banner':Banner,
+        VueCkeditor
     },
     data(){
         return{
@@ -44,16 +56,18 @@ export default {
         }
     },
 
-    mounted(){
-        CKEDITOR.replace( 'ckeditor' )
-    },
+    // mounted(){
+    //     CKEDITOR.replace( 'ckeditor' )
+    // },
     created(){
         db.collection("blog").doc(this.$route.params.id)
         .onSnapshot((doc) => {
             this.post ={
                 title: doc.data().title,
                 url:doc.data().url,
-                text:doc.data().text
+                text:doc.data().text,
+                // timestamp: doc.Date,
+                id:doc.id
             }  
         })
     },
@@ -61,17 +75,30 @@ export default {
         // post(){return this.$store.getters.post}
     },
     methods:{
-        editPost(){       
-            db.collection('blog').doc(this.$route.params.id).set(this.post).then((docRef)=>{
+        // editPost(id){
+        //     this.$store.dispatch('editPost',id)
+        // }
+        editPost(id){       
+            db.collection('blog').doc(id)
+            .set(this.post).then((docRef)=>{
                 this.post.title = this.title,
-                this.post.text = CKEDITOR.instances.ckeditor.getData(),
+                this.post.text = this.text,
                 this.post.url = this.url,
-                this.post.timestamp = new Date()
-                
-            })
-
-            
+                this.post.timestamp = new Date()       
+            }) 
+            alert('Post is edit.')
+            this.$router.push(`/blog/${id}`)   
+        },
+        deletePost(id){
+        if(confirm('Are you sure ? ')){
+          db.collection("blog").doc(id).delete();
+          setTimeout(() => {
+            document.querySelector('.article').remove()
+          }, 400); 
+          this.$router.push({path:`/blog`}) 
         }
+      },
+        
     }
 }
 </script>
@@ -85,7 +112,7 @@ input{
     width: 70%;
     margin: 20px 0px;
     padding: 20px;
-    border: 3px solid #212529;
+    border: 1px solid #212529;
 }
 p{
     margin-top: -15px;
@@ -95,16 +122,13 @@ textarea{
     margin: 20px 0px;
 }
 .btn{
-    font-family: "Novecentosan", Arial, sans-serif;
-    background: #2ecc71;
+    font-family: "Novecentosan", Arial, sans-serif;  
     border: none;
     border-radius: 0px;
     padding: 10px 40px;
     margin-top: 20px;
 }
-.editPost{
-   text-align: center;
-}
+
 .marginBottom{
     margin-bottom: 250px;
 }
@@ -118,9 +142,14 @@ textarea{
 .error{
   border-color: red;
 }
-.backgroundPost{
-    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  
-    -moz-box-shadow:    3px 3px 5px 6px #ccc;  
-    box-shadow:         3px 3px 5px 6px #ccc;
+.title,.url{
+    margin-top: -0px
 }
+label{
+    margin: 0px;
+    text-transform :none;
+    font-size:15px;
+    font-family:"Helvetica", Arial, sans-serif
+}
+
 </style>
