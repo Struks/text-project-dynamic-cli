@@ -59,6 +59,7 @@ const actions = {
               if(change.type === 'added'){
                 blog.push({
                   ...change.doc.data(),
+                  timestamp:change.doc.data().timestamp,
                   id: change.doc.id
                 })
               }

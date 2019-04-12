@@ -40,7 +40,6 @@
 import VueCkeditor from 'vue-ckeditor2';
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
-import { setTimeout } from 'timers';
 import {store} from '@/store/index' 
 export default {
     components:{
@@ -49,16 +48,12 @@ export default {
     },
     data(){
         return{
-        post:{},
-           headline: 'Edit post',
-           src:true,
+        // post:{},
+        headline: 'Edit post',
+        src:true,
             
         }
     },
-
-    // mounted(){
-    //     CKEDITOR.replace( 'ckeditor' )
-    // },
     created(){
         db.collection("blog").doc(this.$route.params.id)
         .onSnapshot((doc) => {
@@ -66,29 +61,34 @@ export default {
                 title: doc.data().title,
                 url:doc.data().url,
                 text:doc.data().text,
-                // timestamp: doc.Date,
+                timestamp: doc.data().timestamp,
                 id:doc.id
             }  
         })
     },
     computed:{
-        // post(){return this.$store.getters.post}
+        post(){return this.$store.getters.post}
     },
     methods:{
-        // editPost(id){
-        //     this.$store.dispatch('editPost',id)
-        // }
-        editPost(id){       
-            db.collection('blog').doc(id)
-            .set(this.post).then((docRef)=>{
-                this.post.title = this.title,
-                this.post.text = this.text,
-                this.post.url = this.url,
-                this.post.timestamp = new Date()       
-            }) 
-            alert('Post is edit.')
-            this.$router.push(`/blog/${id}`)   
+        setPost(){return commit('setPost',post.id)},
+        editPost(id){
+            this.$store.dispatch('editPost',{
+                title: post.title,
+                url: post.url,
+                text: post.url,
+                
+            })
         },
+        // editPost(id){       
+        //     db.collection('blog').doc(id)
+        //     .set(this.post).then((docRef)=>{
+        //         this.post.title = this.title,
+        //         this.post.text = this.text,
+        //         this.post.url = this.url,
+        //         this.post.timestamp = this.timestamp       
+        //     }) 
+        //     this.$router.push(`/blog/${id}`)   
+        // },
         deletePost(id){
         if(confirm('Are you sure ? ')){
           db.collection("blog").doc(id).delete();

@@ -26,7 +26,6 @@
                         @blur="$v.url.$touch()"
                         :class="{error: $v.url.$error}"
                     >
-                    <p class="error-message" v-if="!$v.url.required && $v.url.$dirty">Thumbnails field is required.</p>
                     <p class="error-message" v-if="!$v.url.url && $v.url.$dirty">URL is not valid.</p>
                     <vue-ckeditor v-model="text"></vue-ckeditor>
                     <div class="afterbtn"><button type="button" class="btn btn-success" @click="addPost">ADD POST</button></div>
@@ -57,13 +56,14 @@ export default {
             text:'',
             url:'',
             src:true,
-            timestamp:''
+            timestamp:'',
+            id:''
             
         }
     },
     validations:{
         title:{ required },
-        url:{ required,url }
+        url:{ url }
     },
     computed:{
         
@@ -80,16 +80,13 @@ export default {
                 title: this.title,
                 text: this.text,
                 url: this.url,
-                timestamp: new Date()
+                timestamp: moment(Date.now()).utc().startOf('day').format(),
             }).then((docRef) =>{ 
+                this.id = docRef.id
                 console.log('Document written with ID: ', docRef.id);
                 this.$router.push(`${docRef.id}`)
             })
             .catch((error) => console.error('Error adding document: ', error))
-            //blog is added
-            if(!this.$v.$invalid){
-                alert('Blog is added.')
-            }
         },
     }
 }
@@ -143,6 +140,7 @@ label{
     font-size:15px;
     font-family:"Helvetica", Arial, sans-serif
 }
+
 
 
 </style>

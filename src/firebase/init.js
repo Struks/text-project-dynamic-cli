@@ -9,5 +9,5 @@ var config = {
     storageBucket: "test-project-cli-b7928.appspot.com",
     messagingSenderId: "603590460569"
   };
-  const app = firebase.initializeApp(config);
+  firebase.initializeApp(config);
   export default firebase.firestore()

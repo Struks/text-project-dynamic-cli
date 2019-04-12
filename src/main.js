@@ -9,10 +9,8 @@ global.jQuery = jQuery
 import Vuelidate from 'vuelidate'
 import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
-const firebase = require("firebase");
-global.firebase = firebase
-
-// Required for side-effects
+import moment from 'moment';
+// Required for side-effects;
 // require("firebase/firestore");
 
 //vuelidate
@@ -29,6 +27,8 @@ Vue.use(SvgIcon, {
 //vuex
 Vue.use(Vuex);
 
+//moment
+Vue.filter('date',(created) => moment(created).format('MMMM Do YYYY'))
 
 new Vue({
   router,

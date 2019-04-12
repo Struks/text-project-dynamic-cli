@@ -119,7 +119,7 @@ const state = {
         alt: "pinguin",
         category: "web",
         title:'Linux',
-        text:'inux (/ˈlɪnəks/ (About this soundlisten) LIN-əks)[9][10] is a family of free and open-source software operating systems based on the Linux kernel,[11] an operating system kernel first released on September 17, 1991 by Linus Torvalds.[12][13][14] Linux is typically packaged in a Linux distribution (or distro for short).'
+        text:'Linux (/ˈlɪnəks/ (About this soundlisten) LIN-əks)[9][10] is a family of free and open-source software operating systems based on the Linux kernel,[11] an operating system kernel first released on September 17, 1991 by Linus Torvalds.[12][13][14] Linux is typically packaged in a Linux distribution (or distro for short).'
       },
       
     ],
@@ -211,23 +211,23 @@ loadMore:(state) => {
 }
 
 const actions = {
-loadMore: context =>{
-  const loader = document.getElementById('loader');
-  let button = document.querySelector('.btn');
-  button.style.display='none';
-  loader.style.display='block';
-  setTimeout(()=>{
-    context.commit('loadMore')
-    button.style.display='block';
-    loader.style.display='none';
-  },1500)
-  
-}
+  loadMore: context =>{
+    const loader = document.getElementById('loader');
+    let button = document.querySelector('.btn');
+    button.style.display='none';
+    loader.style.display='block';
+    setTimeout(()=>{
+      context.commit('loadMore')
+      button.style.display='block';
+      loader.style.display='none';
+    },1500)
+    
+  }
 }
 
 export default {
-state,
-getters,
-mutations,
-actions
+  state,
+  getters,
+  mutations,
+  actions
 }

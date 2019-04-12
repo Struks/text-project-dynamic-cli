@@ -1,4 +1,4 @@
-// import db from '@/firebase/init'
+import db from '@/firebase/init'
 const state = {
     post:{},
     id:0
@@ -6,40 +6,28 @@ const state = {
 }
 
 const getters = {
-    post(state){return state.post}
+    post(state){return state.post},
 }
 
 const mutations = {
-    // editPost(state,payload){       
-    //     db.collection('blog').doc(payload)
-    //     .set(state.post).then((docRef)=>{
-    //         this.post.title = this.title,
-    //         this.post.text = this.text,
-    //         this.post.url = this.url,
-    //         this.post.timestamp = new Date()    
-    //     })    
-    // }
+    setPost(state,payload){state.post = payload}
 }
 
 const actions = {
-    // editPost(context,payload){
-    //     setTimeout(()=>{
-    //         context.commit('editPost',payload)
-    //     },500)
-    // }
     
-    // getEditPost({commit,payload}){
-    //     let post = {}
-    //     db.collection("blog").doc(payload)
-    //     .onSnapshot((doc) => {
-    //         post ={
-    //             title: doc.data().title,
-    //             url:doc.data().url,
-    //             text:doc.data().text
-    //         }
-    //         commit('editPost',post)
-    //     }) 
-    // }
+    
+    editPost({commit},payload){       
+        db.collection('blog').doc(payload).update({
+            title : payload.title,
+            text : payload.text,
+            url : payload.url,
+            timestamp : payload.timestamp       
+        }).catch(err =>{
+            console.log(err)
+        });
+        commit('setPost')
+          
+    },
 }
 
 export default{

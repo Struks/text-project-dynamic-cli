@@ -7,7 +7,7 @@ import WorkPage from './views/WorkPage'
 // import links from './components/notFound/links'
 import BlogPage from './views/BlogPage'
 import newPost from './components/blog/newPost'
-import showPost from './components/blog/showPost'
+import showPost from './components/blog/singlePost'
 import editPost from './components/blog/editPost'
 
 Vue.use(Router)
