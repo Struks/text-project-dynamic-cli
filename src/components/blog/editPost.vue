@@ -5,6 +5,16 @@
             <div class="backgroundPost">
                 
                 <div class="editPost pt-5">
+                    <div class="float-right" >
+                        <label for="category">Category:</label><br/>
+                        <select class="form-control custom-select" id="category" v-model="post.category">
+                            <option value="" selected disabled>Choose here</option>
+                            <option value="nature">Nature</option>
+                            <option value="tehnology">Tehnology</option>
+                            <option value="art">Art</option>
+                            <option value="history">History</option>
+                        </select>
+                    </div>
                     <label for="title">Title:</label><br/>
                     <input 
                         id="title"
@@ -48,47 +58,21 @@ export default {
     },
     data(){
         return{
-        // post:{},
         headline: 'Edit post',
-        src:true,
-            
+        src:true,          
         }
     },
     created(){
-        db.collection("blog").doc(this.$route.params.id)
-        .onSnapshot((doc) => {
-            this.post ={
-                title: doc.data().title,
-                url:doc.data().url,
-                text:doc.data().text,
-                timestamp: doc.data().timestamp,
-                id:doc.id
-            }  
-        })
+        this.$store.dispatch('loadPostOnEditor',this.$route.params.id)
     },
     computed:{
         post(){return this.$store.getters.post}
     },
     methods:{
-        setPost(){return commit('setPost',post.id)},
-        editPost(id){
-            this.$store.dispatch('editPost',{
-                title: post.title,
-                url: post.url,
-                text: post.url,
-                
-            })
+        editPost(id){       
+            this.$store.dispatch('getEditPost',id)
+            this.$router.push(`/blog/${id}`)   
         },
-        // editPost(id){       
-        //     db.collection('blog').doc(id)
-        //     .set(this.post).then((docRef)=>{
-        //         this.post.title = this.title,
-        //         this.post.text = this.text,
-        //         this.post.url = this.url,
-        //         this.post.timestamp = this.timestamp       
-        //     }) 
-        //     this.$router.push(`/blog/${id}`)   
-        // },
         deletePost(id){
         if(confirm('Are you sure ? ')){
           db.collection("blog").doc(id).delete();

@@ -29,7 +29,7 @@ export default {
     data(){
         return{
             title:'',
-            url:null,
+            url:'',
             text:'',
             timestamp:'',           
             headline: '',
@@ -38,6 +38,7 @@ export default {
         }
     },
     created(){
+        // this.$store.dispatch('getSinglePost',this.$route.params.id)
         db.collection('blog').doc(this.$route.params.id).get().then(doc =>{
             if(doc.exists){
                 this.title = doc.data().title;
@@ -58,7 +59,8 @@ export default {
         deletePost(id){
             console.log("Hello this is id: " + id);
         if(confirm('Are you sure ? ')){
-            db.collection("blog").doc().delete();
+            db.collection("blog").doc(id).delete()
+            .catch(error => conosle.log('Error: ', error));
             
             setTimeout(() => {
                 this.$router.push({path:`/blog`})

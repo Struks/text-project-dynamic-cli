@@ -5,6 +5,16 @@
             <div class="backgroundPost">
                 
                 <div class="newPost pt-5">
+                    <div class="float-right" >
+                        <label for="category">Category:</label><br/>
+                        <select class="form-control custom-select" id="category" v-model="category">
+                            <option value="" selected disabled>Choose here</option>
+                            <option value="nature">Nature</option>
+                            <option value="tehnology">Tehnology</option>
+                            <option value="art">Art</option>
+                            <option value="history">History</option>
+                        </select>
+                    </div>  
                     <label for="title">Title:</label><br/>
                     <input 
                         id="title"
@@ -57,13 +67,14 @@ export default {
             url:'',
             src:true,
             timestamp:'',
-            id:''
+            id:'',
+            category:''
             
         }
     },
     validations:{
         title:{ required },
-        url:{ url }
+        url:{ url },
     },
     computed:{
         
@@ -80,6 +91,7 @@ export default {
                 title: this.title,
                 text: this.text,
                 url: this.url,
+                category: this.category,
                 timestamp: moment(Date.now()).utc().startOf('day').format(),
             }).then((docRef) =>{ 
                 this.id = docRef.id
