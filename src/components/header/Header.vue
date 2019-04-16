@@ -58,9 +58,9 @@
                   :class="media.class"
                 ></svgicon>
               </a>
-            </li>
-            <!--social media hamburger-->
+            </li>          
           </ul>
+         <!--social media hamburger-->
         </div>
       </nav>
     </div>
@@ -81,7 +81,10 @@
         </ul>
         <ul class="auth-links navbar-nav main-navigation" >
           <li v-for="link in auth" :key="link.id">
-            <a :href="link.link">{{link.name}}</a>
+            <router-link 
+              :to="link.link"
+              :exact="link.exact"
+            >{{link.name}}</router-link>
           </li>
          </ul>
       </div>

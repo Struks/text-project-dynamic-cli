@@ -8,8 +8,8 @@ const state = {
         { link: '/blog', name: 'BLOG', exact: false },
     ], 
     auth:[
-        {link: '#', name:'Login'},
-        {link: '#', name:'Register'},
+        {link: '/login', name:'Login', exact: true},
+        {link: '/signup', name:'Sign up', exact: true},
     ]
 }
 

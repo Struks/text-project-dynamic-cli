@@ -5,16 +5,6 @@
             <div class="backgroundPost">
                 
                 <div class="editPost pt-5">
-                    <div class="float-right" >
-                        <label for="category">Category:</label><br/>
-                        <select class="form-control custom-select" id="category" v-model="post.category">
-                            <option value="" selected disabled>Choose here</option>
-                            <option value="nature">Nature</option>
-                            <option value="tehnology">Tehnology</option>
-                            <option value="art">Art</option>
-                            <option value="history">History</option>
-                        </select>
-                    </div>
                     <label for="title">Title:</label><br/>
                     <input 
                         id="title"

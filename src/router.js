@@ -4,15 +4,17 @@ import ContactPage from './views/ContactPage'
 import AboutPage from './views/AboutPage'
 import HomePage from './views/HomePage'
 import WorkPage from './views/WorkPage'
-// import links from './components/notFound/links'
 import BlogPage from './views/BlogPage'
 import newPost from './components/blog/newPost'
 import showPost from './components/blog/singlePost'
 import editPost from './components/blog/editPost'
+import login from '@/components/authentication/login.vue'
+import signup from '@/components/authentication/signup.vue'
+import firebase from 'firebase/app';
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -36,7 +38,8 @@ export default new Router({
     { 
       path: '/blog',
       component: BlogPage,
-      name:'blog-page'
+      name:'blog-page',
+      // meta:{requiresAuth:true}
     },
     {
       path: '/blog/newPost',
@@ -52,16 +55,27 @@ export default new Router({
       path:'/blog/:id/edit',
       component: editPost,
       name: 'edit-post'
+    },
+    {
+      path:'/login',
+      component: login,
+      name: 'login',
+    },
+    {
+      path:'/signup',
+      component: signup,
+      name: 'sign-up'
     }
-
-    // {
-    //   path: '*',
-    //   component: NotFound
-    // },
-    // {
-    //   path: '/Link',
-    //   name: 'links',
-    //   component: links
-    // }
+  
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+ 
+  if (requiresAuth && !currentUser) next('login');
+  else next();
+});
+export default router;
+

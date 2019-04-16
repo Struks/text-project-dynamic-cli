@@ -10,8 +10,10 @@ import Vuelidate from 'vuelidate'
 import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
 import moment from 'moment';
-// Required for side-effects;
-// require("firebase/firestore");
+
+
+
+
 
 //vuelidate
 Vue.use(Vuelidate)

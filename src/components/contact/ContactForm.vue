@@ -155,7 +155,7 @@ input {
   max-width: 320px;
   width: 100%;
   height: 45px;
-  border-color: #8a8888 ;
+  border-color: #8a8888;
   border-radius: 0;
   border-width: 2px;
   border-style:solid;

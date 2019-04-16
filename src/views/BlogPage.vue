@@ -39,7 +39,6 @@
 <script>
 import db from '@/firebase/init';
 import Banner from '@/components/banner/Banner.vue';
-import newPost from '../components/blog/newPost.vue';
 
 export default {
     components:{
