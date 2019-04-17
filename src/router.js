@@ -8,8 +8,8 @@ import BlogPage from './views/BlogPage'
 import newPost from './components/blog/newPost'
 import showPost from './components/blog/singlePost'
 import editPost from './components/blog/editPost'
-import login from '@/components/authentication/login.vue'
-import signup from '@/components/authentication/signup.vue'
+import login from '@/views/login.vue'
+import signup from '@/views/signup.vue'
 import firebase from 'firebase/app';
 
 Vue.use(Router)
@@ -39,7 +39,7 @@ const router = new Router({
       path: '/blog',
       component: BlogPage,
       name:'blog-page',
-      // meta:{requiresAuth:true}
+      meta:{requiresAuth:true},
     },
     {
       path: '/blog/newPost',
