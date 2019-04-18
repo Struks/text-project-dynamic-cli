@@ -4,7 +4,6 @@ const state = {
 }
 
 const getters = {
-    post(state){return state.post},
 }
 
 const mutations = {
@@ -12,31 +11,27 @@ const mutations = {
 }
 
 const actions = {
-    getEditPost(payload){
-        const post={}
-        db.collection('blog').doc(payload)
+    getEditPost({commit}, payload){   
+        db.collection('blog').doc(payload.id)
         .update({
-            title :  post.title,
-            text : post.text,
-            url : post.url,
-            timestamp : post.timestamp  
+            title :  payload.title,
+            text : payload.text,
+            url : payload.url,
+            timestamp : payload.timestamp  
         })
-  
-        
+        commit('editPost')
     },
-    loadPostOnEditor({commit},payload){ 
-        commit('editPost',payload);
-        db.collection("blog").doc(payload)
-        .onSnapshot((doc) => {
-            state.post ={
-                title: doc.data().title,
-                url:doc.data().url,
-                text:doc.data().text,
-                timestamp: doc.data().timestamp,
-                id:doc.id
-            }  
-        })
-    }
+    // loadPostOnEditor({payload}){ 
+    //     // commit('editPost',payload);
+    //     db.collection("blog").doc(payload.id)
+    //     .onSnapshot((doc) => {
+    //         payload.title = doc.data().title,
+    //         payload.url = doc.data().url,
+    //         payload.text = doc.data().text,
+    //         payload.timestamp = doc.data().timestamp,
+    //         payload.id = doc.id   
+    //     })
+    // }
     
 }
 

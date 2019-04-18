@@ -63,7 +63,7 @@ export default {
     created(){
       setTimeout(()=>{
         this.$store.dispatch('getBlogs',3)
-      },400)
+      },500)
     },
     methods:{
       newPost(){

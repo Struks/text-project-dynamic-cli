@@ -1,42 +1,72 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import db from '@/firebase/init'
+import router from '@/router'
+// import { longStackSupport } from 'q';
 
-const state ={
-    fireForm:{
-        username:'',
-        password:'',
-        firstname:'',
-        lastname:'',
-        repeatPassword:'',
-        email:'',
-    }
+const state = {
+    feedback:'',
+    logUser: null,
 }
 
-const getters ={
-    fireForm: state => state.fireForm,
+const getters = {
+    feedback: state => state.feedback,
+    logUser: state => state.logUser,
 }
 
-const mutations ={
+const mutations = {
+    setFeedback:(state,payload) => state.feedback = payload, 
+    setLogUser:(state,payload) => state.logUser = payload
+}
+
+const actions = {
     // sign up
-    signUp(){
-        firebase.auth().createUserWithEmailAndPassword(state.fireForm.email,state.fireForm.password)
-        .then(user =>{
-            console.log(user)
-        }).catch(err => console.log("error. " + err.message))
+    signUp({commit},payload){
+        firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+        .then(() => {
+            db.collection("users").doc().set({
+                firstname: payload.firstname,
+                lastname: payload.lastname,
+                email: payload.email,
+                username: payload.username, 
+            }).then(()=>{
+                commit('setFeedback', null)
+                router.push('/blog')
+            })
+        }).catch(err =>  {
+            commit('setFeedback', err.message)
+        })
     },
     // login
-    login(){
-        firebase.auth().signInWithEmailAndPassword(state.fireForm.email,state.fireForm.password)
-        .then(user =>{
-            console.log('Well done.' + user)
-        }).catch(err =>{
-            console.log('Error! '+ err.message)
+    login({commit},payload){
+        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+        .then(() =>{
+            const newUser = {
+            id: firebase.auth().currentUser.uid,
+            email: firebase.auth().currentUser.email
+            };
+            commit('setLogUser', newUser)
         })
-    }
-}
-
-const actions ={
-
+        .then(() =>{
+            commit('setFeedback', null)
+            router.push('/blog')
+        }).catch(err =>{
+            commit('setFeedback', err.message)
+        })
+        
+    },
+    //logout
+    logout({commit}){
+        firebase.auth().signOut().then(()=>{
+            commit('setLogUser',null)
+            router.replace('login')
+            
+        })
+    },
+    //without change login/logout
+    autoSignIn({ commit }, payload ) {
+        commit('setLogUser', { id: payload.uid });
+    },
 }
 
 export default{

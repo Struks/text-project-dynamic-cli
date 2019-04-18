@@ -5,69 +5,74 @@
            <div class="form login">
                <form action="#" @submit.prevent="submit" >                  
                    <h1 class="m-3">Sign Up</h1>
-                   <!-- first and last name -->
-                   <div class="row justify-content-center">
-                        <div class="col-4 form-group p-0" :class="{'form-group--error': $v.fireForm.firstname.$error && submitted}">
-                            <input 
-                                type="text"
-                                class="firstname"
-                                v-model="$v.fireForm.firstname.$model"
-                                placeholder="first name"
-                            >
-                            <p class="error" v-if="!$v.fireForm.firstname.required && submitted">First name is required</p>
-                        </div>
-                        <div class="col-4 form-group p-0" :class="{'form-group--error': $v.fireForm.lastname.$error && submitted}">
-                            <input 
-                                type="text"
-                                class="lastname"
-                                v-model="$v.fireForm.lastname.$model"
-                                placeholder="last name"
-                            >
-                            <p class="error" v-if="!$v.fireForm.lastname.required && submitted">Last name is required</p>
-                        </div>
-                   </div>
+                   <!-- first and last name -->   
+                    <input 
+                        type="text"
+                        class="firstname"
+                        :class="{'form-group--error':$v.firstname.$error }"
+                        v-model="firstname"
+                        placeholder="first name">
+                    <div class="firstnameError"  v-if="$v.firstname.$error">
+                        <p class="error" v-if="!$v.firstname.required">First name is required</p>
+                    </div>
+                    <input 
+                        type="text"
+                        class="lastname"
+                        :class="{'form-group--error':$v.lastname.$error }"
+                        v-model="lastname"
+                        placeholder="last name">
+                    <div class="lastnameError" v-if="$v.lastname.$error">          
+                        <p class="error" v-if="!$v.lastname.required">Last name is required</p>
+                    </div>
                    <!-- username -->
-                   <div class="form-group" :class="{'form-group--error':$v.fireForm.username.$error && submitted}">
-                       <input 
-                            type="text" 
-                            class="username form_input"
-                            v-model="$v.fireForm.username.$model"
-                            placeholder="username"
-                        ><br/>
-                        <p class="error" v-if="!$v.fireForm.username.required && submitted">Username is required</p>
+                    <input 
+                        type="text" 
+                        class="username form_input"
+                        :class="{'form-group--error':$v.username.$error }"
+                        v-model="username"
+                        placeholder="username"
+                    >
+                    <div v-if="$v.username.$error">
+                        <p class="error" v-if="!$v.username.required">Username is required</p>
                    </div>
                    <!-- email -->
-                   <div class="form-group" :class="{'form-group--error':$v.fireForm.email.$error && submitted}">
                     <input 
                         class="email"
-                        v-model="$v.fireForm.email.$model"
+                        :class="{'form-group--error':$v.email.$error }"
+                        type="text"
+                        v-model="email"
                         placeholder="email"
                     >
-                    <p class="error" v-if="!$v.fireForm.email.required && submitted">Email is required</p>
-                    <p class="error" v-if="!$v.fireForm.email.email && submitted">Email is no valid</p>
+                    <div v-if="$v.email.$error">
+                        <p class="error" v-if="!$v.email.required">Email is required</p>
+                        <p class="error" v-if="!$v.email.email">Email is no valid</p>
                     </div>
                     <!-- passwords -->
-                    <div class="form-group" :class="{'form-group--error':$v.fireForm.password.$error && submitted}">
                     <input 
                         type="password"
                         class="password"
-                        v-model="$v.fireForm.password.$model"
+                        :class="{'form-group--error':$v.password.$error }"
+                        v-model="password"
                         placeholder="password"
-                        @keyup="moreLeft($v.fireForm.password.$model)"
+                        @keyup="moreLeft(password)"
                     >
-                    <p class="error" v-if="!$v.fireForm.password.required && submitted">Password is required</p>
-                    <p v-if="leftChars <= 6" class="infoMoreChar">You have used {{leftChars}} characters. Minimum is {{$v.fireForm.password.$params.minLength.min}}</p>
+                    <div v-if="$v.password.$error">
+
+                    <p class="error" v-if="!$v.password.required">Password is required</p>
                     </div>
-                    <div class="form-group" :class="{'form-group--error':$v.fireForm.password.$error && submitted}">
+                    <p v-if="leftChars <= 6" class="infoMoreChar">You have used {{leftChars}} characters. Minimum is {{$v.password.$params.minLength.min}}</p>
                     <input 
                         type="password"
-                        class="password"
-                        v-model="$v.fireForm.repeatPassword.$model"
-                        placeholder="repeatPassword"
+                        class="repeatPassword"
+                        :class="{'form-group--error':$v.repeatPassword.$error }"
+                        v-model="repeatPassword"
+                        placeholder="repeat password"
                     >
-                    <p class="error" v-if="!$v.fireForm.repeatPassword.required && submitted">Password is required</p>
-                    <p class="error" v-if="!$v.fireForm.repeatPassword.sameAs && submitted">Passwords must be identical</p>
+                    <div v-if="$v.repeatPassword.$error">
+                        <p class="error" v-if="!$v.repeatPassword.required">Repeat Password is required</p>
+                        <p class="error" v-if="!$v.repeatPassword.sameAs">Passwords must be identical</p>
                     </div>
+                    <p class="error" v-if="feedback !== null">{{feedback}}</p>
                     <button type="submit" class="btn btn-success m-3">Sign Up</button>
                     <div class="pb-4"><span>Or go back to <router-link to="/login">login.</router-link></span></div>               
                </form>
@@ -85,38 +90,57 @@ export default {
       'hero-banner':Banner,
     },
     data(){
+        // return{
+            
+        //     headline:'Registration',
+        //     leftChars:0,
+        //     username:'',
+        //     password:'',
+        //     firstname:'',
+        //     lastname:'',
+        //     email:'',
+        //     repeatPassword:''
+        // }
         return{
-          headline:'Registration',
-          submitted:false,
-          leftChars:0,
+            
+            headline: 'Registration',
+            leftChars: 0,
+            username: 'edvin',
+            password: '1234567',
+            firstname: 'struja',
+            lastname:'strujic',
+            email:'edvin@gmail.com',
+            repeatPassword:'1234567'
         }
     },
     validations:{
-        fireForm:{
-            username:{required},
-            password:{required, minLength: minLength(6)},
-            firstname:{required},
-            lastname:{required},
-            repeatPassword:{sameAs:sameAs('password'), required},
-            email:{email,required}
-            
-
-        }
+        username:{required},
+        password:{required, minLength: minLength(6)},
+        firstname:{required},
+        lastname:{required},
+        repeatPassword:{sameAs:sameAs('password'), required},
+        email:{email,required}
     },
     computed:{
-        fireForm(){return this.$store.getters.fireForm}
+        feedback(){return this.$store.getters.feedback},
     },
     methods:{
-        submit(){ 
-            this.submitted = true;     
+        submit(){  
             //stop here if form is invalid
             this.$v.$touch();
 
             if(this.$v.$invalid) {
                 return
             }
-            //auth sign up(create account)
-            this.$store.commit('signUp')
+            // auth sign up(create account)
+            this.$store.dispatch('signUp', {
+                username:this.username,
+                password:this.password,
+                firstname:this.firstname,
+                lastname:this.lastname,
+                email:this.email
+            }); 
+            // console.log(this.email)
         },
         //chars for passsword
         moreLeft(useChars){
@@ -145,9 +169,8 @@ input{
     border-style:solid;
     border-color: #8a8888;
 }
-.firstname,.lastname{
-    width:170px;
-}
+
+
 button{
     width: 350px;
 }
@@ -162,7 +185,7 @@ button{
     color: red;
     font-size: 12px;
 }
-.form-group--error input {
+.form-group--error {
     border-color: red;
 }
 .infoMoreChar{

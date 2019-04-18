@@ -44,7 +44,7 @@ const router = new Router({
     {
       path: '/blog/newPost',
       component: newPost,
-      name:'new-post'
+      name:'new-post',
     },
     {
       path:'/blog/:id',
@@ -75,6 +75,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
  
   if (requiresAuth && !currentUser) next('login');
+  
   else next();
 });
 export default router;

@@ -27,6 +27,7 @@ export default {
     name: "show-post",
     data(){
         return{
+            
             title:'',
             url:'',
             text:'',
@@ -42,6 +43,14 @@ export default {
         // console.log(id)
    },
     created(){
+        // this.$store.dispatch('getSinglePost', {
+        //     title: this.title,
+        //     url: this.url,
+        //     text: this.text,
+        //     timestamp: this.timestamp,        
+        //     headline: this.headline,
+        //     id: this.id,
+        // })
         db.collection('blog').doc(this.$route.params.id).get().then(doc =>{
             if(doc.exists){
                 this.title = doc.data().title;
@@ -51,12 +60,10 @@ export default {
                 this.headline = this.title; 
                 this.id = doc.id;
             }
-        })
-       
-        
+        })  
     },
     computed:{
-        // post(){this.$store.getters.post}
+        // post(){return this.$store.getters.post}
     },
     methods:{
         editPost(id){
@@ -64,14 +71,14 @@ export default {
         },
         deletePost(id){
             console.log("Hello this is id: " + id);
-        if(confirm('Are you sure ? ')){
-            db.collection("blog").doc(id).delete()
-            .catch(error => conosle.log('Error: ', error));
-            
-            setTimeout(() => {
-                this.$router.push({path:`/blog`})
-            }, 400);   
-        }
+            if(confirm('Are you sure ? ')){
+                db.collection("blog").doc(id).delete()
+                .catch(error => conosle.log('Error: ', error));
+
+                setTimeout(() => {
+                    this.$router.push({path:`/blog`})
+                }, 400);   
+            }
         },
     }
 }

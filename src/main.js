@@ -10,7 +10,7 @@ import Vuelidate from 'vuelidate'
 import SvgIcon from 'vue-svgicon'
 import Vuex from 'vuex';
 import moment from 'moment';
-
+import firebase from 'firebase/app'
 
 
 
@@ -32,8 +32,27 @@ Vue.use(Vuex);
 //moment
 Vue.filter('date',(created) => moment(created).format('MMMM Do YYYY'))
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+//initialize the app only when 
+//we are sure Firebase Auth object is ready to use
+let app='';
+
+firebase.auth().onAuthStateChanged(()=>{
+  if(!app){
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+})
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      store.dispatch('autoSignIn', user);
+    }
+ })
+// new Vue({
+//   router,
+//   store,
+//   render: h => h(App)
+// }).$mount('#app')

@@ -81,12 +81,14 @@
         </ul>
         <ul class="auth-links navbar-nav main-navigation" >
           <li v-for="link in auth" :key="link.id">
-            <router-link 
+            <router-link v-if="!logUser"
               :to="link.link"
               :exact="link.exact"
             >{{link.name}}</router-link>
           </li>
-         </ul>
+          <button v-if="logUser" @click="logout()" class="logoutBtn">LOGOUT</button>
+         </ul>    
+           
       </div>
     </nav>
   </div>
@@ -106,8 +108,12 @@ export default {
     menues(){return this.$store.getters.menues},
     socialMedia(){return this.$store.getters.socialMedia},
     auth(){return this.$store.getters.auth},
+    logUser(){return this.$store.getters.logUser},
   },
   methods:{
+    logout(){
+      this.$store.dispatch('logout')
+    }
   },
 };
 </script>
@@ -133,6 +139,15 @@ hr {
 .auth-links a{
   padding-left: 30px;
   text-decoration: none;
+}
+.logoutBtn{
+  font-family: "Novecentosan", Arial, sans-serif;
+  color: #7f7f7f;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden; 
 }
 .router-link-active {
   color: #2ecc71 !important;
