@@ -110,7 +110,7 @@ export default {
             firstname: 'struja',
             lastname:'strujic',
             email:'edvin@gmail.com',
-            repeatPassword:'1234567'
+            repeatPassword:'1234567',
         }
     },
     validations:{
@@ -138,7 +138,7 @@ export default {
                 password:this.password,
                 firstname:this.firstname,
                 lastname:this.lastname,
-                email:this.email
+                email:this.email,
             }); 
             // console.log(this.email)
         },

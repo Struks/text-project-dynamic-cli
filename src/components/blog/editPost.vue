@@ -113,6 +113,11 @@ input{
     padding: 20px;
     border: 1px solid #212529;
 }
+@media(max-width: 525px){
+    input{
+        width: 100%;
+    }
+}
 p{
     margin-top: -15px;
 }
@@ -127,9 +132,20 @@ textarea{
     padding: 10px 40px;
     margin-top: 20px;
 }
-
+@media(max-width: 525px){
+    .btn{
+        width:120px;
+        padding: 5px 20px;
+        font-size: 12px;
+    }
+}
 .marginBottom{
     margin-bottom: 250px;
+}
+@media(max-width: 525px){
+    .marginBottom{
+        margin-bottom: 150px;
+    }   
 }
 .afterbtn{
     padding-bottom: 20px;

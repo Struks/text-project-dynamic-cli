@@ -36,7 +36,7 @@ Vue.filter('date',(created) => moment(created).format('MMMM Do YYYY'))
 //we are sure Firebase Auth object is ready to use
 let app='';
 
-firebase.auth().onAuthStateChanged(()=>{
+firebase.auth().onAuthStateChanged((user)=>{
   if(!app){
     app = new Vue({
       router,
@@ -44,13 +44,11 @@ firebase.auth().onAuthStateChanged(()=>{
       render: h => h(App)
     }).$mount('#app')
   }
+  if(user){
+    store.dispatch('setUser',user);
+  }
 })
 
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      store.dispatch('autoSignIn', user);
-    }
- })
 // new Vue({
 //   router,
 //   store,

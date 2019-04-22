@@ -1,16 +1,19 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import ContactPage from './views/ContactPage'
-import AboutPage from './views/AboutPage'
-import HomePage from './views/HomePage'
-import WorkPage from './views/WorkPage'
-import BlogPage from './views/BlogPage'
-import newPost from './components/blog/newPost'
-import showPost from './components/blog/singlePost'
-import editPost from './components/blog/editPost'
-import login from '@/views/login.vue'
-import signup from '@/views/signup.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import ContactPage from './views/ContactPage';
+import AboutPage from './views/AboutPage';
+import HomePage from './views/HomePage';
+import WorkPage from './views/WorkPage';
+import BlogPage from './views/BlogPage';
+import newPost from './components/blog/newPost';
+import showPost from './components/blog/singlePost';
+import editPost from './components/blog/editPost';
+import login from '@/views/login.vue';
+import signup from '@/views/signup.vue';
+import profilUser from '@/views/profilUser.vue';
+import editProfil from '@/components/userProfil/editProfil.vue';
 import firebase from 'firebase/app';
+
 
 Vue.use(Router)
 
@@ -65,6 +68,16 @@ const router = new Router({
       path:'/signup',
       component: signup,
       name: 'sign-up'
+    },
+    {
+      path:'/:uid',
+      component: profilUser,
+      name:'profilUser'
+    },
+    {
+      path:'/:uid/edit',
+      component: editProfil,
+      name:'editProfil'
     }
   
   ]
@@ -75,7 +88,6 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
  
   if (requiresAuth && !currentUser) next('login');
-  
   else next();
 });
 export default router;

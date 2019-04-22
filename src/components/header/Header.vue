@@ -86,6 +86,7 @@
               :exact="link.exact"
             >{{link.name}}</router-link>
           </li>
+          <router-link v-if="logUser" :to="'/' + logUser.id">{{logUser.username}}</router-link>
           <button v-if="logUser" @click="logout()" class="logoutBtn">LOGOUT</button>
          </ul>    
            
@@ -103,6 +104,9 @@ export default {
   data() {
     return {
     };
+  },
+  created(){
+    this.$store.dispatch('setUser')
   },
   computed:{
     menues(){return this.$store.getters.menues},
@@ -147,7 +151,8 @@ hr {
   background-repeat:no-repeat;
   border: none;
   cursor:pointer;
-  overflow: hidden; 
+  overflow: hidden;
+  margin-left: 15px; 
 }
 .router-link-active {
   color: #2ecc71 !important;

@@ -16,7 +16,7 @@ const getters = {
 
 const mutations = {
     setFeedback:(state,payload) => state.feedback = payload, 
-    setLogUser:(state,payload) => state.logUser = payload
+    setLogUser:(state,payload) => state.logUser = payload,
 }
 
 const actions = {
@@ -28,7 +28,8 @@ const actions = {
                 firstname: payload.firstname,
                 lastname: payload.lastname,
                 email: payload.email,
-                username: payload.username, 
+                username: payload.username,
+                user_id: firebase.auth().currentUser.uid
             }).then(()=>{
                 commit('setFeedback', null)
                 router.push('/blog')
@@ -58,14 +59,33 @@ const actions = {
     //logout
     logout({commit}){
         firebase.auth().signOut().then(()=>{
-            commit('setLogUser',null)
+            commit('setLogUser', null)
             router.replace('login')
             
         })
     },
-    //without change login/logout
+    // without change login/logout
     autoSignIn({ commit }, payload ) {
-        commit('setLogUser', { id: payload.uid });
+        commit('setLogUser', { 
+            id: payload.uid,
+            email: payload.email,
+        });
+        
+    },
+    //get user 
+    setUser({commit}, payload) {
+        if(payload) {
+            db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
+                let user = {};
+                snapshot.docs.forEach(doc => {
+                    user = doc.data()
+                    user.id = doc.id    
+                })
+                commit('setLogUser', user)
+
+            })
+        }
+
     },
 }
 
