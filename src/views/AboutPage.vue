@@ -1,5 +1,5 @@
 <template>
-    <div class="margin-bottom">
+   <div class="margin-bottom">
         <hero-banner v-bind:headline="headline"></hero-banner>
         <about-us v-bind:image="image" :text1="text1" :text2="text2"></about-us>
         <div class="container">

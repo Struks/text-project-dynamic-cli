@@ -40,7 +40,6 @@
 import VueCkeditor from 'vue-ckeditor2';
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
-import {store} from '@/store/index' 
 export default {
     components:{
         'banner':Banner,

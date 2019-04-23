@@ -90,28 +90,31 @@ export default {
       'hero-banner':Banner,
     },
     data(){
-        // return{
-            
-        //     headline:'Registration',
-        //     leftChars:0,
-        //     username:'',
-        //     password:'',
-        //     firstname:'',
-        //     lastname:'',
-        //     email:'',
-        //     repeatPassword:''
-        // }
         return{
             
-            headline: 'Registration',
-            leftChars: 0,
-            username: 'edvin',
-            password: '1234567',
-            firstname: 'struja',
-            lastname:'strujic',
-            email:'edvin@gmail.com',
-            repeatPassword:'1234567',
+            headline:'Registration',
+            leftChars:0,
+            username:'',
+            password:'',
+            firstname:'',
+            lastname:'',
+            email:'',
+            repeatPassword:'',
+            bio:'',
+            img:'',
+
         }
+        // return{
+            
+        //     headline: 'Registration',
+        //     leftChars: 0,
+        //     username: 'edvin',
+        //     password: '1234567',
+        //     firstname: 'struja',
+        //     lastname:'strujic',
+        //     email:'edvin@gmail.com',
+        //     repeatPassword:'1234567',
+        // }
     },
     validations:{
         username:{required},
@@ -128,26 +131,25 @@ export default {
         submit(){  
             //stop here if form is invalid
             this.$v.$touch();
-
             if(this.$v.$invalid) {
                 return
             }
             // auth sign up(create account)
             this.$store.dispatch('signUp', {
-                username:this.username,
-                password:this.password,
-                firstname:this.firstname,
-                lastname:this.lastname,
-                email:this.email,
+                username: this.username,
+                password: this.password,
+                firstname: this.firstname,
+                lastname: this.lastname,
+                email: this.email,
+                bio: this.bio,
+                img: this.img
             }); 
             // console.log(this.email)
         },
         //chars for passsword
         moreLeft(useChars){
             this.leftChars = useChars.length
-        },
-        
-        
+        }, 
     }
 }
 </script>
@@ -169,8 +171,6 @@ input{
     border-style:solid;
     border-color: #8a8888;
 }
-
-
 button{
     width: 350px;
 }

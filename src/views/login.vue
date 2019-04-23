@@ -55,8 +55,8 @@ export default {
       headline: "login",
       leftChars: 0,
       //users
-      email: "smotodog@gmail.com",
-      password: "1234567"
+      email: "",
+      password: ""
     };
   },
   validations: {

@@ -5,7 +5,7 @@ import router from '@/router'
 // import { longStackSupport } from 'q';
 
 const state = {
-    feedback:'',
+    feedback: '',
     logUser: null,
 }
 
@@ -15,81 +15,94 @@ const getters = {
 }
 
 const mutations = {
-    setFeedback:(state,payload) => state.feedback = payload, 
-    setLogUser:(state,payload) => state.logUser = payload,
+    setFeedback: (state, payload) => state.feedback = payload,
+    setLogUser: (state, payload) => state.logUser = payload,
 }
 
 const actions = {
     // sign up
-    signUp({commit},payload){
+    signUp({ commit }, payload) {
         firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-        .then(() => {
-            db.collection("users").doc().set({
-                firstname: payload.firstname,
-                lastname: payload.lastname,
-                email: payload.email,
-                username: payload.username,
-                user_id: firebase.auth().currentUser.uid
-            }).then(()=>{
-                commit('setFeedback', null)
-                router.push('/blog')
+            .then(() => {
+                db.collection("users").doc().set({
+                    firstname: payload.firstname,
+                    lastname: payload.lastname,
+                    email: payload.email,
+                    username: payload.username,
+                    user_id: firebase.auth().currentUser.uid
+                }).then(() => {
+                    commit('setFeedback', null)
+                    router.push('/blog')
+                })
+            }).catch(err => {
+                commit('setFeedback', err.message)
             })
-        }).catch(err =>  {
-            commit('setFeedback', err.message)
-        })
     },
     // login
-    login({commit},payload){
+    login({ commit }, payload) {
+        commit('setFeedback', null)
         firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-        .then(() =>{
-            const newUser = {
-            id: firebase.auth().currentUser.uid,
-            email: firebase.auth().currentUser.email
-            };
-            commit('setLogUser', newUser)
-        })
-        .then(() =>{
-            commit('setFeedback', null)
-            router.push('/blog')
-        }).catch(err =>{
-            commit('setFeedback', err.message)
-        })
-        
+            .then(() => {
+                const newUser = {
+                    id: firebase.auth().currentUser.uid,
+                    email: firebase.auth().currentUser.email
+                };
+                commit('setLogUser', newUser)
+            })
+            .then(() => {
+                commit('setFeedback', null)
+                router.push('/blog')
+            }).catch(err => {
+                commit('setFeedback', err.message)
+            })
+
     },
     //logout
-    logout({commit}){
-        firebase.auth().signOut().then(()=>{
+    logout({ commit }) {
+        commit('setFeedback', null)
+        firebase.auth().signOut().then(() => {
             commit('setLogUser', null)
             router.replace('login')
-            
+
         })
     },
     // without change login/logout
-    autoSignIn({ commit }, payload ) {
-        commit('setLogUser', { 
+    autoSignIn({ commit }, payload) {
+        commit('setLogUser', {
             id: payload.uid,
             email: payload.email,
         });
-        
+
     },
-    //get user 
-    setUser({commit}, payload) {
-        if(payload) {
+    //get user (router implementation)
+    setUser({ commit }, payload) {
+        if (payload) {
             db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
                 let user = {};
                 snapshot.docs.forEach(doc => {
                     user = doc.data()
-                    user.id = doc.id    
+                    user.id = doc.id
                 })
                 commit('setLogUser', user)
-
             })
         }
-
     },
+    //update edit profil acount
+    saveEditProfil({commit},payload){
+        db.collection('users').doc(payload.id).update({
+            bio:payload.bio,
+            img:payload.img
+        })
+        commit('setLogUser', payload);
+        setTimeout(()=>{
+            router.push(`/${payload.id}`)
+        },400)
+        
+
+    }
 }
 
-export default{
+export default {
     state,
     getters,
     mutations,
