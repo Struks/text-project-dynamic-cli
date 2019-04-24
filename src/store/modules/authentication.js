@@ -67,14 +67,14 @@ const actions = {
         })
     },
     // without change login/logout
-    autoSignIn({ commit }, payload) {
-        commit('setLogUser', {
-            id: payload.uid,
-            email: payload.email,
-        });
+    // autoSignIn({ commit }, payload) {
+    //     commit('setLogUser', {
+    //         id: payload.uid,
+    //         email: payload.email,
+    //     });
+    // },
 
-    },
-    //get user (router implementation)
+    //get user (main implementation)
     setUser({ commit }, payload) {
         if (payload) {
             db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
