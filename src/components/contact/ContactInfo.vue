@@ -22,7 +22,6 @@
 
 
 <script>
-import {mapGetters} from 'vuex'
 export default {
   data(){
       return{
@@ -30,19 +29,17 @@ export default {
       }
     },
     computed:{
-        ...mapGetters([
-           'subtitle',
-           'storeHours',
-           'informations',
-           'email',
-           'phone',
-           'street',
-           'ZIP',
-           'workDays', 
-           'workTime',
-           'noWork',
-           'noTime',
-        ])
+        subtitle(){ return this.$store.getters.subtitle },
+        storeHours(){ return this.$store.getters.storeHours },
+        informations(){ return this.$store.getters.informations },
+        email(){ return this.$store.getters.email },
+        phone(){ return this.$store.getters.phone },
+        street(){ return this.$store.getters.street },
+        ZIP(){ return this.$store.getters.ZIP },
+        workDays(){ return this.$store.getters.workDays },
+        workTime(){ return this.$store.getters.workTime },
+        noWork(){ return this.$store.getters.noWork },
+        noTime(){ return this.$store.getters.noTime },
     }  
 }
 </script>

@@ -9,6 +9,7 @@
           :src="noimg"
           alt="no image"
           width="250px"
+          height="300px"
         >
         <img
           v-if="currentUser.img"
@@ -16,6 +17,7 @@
           :src="currentUser.img"
           alt="user image"
           width="250px"
+          height="300px"
         >
       </div>
       <h1 class="mt-3 mb-5">{{currentUser.firstname}} {{currentUser.lastname}}</h1>

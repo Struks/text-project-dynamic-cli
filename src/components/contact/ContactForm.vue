@@ -51,7 +51,6 @@
 
 <script>
 import { required, maxLength, email } from "vuelidate/lib/validators";
-import {mapGetters} from 'vuex';
 import VueRecaptcha from 'vue-recaptcha';
 
 
@@ -59,9 +58,9 @@ export default {
    components: { VueRecaptcha },
   data() {
     return {
-       leftChars: 0,
-       submitted: false,
-       receptchaChecked:false,
+      leftChars: 0,
+      submitted: false,
+      receptchaChecked:false,
     };
   },
   validations: {
@@ -73,13 +72,10 @@ export default {
     }
   },
   computed:{
-    
-    ...mapGetters([
-      'paragraph',
-      'subTitle',
-      'form',
-      'src',
-    ])
+    paragraph(){ return this.$store.getters.paragraph },
+    subTitle(){ return this.$store.getters.subTitle },
+    form(){ return this.$store.getters.form },
+    src(){ return this.$store.getters.src },
   },
   methods: {
     submit() {    

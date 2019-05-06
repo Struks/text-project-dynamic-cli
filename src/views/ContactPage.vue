@@ -15,7 +15,6 @@
 import Banner from '../components/banner/Banner.vue';
 import ContactForm from '../components/contact/ContactForm.vue';
 import ContactInfo from '../components/contact/ContactInfo.vue';
-import {mapGetters,mapMutations} from 'vuex';
 export default {
     components:{
         'hero-banner': Banner,
@@ -28,9 +27,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters([
-            'googleShot'
-        ])
+        googleShot(){ return this.$store.getters.googleShot }
     }
     
 }

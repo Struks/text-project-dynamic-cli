@@ -2,7 +2,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import db from '@/firebase/init'
 import router from '@/router'
-// import { longStackSupport } from 'q';
 
 const state = {
     feedback: '',
@@ -66,13 +65,6 @@ const actions = {
 
         })
     },
-    // without change login/logout
-    // autoSignIn({ commit }, payload) {
-    //     commit('setLogUser', {
-    //         id: payload.uid,
-    //         email: payload.email,
-    //     });
-    // },
 
     //get user (main implementation)
     setUser({ commit }, payload) {

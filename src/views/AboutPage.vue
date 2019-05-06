@@ -24,7 +24,6 @@
 import Banner from '../components/banner/Banner.vue';
 import AboutUs from '../components/about/AboutUs.vue';
 import TabServices from '../components/about/TabServices.vue';
-import {mapGetters} from 'vuex';
 
 export default {
     components:{
@@ -53,15 +52,12 @@ export default {
         }
     },
     computed:{
-        ...mapGetters([
-            //about us
-            'headline',
-            'image',
-            'text1',
-            'text2',
-            'mission',
-            'fun',,
-        ])
+        headline(){ return this.$store.getters.headline },
+        image(){ return this.$store.getters.image },
+        text1(){ return this.$store.getters.text1 },
+        text2(){ return this.$store.getters.text2 },
+        mission(){ return this.$store.getters.mission },
+        fun(){ return this.$store.getters.fun },
     }
     
 }

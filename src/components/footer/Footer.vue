@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
 export default {
   data() {
     return {
@@ -38,12 +37,9 @@ export default {
     };
   },
   computed:{
-    // menues(){
-    //   return this.$store.getters.menues;
-    // }
-    ...mapGetters([
-      'menues'
-    ])
+    menues(){
+      return this.$store.getters.menues;
+    }
   },
   methods:{
     goToWork(){

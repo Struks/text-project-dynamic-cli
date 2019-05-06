@@ -25,9 +25,9 @@ const state = {
   text:{
       title:'GET TO KNOW US A LITTLE BETTER',
       content:`
-          <p><b>Computer science</b> is the study of processes that interact with data and that can be represented as data in the form of programs. It enables the use of algorithms to manipulate, store, and communicate digital information. A computer scientist studies the theory of computation and the practice of designing software systems.</p>
-          <p>Programming language theory considers approaches to the description of computational processes, while computer programming itself involves the use of programming languages and complex systems.</p>
-          <p>P.S. Enjoy in good vibe.</p>
+        <p><b>Computer science</b> is the study of processes that interact with data and that can be represented as data in the form of programs. It enables the use of algorithms to manipulate, store, and communicate digital information. A computer scientist studies the theory of computation and the practice of designing software systems.</p>
+        <p>Programming language theory considers approaches to the description of computational processes, while computer programming itself involves the use of programming languages and complex systems.</p>
+        <p>P.S. Enjoy in good vibe.</p>
       `
   },
   downloadVideo:false,
@@ -154,7 +154,9 @@ const getters = {
 
 const mutations = {
   //popup
-  setupVideo: (state,downloadVideo) => state.downloadVideo = downloadVideo,   
+  setupVideo: (state,downloadVideo) => {
+    state.downloadVideo = downloadVideo;
+  },   
 }
 
 

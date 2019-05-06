@@ -76,8 +76,10 @@ export default {
         title:{ required },
         url:{ url },
     },
-    computed:{
-        
+    computed: {
+        currentUser(){
+            return this.$store.getters.logUser;
+        }
     },
 
     methods:{
@@ -92,6 +94,7 @@ export default {
                 text: this.text,
                 url: this.url,
                 category: this.category,
+                author: this.currentUser.firstname + ' ' + this.currentUser.lastname,
                 timestamp: moment(Date.now()).utc().startOf('day').format(),
             }).then((docRef) =>{ 
                 this.id = docRef.id

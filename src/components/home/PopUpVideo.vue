@@ -40,24 +40,19 @@
 
 
 <script>
-import {mapGetters,mapMutations} from 'vuex'
 export default {
     data(){
         return{
         }
     },
     computed:{
-        ...mapGetters([
-            'popupImage',
-            'popup',
-            'text',
-            'downloadVideo'
-        ])
+        popupImage(){return this.$store.getters.popupImage},
+        popup(){return this.$store.getters.popup},
+        text(){return this.$store.getters.text},
+        downloadVideo(){return this.$store.getters.downloadVideo},
     },
     methods:{
-        ...mapMutations([
-            'setupVideo'
-        ])
+        setupVideo(){this.$store.commit('setupVideo',true)}
     }
 }
 </script>

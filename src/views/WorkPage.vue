@@ -99,17 +99,11 @@ export default {
     
   },
   methods:{
-    ...mapMutations([
-      'changeCategory',
-      'active',
-      'switchToGrid',
-      'switchToList'
-    ]),
-    // changeCategory(){ return this.$store.commit('selectedCategory')},
-    // active(){ return this.$store.commit('active')},
-    // switchToGrid(){ return this.$store.commit('switchToGrid')},
-    // switchToList(){ return this.$store.commit('switchToList')},
-    loadMore(){return this.$store.dispatch('loadMore')},
+    changeCategory(category){ this.$store.commit('changeCategory', category) },
+    active(category){ this.$store.commit('active', category) },
+    switchToGrid(grid){ this.$store.commit('switchToGrid', grid) },
+    switchToList(list){ this.$store.commit('switchToList', list) },
+    loadMore(){ this.$store.dispatch('loadMore')},
   },
 };
 </script>

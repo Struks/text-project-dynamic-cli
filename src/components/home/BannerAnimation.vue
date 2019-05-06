@@ -15,15 +15,10 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
 export default {
     computed:{
-        // devices() {return this.$store.getters.devices},
-        // paraph: () => this.$store.getters.paraph
-        ...mapGetters([
-            'devices',
-            'paraph'
-        ])
+        devices() {return this.$store.getters.devices},
+        paraph() {return this.$store.getters.paraph},
     }
 }
 </script>

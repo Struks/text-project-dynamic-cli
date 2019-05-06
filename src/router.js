@@ -82,7 +82,7 @@ const router = new Router({
   
   ]
 })
-
+//navigation guards
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);

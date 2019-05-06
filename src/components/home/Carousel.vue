@@ -57,7 +57,6 @@
 <script>
 import Slick from "vue-slick";
 import '@/assets/icons';
-import { mapGetters, mapMutations } from 'vuex';
 export default {
   components: { Slick },
   data() {
@@ -65,12 +64,10 @@ export default {
     };
   },
   computed:{
-    ...mapGetters([
-      'beforeSlide',
-      'caoruselImages',
-      'slickOptions',
-      'slickOptions2'
-    ])
+    beforeSlide(){return this.$store.getters.beforeSlide},
+    caoruselImages(){return this.$store.getters.caoruselImages},
+    slickOptions(){return this.$store.getters.slickOptions},
+    slickOptions2(){return this.$store.getters.slickOptions2},
   },
   methods: {
     next() {

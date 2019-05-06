@@ -93,7 +93,10 @@
               <p class="text mt-3" v-html="post.text"></p>
             </div>
           </router-link>
-          <span class="badge badge-secondary">Last modifed: {{post.timestamp | date}}</span>
+          <span class="badge badge-secondary">
+            Last modifed: {{post.timestamp | date}} ||
+            BY <i><b>{{post.author}}</b></i>
+          </span>
         </article>
 
         <button
@@ -147,7 +150,7 @@ export default {
     },
     filteredPosts() {
       return this.$store.getters.filteredPosts;
-    }
+    },
   },
   created() {
     setTimeout(() => {
