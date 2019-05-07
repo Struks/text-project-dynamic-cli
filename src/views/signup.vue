@@ -150,7 +150,7 @@ export default {
         lastname: this.lastname,
         email: this.email,
         bio: this.bio,
-        img: this.img
+        img: this.img, 
       });
       // console.log(this.email)
     },

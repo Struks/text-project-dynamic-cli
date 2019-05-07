@@ -90,10 +90,10 @@
                 class="group list-group-image mr-3 z-hovr"
               >
               <h2>{{post.title}}</h2>
-              <p class="text mt-3" v-html="post.text"></p>
+              <p class="text mt-3 d-none d-md-block" v-html="post.text"></p>
             </div>
           </router-link>
-          <span class="badge badge-secondary">
+          <span class="badge badge-primary">
             Last modifed: {{post.timestamp | date}} ||
             BY <i><b>{{post.author}}</b></i>
           </span>

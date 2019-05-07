@@ -7,6 +7,7 @@
         </a>
       </div>
       <social-media ></social-media>
+    
       <!--hamburger menu-->
       <button
         type="button"
@@ -42,7 +43,18 @@
                 :exact="menu.exact"
               >{{menu.name}}</router-link>
             </li>
-
+              <li v-for="link in auth" :key="link.id">
+            <router-link class="nav-link mt-3" v-if="!logUser"
+              :to="link.link"
+              :exact="link.exact"
+            >{{link.name}}</router-link>
+          </li>
+          <li class="">
+          <router-link class="nav-link mt-3" v-if="logUser" :to="'/' + logUser.id">{{logUser.username}}</router-link>
+          </li>
+          <li>
+          <button v-if="logUser" @click="logout()" class="logoutBtn m-0 p-0">LOGOUT</button>
+            </li>
             <li class="hamburger-social-media nav-item d-md-none mt-2">
               <a
                 v-for="(media,index) in socialMedia"
@@ -64,7 +76,6 @@
         </div>
       </nav>
     </div>
-
     <hr>
     <nav class="navbar navbar-expand-sm pl-0 d-none d-md-block">
       <div class="main-menu">

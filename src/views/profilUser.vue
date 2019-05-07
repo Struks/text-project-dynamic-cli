@@ -70,10 +70,19 @@ h4 {
   text-align: center;
 }
 .paraph-container {
-  margin: 0px 100px;
   text-align: start;
 }
 .img {
   margin-top: -25px;
+}
+@media(max-width: 768px){
+  .margin-bottom {
+  margin-bottom: 180px;
+  }
+}
+@media(max-width: 425px){
+  .margin-bottom {
+  margin-bottom: 140px;
+  }
 }
 </style>

@@ -28,7 +28,8 @@ const actions = {
                     lastname: payload.lastname,
                     email: payload.email,
                     username: payload.username,
-                    user_id: firebase.auth().currentUser.uid
+                    user_id: firebase.auth().currentUser.uid,
+                    role: "user",
                 }).then(() => {
                     commit('setFeedback', null)
                     router.push('/blog')
