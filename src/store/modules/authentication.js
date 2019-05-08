@@ -6,16 +6,24 @@ import router from '@/router'
 const state = {
     feedback: '',
     logUser: null,
+    //users
+    users:[],
 }
 
 const getters = {
     feedback: state => state.feedback,
     logUser: state => state.logUser,
+    //users
+    users:state => state.users,
 }
 
 const mutations = {
     setFeedback: (state, payload) => state.feedback = payload,
     setLogUser: (state, payload) => state.logUser = payload,
+    //set users
+    setUsers(state, payload){
+        state.users = payload;
+    }
 }
 
 const actions = {
@@ -92,6 +100,22 @@ const actions = {
         },400)
         
 
+    },
+    //get users 
+    getUsers({commit}){
+        const users = []
+        db.collection('users').orderBy('firstname').onSnapshot(res =>{
+            const changes = res.docChanges();
+            changes.forEach(change =>{
+                if(change.type === 'added'){
+                   users.push({
+                       ...change.doc.data(),
+                       timestamp:change.doc.data().timestamp,
+                   }) 
+                }
+                commit('setUsers', users);
+            })
+        })
     }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-between m-1 align-items-end">
+    <div class="row justify-content-between m-1 align-items-end mb-3">
       <div>
         <a href="/">
           <img src="/img/logo.svg" alt="logo">
@@ -76,6 +76,7 @@
         </div>
       </nav>
     </div>
+    <router-link class="adminMenu" to="/admin menu">ADMIN MENU</router-link>
     <hr>
     <nav class="navbar navbar-expand-sm pl-0 d-none d-md-block">
       <div class="main-menu">
@@ -136,7 +137,7 @@ export default {
 
 <style scoped>
 hr {
-  margin-top: 30px;
+  margin-top: 0px;
 }
 .main-menu a {
   font-family: "Novecentosan", Arial, sans-serif;
@@ -185,5 +186,12 @@ a svg{
   button {
     margin-left: 50px;
   }
+}
+.adminMenu{
+  background: #F0EEED;
+  border: 1px solid #DADADA;
+  font-family: "Novecentosan", Arial, sans-serif;
+  color: #7f7f7f;
+  text-decoration: none;
 }
 </style>

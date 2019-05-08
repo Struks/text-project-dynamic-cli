@@ -15,6 +15,7 @@ import editProfil from '@/components/userProfil/editProfil.vue';
 // import firebase from 'firebase/app';
 import {store} from '@/store/index'
 import accessDenied from './components/blog/accessDenied.vue';
+import AdminMenu from '@/views/AdminMenu.vue';
 
 
 Vue.use(Router)
@@ -81,6 +82,15 @@ const router = new Router({
       name: 'sign-up'
     },
     {
+      path: '/admin menu',
+      component: AdminMenu,
+      name: 'admin-menu',
+      meta:{
+        requiresAuth: true,
+        roles: ['']
+      }
+    },
+    {
       path: '/:uid',
       component: profilUser,
       name: 'profilUser',
@@ -97,7 +107,7 @@ const router = new Router({
       path: '/no access',
       component: accessDenied,
       name: 'access-denied'
-    }
+    },
 
   ]
 })
