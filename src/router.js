@@ -121,7 +121,7 @@ router.beforeEach((to, from, next) => {
   const roles = to.meta.roles || [];
 
   //if user is logged in
-  if (!!to.meta.requiresAuth && !logUser) {
+  if (to.meta.requiresAuth && !logUser) {
     next({
       name: 'login',
       query: {

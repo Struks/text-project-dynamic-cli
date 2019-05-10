@@ -111,6 +111,7 @@ const actions = {
                    users.push({
                        ...change.doc.data(),
                        timestamp:change.doc.data().timestamp,
+                       
                    }) 
                 }
                 commit('setUsers', users);

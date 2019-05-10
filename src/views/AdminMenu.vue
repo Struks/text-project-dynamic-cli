@@ -15,12 +15,13 @@
                 </thead>
                 <tbody>
                     <tr v-for="user in users" :key="user.id" scope="row">
+                        
                         <td>{{user.user_id}}</td>
                         <td>{{user.firstname}} {{user.lastname}}</td>
                         <td>{{user.email}}</td>
                         <td>{{user.timestamp | date}}</td>
                         <td>{{user.role}}</td>
-                        
+                    
                     </tr>
                 </tbody>
             </table>
