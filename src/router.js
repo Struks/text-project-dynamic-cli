@@ -96,6 +96,13 @@ const router = new Router({
       name: 'profilUser',
       meta:{
         requiresAuth: true,
+      },
+      beforeEnter: (to, from, next) => {
+        const id = to.params.id
+        store.dispatch('setUser', id )
+        .then(() => {
+            next();
+        });
       }
     },
     {

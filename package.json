@@ -10,6 +10,9 @@
     "prebuild": "npm run icons"
   },
   "dependencies": {
+    "@progress/kendo-grid-vue-wrapper": "^2019.1.220",
+    "@progress/kendo-theme-default": "^3.5.1",
+    "@progress/kendo-ui": "^2019.1.424",
     "bootstrap": "^4.3.1",
     "es6-promise": "^4.2.6",
     "firebase": "^5.9.2",

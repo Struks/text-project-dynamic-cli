@@ -7,23 +7,23 @@ const state = {
     feedback: '',
     logUser: null,
     //users
-    users:[],
+    // users:[],
 }
 
 const getters = {
     feedback: state => state.feedback,
     logUser: state => state.logUser,
     //users
-    users:state => state.users,
+    // users:state => state.users,
 }
 
 const mutations = {
     setFeedback: (state, payload) => state.feedback = payload,
     setLogUser: (state, payload) => state.logUser = payload,
     //set users
-    setUsers(state, payload){
-        state.users = payload;
-    }
+    // setUsers(state, payload){
+    //     state.users = payload;
+    // }
 }
 
 const actions = {
@@ -76,48 +76,48 @@ const actions = {
     },
 
     //get user (main implementation)
-    setUser({ commit }, payload) {
-        if (payload) {
-            db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
-                let user = {};
-                snapshot.docs.forEach(doc => {
-                    user = doc.data()
-                    user.id = doc.id
-                })
-                commit('setLogUser', user)
-            })
-        }
-    },
-    //update edit profil acount
-    saveEditProfil({commit},payload){
-        db.collection('users').doc(payload.id).update({
-            bio:payload.bio,
-            img:payload.img
-        })
-        commit('setLogUser', payload);
-        setTimeout(()=>{
-            router.push(`/${payload.id}`)
-        },400)
+    // setUser({ commit }, payload) {
+    //     if (payload) {
+    //         db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
+    //             let user = {};
+    //             snapshot.docs.forEach(doc => {
+    //                 user = doc.data()
+    //                 user.id = doc.id
+    //             })
+    //             commit('setLogUser', user)
+    //         })
+    //     }
+    // },
+    // //update edit profil acount
+    // saveEditProfil({commit},payload){
+    //     db.collection('users').doc(payload.id).update({
+    //         bio:payload.bio,
+    //         img:payload.img
+    //     })
+    //     commit('setLogUser', payload);
+    //     setTimeout(()=>{
+    //         router.push(`/${payload.id}`)
+    //     },400)
         
 
-    },
-    //get users 
-    getUsers({commit}){
-        const users = []
-        db.collection('users').orderBy('firstname').onSnapshot(res =>{
-            const changes = res.docChanges();
-            changes.forEach(change =>{
-                if(change.type === 'added'){
-                   users.push({
-                       ...change.doc.data(),
-                       timestamp:change.doc.data().timestamp,
-                       
-                   }) 
-                }
-                commit('setUsers', users);
-            })
-        })
-    }
+    // },
+    // //get users 
+    // getUsers({commit}){
+    //     const users = []
+    //     db.collection('users').orderBy('firstname').onSnapshot(res =>{
+    //         const changes = res.docChanges();
+    //         changes.forEach(change =>{
+    //             if(change.type === 'added'){
+    //                users.push({
+    //                    ...change.doc.data(),
+    //                    timestamp:change.doc.data().timestamp,
+    //                    id: change.doc.id,   
+    //                }) 
+    //             }
+    //             commit('setUsers', users);
+    //         })
+    //     })
+    // }
 }
 
 export default {

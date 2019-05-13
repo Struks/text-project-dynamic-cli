@@ -1,8 +1,8 @@
 <template>
     <div class="margin-bottom">
         <hero-banner :headline="headline"/>
-        <div class="container"> 
-            <table class="table table-responsive-lg table-bordered mt-4">
+        <div class="grid-wrapper container"> 
+            <!-- <table class="table table-responsive-lg table-bordered mt-4">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">ID</th>
@@ -24,7 +24,21 @@
                     
                     </tr>
                 </tbody>
-            </table>
+            </table> -->
+           <kendo-grid
+                :data-source="users"
+                :height="400"
+                :sortable='true'
+                :selectable="'multiple'"
+                :selected-field="selectedField"
+                @change="userProfil"
+                :editable="'inline'">
+            <kendo-grid-column :field="'id'" :title="'ID'" :width="250"></kendo-grid-column>
+            <kendo-grid-column :field="'firstname'" :title="'First Name'" :width="150"></kendo-grid-column>
+            <kendo-grid-column :field="'lastname'" :title="'Last Name'" :width="150"></kendo-grid-column>
+            <kendo-grid-column :field="'email'" :title="'Email'" :width="200"></kendo-grid-column>
+            <kendo-grid-column :field="'role'" :title="'Role'" ></kendo-grid-column>
+           </kendo-grid>
         </div>
     </div>
 </template>
@@ -37,7 +51,15 @@ export default {
     },
     data(){
         return{
-          headline: "Users"  
+          headline: "Users",
+           selectedField: 'selected',
+            columns: [
+                { field: 'id', title: 'ID'},
+                { field: 'firstName', title: 'First Name' },
+                { field: 'lastName', title: 'Last Name' },
+                { field: 'email', title: 'Email' },
+                { field: 'role', title: 'Role' }
+            ]
         }
     },
     computed:{
@@ -45,16 +67,31 @@ export default {
             return this.$store.getters.users;
         }
     },
+    methods:{
+        //link to user profil.
+        userProfil(event){
+            const element = event.sender.select();
+            const id = event.sender.dataItem(element[0]).id
+            this.$router.push('/' + id)
+        }
+    },
     created(){
         this.$store.dispatch('getUsers');
     },
+    
     
 }
 </script>
 
 
 <style scoped>
-.margin-bottom{
-    
-}
+    .margin-bottom{
+
+    }
+    .grid-wrapper{
+        margin-top: 30px;
+    }
+    .grid-wrapper :hover {
+        cursor: pointer;
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="margin-bottom">
         <h1 class="text-center mt-5">You don't have authorization <br/> to access this page.</h1>
         <div class="text-center mt-5">
             <!-- back to last page -->

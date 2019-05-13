@@ -60,7 +60,7 @@
       
         <img
           
-          v-show="showBlog"
+          v-show="showSpinner"
           src="/img/spinner.gif"
           alt="spinner"
           class="img img-fluid"
@@ -140,7 +140,7 @@ export default {
   },
   data() {
     return {
-      showBlog: true,
+      showSpinner: true,
       headline: "My Pretty Blog",
       key: "",
       loading: true,
@@ -169,7 +169,7 @@ export default {
     
     setTimeout(() => {
       this.$store.dispatch("getBlogs", 3);
-      this.showBlog = false;
+      this.showSpinner = false;
 
     }, 1000);
   },
