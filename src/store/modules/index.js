@@ -14,7 +14,7 @@ requireModule.keys().forEach(fileName => {
   // create a dynamic object with all modules
     modules[moduleName] = {
     // add namespace here
-        namespaced: false,
+        namespaced: true,
         ...requireModule(fileName).default
     // if you have exported the object with name in the module `js` file
     // e.g., export const name = {};

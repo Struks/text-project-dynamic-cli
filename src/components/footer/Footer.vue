@@ -3,12 +3,8 @@
     <div class="footer footer-top p-2 p-lg-5 p-md-4">
       <div class="container">
         <div class="row justify-content-between">
-         <span class="ml-xl-3">{{name}}</span> 
-          <button
-            type="button"
-            @click="goToWork()"
-            class="btn btn-success"
-          >{{buttonName}}</button>
+          <span class="ml-xl-3">{{name}}</span>
+          <button type="button" @click="goToWork()" class="btn btn-success">{{buttonName}}</button>
         </div>
       </div>
     </div>
@@ -36,14 +32,14 @@ export default {
       copyright: "COPYRIGHT 2013 DISPLAY ALL RIGHTS RESERVED."
     };
   },
-  computed:{
-    menues(){
-      return this.$store.getters.menues;
+  computed: {
+    menues() {
+      return this.$store.getters["mainMenu/menues"];
     }
   },
-  methods:{
-    goToWork(){
-      this.$router.push({path:'/work'})
+  methods: {
+    goToWork() {
+      this.$router.push({ path: "/work" });
     }
   }
 };
@@ -73,7 +69,7 @@ button {
   border-radius: 0px;
   background: #2ecc71;
 }
-.copy-right p{
+.copy-right p {
   margin-left: 15px;
 }
 .footer-bottom {
@@ -90,23 +86,22 @@ button {
 li {
   padding: 2px;
 }
-.footer-links li::after{
+.footer-links li::after {
   content: "/";
   margin-left: 5px;
-  color: #7f7f7f ;
+  color: #7f7f7f;
 }
-.footer-links li:last-child::after{
+.footer-links li:last-child::after {
   content: "";
 }
 /*media for footer*/
-
 
 @media (max-width: 425px) {
   footer {
     text-align: center;
   }
 
-  .row span{
+  .row span {
     font-size: 13px;
     padding: 16px;
   }
@@ -122,7 +117,7 @@ li {
     margin: 0px auto;
     font-size: 9px;
   }
-  
+
   .footer-bottom {
     padding: 5px;
   }
@@ -131,8 +126,8 @@ li {
     font-size: 6px;
   }
 }
-@media(max-width: 375px){
-  .row span{
+@media (max-width: 375px) {
+  .row span {
     padding: 8px;
     padding-left: 50px;
   }
@@ -141,7 +136,7 @@ li {
   .row {
     margin: 0 -15px;
   }
-  .row span{
+  .row span {
     margin-left: 10px;
     padding: 5px;
     text-align: center;

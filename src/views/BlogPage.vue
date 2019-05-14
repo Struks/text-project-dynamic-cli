@@ -26,7 +26,8 @@
                     v-for="input in blogCategories"
                     :key="input.id"
                     @click="activeBlog(input.value), changeCategory(input.value)"
-                    :class="{active : activeCategoryBlog == input.value}">
+                    :class="{active : activeCategoryBlog == input.value}"
+                  >
                     <input
                       type="radio"
                       v-show="checked='checked'"
@@ -48,26 +49,18 @@
             v-for="input in blogCategories"
             :key="input.id"
             @click="activeBlog(input.value), changeCategory(input.value)"
-            :class="{active : activeCategoryBlog == input.value}">
+            :class="{active : activeCategoryBlog == input.value}"
+          >
             <input
               type="radio"
               v-show="checked='checked'"
               v-model="activeCategoryBlog"
-              :value="input.value">
+              :value="input.value"
+            >
             {{input.value}}</label>
         </div>
       </div>
-      
-        <img
-          
-          v-show="showSpinner"
-          src="/img/spinner.gif"
-          alt="spinner"
-          class="img img-fluid"
-          id="blogLoader"
-         
-        >
- 
+
       <div class="postList" id="postList">
         <article v-for="post in filteredPosts" :key="post.id" :class="'article ' + post.id">
           <button
@@ -121,8 +114,7 @@
           alt="spinner"
           class="img img-fluid"
           id="loader"
-          style="display:none"
-        >
+          style="display:none">
       </div>
     </div>
   </div>
@@ -150,28 +142,23 @@ export default {
   },
   computed: {
     blogCategories() {
-      return this.$store.getters.blogCategories;
+      return this.$store.getters['blog/blogCategories'];
     },
     activeCategoryBlog() {
-      return this.$store.getters.activeCategoryBlog;
+      return this.$store.getters['blog/activeCategoryBlog'];
     },
     blog() {
-      return this.$store.getters.blog;
+      return this.$store.getters['blog/blog'];
     },
     noMoreProjects() {
-      return this.$store.getters.noMoreProjects;
+      return this.$store.getters['blog/noMoreProjects'];
     },
     filteredPosts() {
-      return this.$store.getters.filteredPosts;
+      return this.$store.getters['blog/filteredPosts'];
     }
   },
   created() {
-    
-    setTimeout(() => {
-      this.$store.dispatch("getBlogs", 3);
-      this.showSpinner = false;
-
-    }, 1000);
+    this.$store.dispatch("blog/getBlogs", 3);
   },
   methods: {
     newPost() {
@@ -184,7 +171,7 @@ export default {
           .doc(id)
           .delete();
         setTimeout(() => {
-          this.$store.dispatch("getBlogs", 3);
+          this.$store.dispatch("blog/getBlogs", 3);
         }, 400);
       }
     },
@@ -197,16 +184,16 @@ export default {
       button.style.display = "none";
       loader.style.display = "block";
       setTimeout(() => {
-        this.$store.dispatch("getBlogs", n * 3);
+        this.$store.dispatch("blog/getBlogs", n * 3);
         button.style.display = "block";
         loader.style.display = "none";
       }, 1500);
     },
     changeCategory(category) {
-      this.$store.commit("changeCategory", category);
+      this.$store.commit("blog/changeCategory", category);
     },
     activeBlog(category) {
-      this.$store.commit("activeBlog", category);
+      this.$store.commit("blog/activeBlog", category);
     }
   }
 };

@@ -28,7 +28,9 @@ const mutations = {
 
 const actions = {
     // sign up
-    signUp({ commit }, payload) {
+    signUp({
+        commit
+    }, payload) {
         firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
             .then(() => {
                 db.collection("users").doc().set({
@@ -47,7 +49,9 @@ const actions = {
             })
     },
     // login
-    login({ commit }, payload) {
+    login({
+        commit
+    }, payload) {
         commit('setFeedback', null)
         firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
             .then(() => {
@@ -66,7 +70,9 @@ const actions = {
 
     },
     //logout
-    logout({ commit }) {
+    logout({
+        commit
+    }) {
         commit('setFeedback', null)
         firebase.auth().signOut().then(() => {
             commit('setLogUser', null)
@@ -74,50 +80,6 @@ const actions = {
 
         })
     },
-
-    //get user (main implementation)
-    // setUser({ commit }, payload) {
-    //     if (payload) {
-    //         db.collection('users').where('email', '==', payload.email).get().then(snapshot => {
-    //             let user = {};
-    //             snapshot.docs.forEach(doc => {
-    //                 user = doc.data()
-    //                 user.id = doc.id
-    //             })
-    //             commit('setLogUser', user)
-    //         })
-    //     }
-    // },
-    // //update edit profil acount
-    // saveEditProfil({commit},payload){
-    //     db.collection('users').doc(payload.id).update({
-    //         bio:payload.bio,
-    //         img:payload.img
-    //     })
-    //     commit('setLogUser', payload);
-    //     setTimeout(()=>{
-    //         router.push(`/${payload.id}`)
-    //     },400)
-        
-
-    // },
-    // //get users 
-    // getUsers({commit}){
-    //     const users = []
-    //     db.collection('users').orderBy('firstname').onSnapshot(res =>{
-    //         const changes = res.docChanges();
-    //         changes.forEach(change =>{
-    //             if(change.type === 'added'){
-    //                users.push({
-    //                    ...change.doc.data(),
-    //                    timestamp:change.doc.data().timestamp,
-    //                    id: change.doc.id,   
-    //                }) 
-    //             }
-    //             commit('setUsers', users);
-    //         })
-    //     })
-    // }
 }
 
 export default {

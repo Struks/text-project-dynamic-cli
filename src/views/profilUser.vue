@@ -56,10 +56,10 @@ export default {
   // },
   computed: {
     currentUser() {
-      return this.$store.getters.logUser;
+      return this.$store.getters['authentication/logUser'];
     },
     users() {
-      return this.$store.getters.users;
+      return this.$store.getters['users/users'];
     }
   },
   methods: {

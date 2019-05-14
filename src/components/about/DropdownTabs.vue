@@ -33,7 +33,9 @@ export default {
         }
     },
     computed:{
-        cards(){return this.$store.getters.cards}
+        cards(){
+            return this.$store.getters['about/cards']
+        }
     }
 }
 </script>

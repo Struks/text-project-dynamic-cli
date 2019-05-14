@@ -50,7 +50,9 @@ export default {
         }
     },
     computed:{
-        Tabs(){ return this.$store.getters.Tabs},
+        Tabs(){ 
+            return this.$store.getters['about/Tabs']
+        },
     },
     methods:{
     }

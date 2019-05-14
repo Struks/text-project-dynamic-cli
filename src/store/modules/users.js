@@ -26,7 +26,7 @@ const actions = {
                     user = doc.data()
                     user.id = doc.id
                 })
-                commit('setLogUser', user)
+                commit('authentication/setLogUser', user, { root: true })
             })
         }
     },
@@ -36,7 +36,7 @@ const actions = {
             bio:payload.bio,
             img:payload.img
         })
-        commit('setLogUser', payload);
+        commit('authentication/setLogUser', payload, { root: true });
         setTimeout(()=>{
             router.push(`/${payload.id}`)
         },400)

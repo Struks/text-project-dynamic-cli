@@ -132,7 +132,7 @@ export default {
   },
   computed: {
     feedback() {
-      return this.$store.getters.feedback;
+      return this.$store.getters['authentication/feedback'];
     }
   },
   methods: {
@@ -143,7 +143,7 @@ export default {
         return;
       }
       // auth sign up(create account)
-      this.$store.dispatch("signUp", {
+      this.$store.dispatch("authentication/signUp", {
         username: this.username,
         password: this.password,
         firstname: this.firstname,

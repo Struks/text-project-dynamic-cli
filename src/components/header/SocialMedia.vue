@@ -10,7 +10,7 @@
 export default {
   computed: {
     socialMedia() {
-      return this.$store.getters.socialMedia
+      return this.$store.getters['socialMedia/socialMedia']
     }
     
   },

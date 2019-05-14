@@ -78,7 +78,7 @@ export default {
     },
     methods:{
         editPost(id){       
-            this.$store.dispatch('getEditPost',{
+            this.$store.dispatch('editPost/getEditPost',{
                 title:this.title,
                 text:this.text,
                 url:this.url,

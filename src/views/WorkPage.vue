@@ -7,77 +7,143 @@
         <div class="row">
           <div class="col-6" id="filters content-category">
             <nav class="nav-bar navbar-expand-sm navbar-light" id="navbar-work">
-              <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown selected" role="button" data-toggle='dropdown' aria-haspopup='true' aria-expanded="false">Categories</a>
-              <div class="portfolioFilter navbar-collapse mt-md-5 pb-md-5 dropdown-menu" aria-labelledby="navbarDropdown">
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown selected"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >Categories</a>
+              <div
+                class="portfolioFilter navbar-collapse mt-md-5 pb-md-5 dropdown-menu"
+                aria-labelledby="navbarDropdown"
+              >
                 <ul class="sort-nav navbar-nav main-navigation">
-                  <label v-for="input in inputs" :key="input.id" @click="active(input.value), changeCategory(input.value)" :class="{active : activeCategory == input.value}">
-                    <input type="radio" v-show="checked ='checked'"  v-model="selectedCategory" :value="input.value">{{input.text}}
+                  <label
+                    v-for="input in inputs"
+                    :key="input.id"
+                    @click="active(input.value), changeCategory(input.value)"
+                    :class="{active : activeCategory == input.value}"
+                  >
+                    <input
+                      type="radio"
+                      v-show="checked ='checked'"
+                      v-model="selectedCategory"
+                      :value="input.value"
+                    >
+                    {{input.text}}
                   </label>
                 </ul>
               </div>
             </nav>
           </div>
         </div>
-      </div><!-- /categories for mobile view -->
+      </div>
+      <!-- /categories for mobile view -->
 
       <!-- categories for dekstop view-->
       <div class="categories d-none d-md-block">
         <div class="filter">
-          <label v-for="input in inputs" :key="input.id" @click="active(input.value), changeCategory(input.value)" :class="{active : activeCategory == input.value}">
-            <input type="radio" v-show="checked='checked'"  v-model="selectedCategory" :value="input.value">{{input.text}}</label>
+          <label
+            v-for="input in inputs"
+            :key="input.id"
+            @click="active(input.value), changeCategory(input.value)"
+            :class="{active : activeCategory == input.value}"
+          >
+            <input
+              type="radio"
+              v-show="checked='checked'"
+              v-model="selectedCategory"
+              :value="input.value"
+            >
+            {{input.text}}</label>
         </div>
-          
-          <!-- list/grid icons -->
-          <div class="list-grid-layout d-none d-md-block float-right">
-            <a class="nav-item" href="#grid" >
-              <svgicon
-                name="gridView"
-                id="grid-view"
-                @click="switchToGrid('grid'), listContentView = false" :class="{activeView : activeView == 'grid'}"
-              ></svgicon>
-            </a>
-            <a class="nav-item" href="#list" >
-              <svgicon
-                name="listView"
-                id="list-view"
-                @click="switchToList('list'), listContentView = true" :class="{activeView : activeView == 'list'}"
-              ></svgicon>
-            </a>
-          </div>
+
+        <!-- list/grid icons -->
+        <div class="list-grid-layout d-none d-md-block float-right">
+          <a class="nav-item" href="#grid">
+            <svgicon
+              name="gridView"
+              id="grid-view"
+              @click="switchToGrid('grid'), listContentView = false"
+              :class="{activeView : activeView == 'grid'}"
+            ></svgicon>
+          </a>
+          <a class="nav-item" href="#list">
+            <svgicon
+              name="listView"
+              id="list-view"
+              @click="switchToList('list'), listContentView = true"
+              :class="{activeView : activeView == 'list'}"
+            ></svgicon>
+          </a>
+        </div>
       </div>
 
       <div style="clear: both;"></div>
       <!-- grid view -->
       <div v-if="!listContentView" class="row portfolioContainer grid-layout" id="portfolio">
-        <div v-for="image in filteredImages.slice(0,imagesToShow)" :key="image.id" class="col-lg-4 col-md-6 col-sm-12 z-hovr" >
+        <div
+          v-for="image in filteredImages.slice(0,imagesToShow)"
+          :key="image.id"
+          class="col-lg-4 col-md-6 col-sm-12 z-hovr"
+        >
           <a href="#">
             <img width="300px" :src="image.src" :alt="image.alt" class="group list-group-image">
           </a>
         </div>
-        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore" class="btn btn-success mt-md-5">LOAD MORE</button>
-        <img src="/img/spinner.gif" alt="spinner" class="img img-fluid" id="loader" style="display:none">
+        <button
+          v-if="images.length > 3 && imagesToShow < images.length"
+          @click="loadMore"
+          class="btn btn-success mt-md-5"
+        >LOAD MORE</button>
+        <img
+          src="/img/spinner.gif"
+          alt="spinner"
+          class="img img-fluid"
+          id="loader"
+          style="display:none"
+        >
       </div>
       <!-- list-view -->
       <div v-if="listContentView" class="row portfolioContainer grid-layout" id="portfolio">
-        <div v-for="image in filteredImages.slice(0,imagesToShow)" :key="image.id" class="z-hovr" >
+        <div v-for="image in filteredImages.slice(0,imagesToShow)" :key="image.id" class="z-hovr">
           <a href="#">
-            <img width="300px" :src="image.src" :alt="image.alt" class="group list-group-image mr-3 float-left">
+            <img
+              width="300px"
+              :src="image.src"
+              :alt="image.alt"
+              class="group list-group-image mr-3 float-left"
+            >
             <div class="content">
               <h2>{{image.title}}</h2>
               <p>{{image.text}}</p>
             </div>
           </a>
         </div>
-        <button v-if="images.length > 3 && imagesToShow < images.length" @click="loadMore()" class="btn btn-success mt-md-5">LOAD MORE</button>
-        <img src="/img/spinner.gif" alt="spinner" class="img img-fluid" id="loader" style="display:none">
-      </div><!-- /list-view -->
+        <button
+          v-if="images.length > 3 && imagesToShow < images.length"
+          @click="loadMore()"
+          class="btn btn-success mt-md-5"
+        >LOAD MORE</button>
+        <img
+          src="/img/spinner.gif"
+          alt="spinner"
+          class="img img-fluid"
+          id="loader"
+          style="display:none"
+        >
+      </div>
+      <!-- /list-view -->
     </div>
   </div>
 </template>
 
 <script>
 import Banner from "../components/banner/Banner.vue";
-import {mapGetters, mapMutations} from 'vuex';
+import { mapGetters, mapMutations } from "vuex";
 export default {
   components: {
     "hero-banner": Banner
@@ -85,26 +151,49 @@ export default {
   data() {
     return {
       headline: "check out what i can do",
-      listContentView:false,      
+      listContentView: false
     };
   },
   computed: {
-    selectedCategory(){return this.$store.getters.selectedCategory;},
-    images(){ return this.$store.getters.images},
-    imagesToShow(){ return this.$store.getters.imagesToShow},
-    filteredImages(){ return this.$store.getters.filteredImages},
-    activeCategory(){ return this.$store.getters.activeCategory},
-    activeView(){ return this.$store.getters.activeView},
-    inputs(){ return this.$store.getters.inputs}, 
-    
+    selectedCategory() {
+      return this.$store.getters["work/selectedCategory"];
+    },
+    images() {
+      return this.$store.getters["work/images"];
+    },
+    imagesToShow() {
+      return this.$store.getters["work/imagesToShow"];
+    },
+    filteredImages() {
+      return this.$store.getters["work/filteredImages"];
+    },
+    activeCategory() {
+      return this.$store.getters["work/activeCategory"];
+    },
+    activeView() {
+      return this.$store.getters["work/activeView"];
+    },
+    inputs() {
+      return this.$store.getters["work/inputs"];
+    }
   },
-  methods:{
-    changeCategory(category){ this.$store.commit('changeCategory', category) },
-    active(category){ this.$store.commit('active', category) },
-    switchToGrid(grid){ this.$store.commit('switchToGrid', grid) },
-    switchToList(list){ this.$store.commit('switchToList', list) },
-    loadMore(){ this.$store.dispatch('loadMore')},
-  },
+  methods: {
+    changeCategory(category) {
+      this.$store.commit("work/changeCategory", category);
+    },
+    active(category) {
+      this.$store.commit("work/active", category);
+    },
+    switchToGrid(grid) {
+      this.$store.commit("work/switchToGrid", grid);
+    },
+    switchToList(list) {
+      this.$store.commit("work/switchToList", list);
+    },
+    loadMore() {
+      this.$store.dispatch("work/loadMore");
+    }
+  }
 };
 </script>
 
@@ -122,77 +211,77 @@ label {
   padding-left: 0px;
   cursor: pointer;
   margin-right: 5px;
-  margin-bottom: 45px
+  margin-bottom: 45px;
 }
-@media(max-width:425px){
-  label{
+@media (max-width: 425px) {
+  label {
     margin-bottom: 10px;
   }
 }
-label input[type="radio"]{
+label input[type="radio"] {
   display: none;
 }
-.filter{
-  display: inline;            
+.filter {
+  display: inline;
 }
-.filter label::after{
+.filter label::after {
   content: "/";
   margin-left: 5px;
-  color: #7f7f7f ;
+  color: #7f7f7f;
 }
-.filter label:last-child::after{
-  content: ""
+.filter label:last-child::after {
+  content: "";
 }
-.categories{
+.categories {
   margin-top: 42px;
 }
-.categoryGreen{
+.categoryGreen {
   color: #2ecc71;
 }
-.active{
+.active {
   color: #2ecc71;
 }
 /* grid-list view */
-.list-grid-layout svg{
+.list-grid-layout svg {
   width: 15px;
   height: 15px;
   margin-top: 10px;
-  color: #7f7f7f ;
+  color: #7f7f7f;
   margin-left: 5px;
 }
-.activeView{
+.activeView {
   color: #2ecc71 !important;
 }
-.grid-layout img{
+.grid-layout img {
   width: 100%;
   height: 100%;
   padding-bottom: 20px;
 }
-.list-layout{
+.list-layout {
   display: grid;
   grid-auto-columns: 1fr;
-  grid-row-gap: 1.3em; 
+  grid-row-gap: 1.3em;
 }
-.content{
+.content {
   margin: 20px;
 }
-@media(max-width: 768px){
+@media (max-width: 768px) {
   .margin-bottom {
     margin-bottom: 190px;
   }
 }
-@media(max-width: 425px){
-  .list-layout{
+@media (max-width: 425px) {
+  .list-layout {
     text-align: center;
   }
   .margin-bottom {
     margin-bottom: 120px !important;
   }
-  label{
+  label {
     margin-left: 5px;
   }
 }
-button{
+button {
   font-family: "Novecentosan", Arial, sans-serif;
   background: #2ecc71;
   border: none;
@@ -203,12 +292,12 @@ button{
   padding: 10px 30px;
   margin-top: 10px;
 }
-#loader{
+#loader {
   width: 300px;
   margin-left: auto;
   margin-right: auto;
 }
-.z-hovr a{
+.z-hovr a {
   text-decoration: none;
 }
 .z-hovr {

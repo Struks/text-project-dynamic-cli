@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <header-view></header-view>
+    <loader/>
     <router-view/>
     <footer-view></footer-view>
   </div>
@@ -12,12 +13,14 @@ import Header from './components/header/Header.vue'
 import Footer from './components/footer/Footer.vue'
 import './css/media-queries.css'
 import '../node_modules/slick-carousel/slick/slick.css';
+import Spinner from '@/components/spinner/spinner.vue'
 
 
 export default {
   components:{
     'header-view': Header,
-    'footer-view': Footer
+    'footer-view': Footer,
+    'loader': Spinner,
   },
   name: 'App',
   data(){

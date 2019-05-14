@@ -99,9 +99,9 @@ const router = new Router({
       },
       beforeEnter: (to, from, next) => {
         const id = to.params.id
-        store.dispatch('setUser', id )
+        store.dispatch('users/setUser', id)
         .then(() => {
-            next();
+          next();
         });
       }
     },
@@ -124,7 +124,7 @@ router.beforeEach((to, from, next) => {
   // if (requiresAuth && !currentUser) next('login');
   // else next();
 
-  const logUser = store.getters.logUser;
+  const logUser = store.getters['authentication/logUser'];
   const roles = to.meta.roles || [];
 
   //if user is logged in

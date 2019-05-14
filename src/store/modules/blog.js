@@ -57,10 +57,6 @@ const getters = {
     }
 }
 
-
-
-
-
 const mutations = {
     setPosts: (state, payload) => state.posts = payload,
     activeBlog: (state, active) => state.activeCategoryBlog = active,
@@ -70,9 +66,10 @@ const mutations = {
 }
 
 const actions = {
-    getBlogs({commit}, n) {
+    async getBlogs({commit}, payload) {
+        commit('spinner/setLoading', true, {root:true})
         const blog = []
-        db.collection('blog').limit(n).orderBy('title', 'desc').onSnapshot(res => {
+        await db.collection('blog').limit(payload).orderBy('title', 'desc').onSnapshot(res => {
             const changes = res.docChanges();
             changes.forEach(change => {
                 if (change.type === 'added') {
@@ -85,13 +82,13 @@ const actions = {
                 commit('getBlogs', blog)
             })
             const sizeOfBlog = res.size
-            if (n !== sizeOfBlog) {
+            if (payload !== sizeOfBlog) {
                 state.noMoreProjects = true
             } else {
                 state.noMoreProjects = false
             }
         })
-
+        commit('spinner/setLoading', false, {root:true});
     }
 
 }

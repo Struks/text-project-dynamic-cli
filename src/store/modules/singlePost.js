@@ -16,9 +16,9 @@ const mutations = {
 }
 
 const actions = {
-    getSinglePost({commit},{payload}){
+    getSinglePost({commit}, payload){
         
-        db.collection('blog').doc(payload.id).then(doc =>{
+        db.collection('blog').doc(payload).then(doc =>{
             if(doc.exists){
                 state.post = (
                 payload.title = doc.data().title,

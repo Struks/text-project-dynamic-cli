@@ -6,8 +6,8 @@
           <img src="/img/logo.svg" alt="logo">
         </a>
       </div>
-      <social-media ></social-media>
-    
+      <social-media></social-media>
+
       <!--hamburger menu-->
       <button
         type="button"
@@ -43,17 +43,23 @@
                 :exact="menu.exact"
               >{{menu.name}}</router-link>
             </li>
-              <li v-for="link in auth" :key="link.id">
-            <router-link class="nav-link mt-3" v-if="!logUser"
-              :to="link.link"
-              :exact="link.exact"
-            >{{link.name}}</router-link>
-          </li>
-          <li class="">
-          <router-link class="nav-link mt-3" v-if="logUser" :to="'/' + logUser.id">{{logUser.username}}</router-link>
-          </li>
-          <li>
-          <button v-if="logUser" @click="logout()" class="logoutBtn m-0 p-0">LOGOUT</button>
+            <li v-for="link in auth" :key="link.id">
+              <router-link
+                class="nav-link mt-3"
+                v-if="!logUser"
+                :to="link.link"
+                :exact="link.exact"
+              >{{link.name}}</router-link>
+            </li>
+            <li class>
+              <router-link
+                class="nav-link mt-3"
+                v-if="logUser"
+                :to="'/' + logUser.id"
+              >{{logUser.username}}</router-link>
+            </li>
+            <li>
+              <button v-if="logUser" @click="logout()" class="logoutBtn m-0 p-0">LOGOUT</button>
             </li>
             <li class="hamburger-social-media nav-item d-md-none mt-2">
               <a
@@ -63,16 +69,11 @@
                 target="_blank"
                 class="mr-1"
               >
-                <svgicon 
-                  :name="media.name" 
-                  width="35" 
-                  height="35"
-                  :class="media.class"
-                ></svgicon>
+                <svgicon :name="media.name" width="35" height="35" :class="media.class"></svgicon>
               </a>
-            </li>          
+            </li>
           </ul>
-         <!--social media hamburger-->
+          <!--social media hamburger-->
         </div>
       </nav>
     </div>
@@ -81,7 +82,6 @@
     <nav class="navbar navbar-expand-sm pl-0 d-none d-md-block">
       <div class="main-menu">
         <ul class="navbar-nav main-navigation pt-2">
-        
           <li class="nav-item" v-for="(menu,index) in menues" :key="index">
             <router-link
               class="nav-link pl-md-0 pr-md-4"
@@ -89,19 +89,14 @@
               :exact="menu.exact"
             >{{menu.name}}</router-link>
           </li>
-          
         </ul>
-        <ul class="auth-links navbar-nav main-navigation" >
+        <ul class="auth-links navbar-nav main-navigation">
           <li v-for="link in auth" :key="link.id">
-            <router-link v-if="!logUser"
-              :to="link.link"
-              :exact="link.exact"
-            >{{link.name}}</router-link>
+            <router-link v-if="!logUser" :to="link.link" :exact="link.exact">{{link.name}}</router-link>
           </li>
           <router-link v-if="logUser" :to="'/' + logUser.id">{{logUser.username}}</router-link>
           <button v-if="logUser" @click="logout()" class="logoutBtn">LOGOUT</button>
-         </ul>    
-           
+        </ul>
       </div>
     </nav>
   </div>
@@ -114,23 +109,30 @@ export default {
     "social-media": SocialMedia
   },
   data() {
-    return {
-    };
+    return {};
   },
-  created(){
-    this.$store.dispatch('setUser')
+  created() {
+    this.$store.dispatch("users/setUser");
   },
-  computed:{
-    menues(){return this.$store.getters.menues},
-    socialMedia(){return this.$store.getters.socialMedia},
-    auth(){return this.$store.getters.auth},
-    logUser(){return this.$store.getters.logUser},
-  },
-  methods:{
-    logout(){
-      this.$store.dispatch('logout')
+  computed: {
+    menues() {
+      return this.$store.getters["mainMenu/menues"];
+    },
+    socialMedia() {
+      return this.$store.getters["socialMedia/socialMedia"];
+    },
+    auth() {
+      return this.$store.getters["mainMenu/auth"];
+    },
+    logUser() {
+      return this.$store.getters["authentication/logUser"];
     }
   },
+  methods: {
+    logout() {
+      this.$store.dispatch("authentication/logout");
+    }
+  }
 };
 </script>
 
@@ -147,29 +149,28 @@ hr {
 .navbar {
   margin-top: -15px;
 }
-.auth-links{
+.auth-links {
   margin-top: -35px;
-  float:right;
-  
+  float: right;
 }
-.auth-links a{
+.auth-links a {
   padding-left: 30px;
   text-decoration: none;
 }
-.logoutBtn{
+.logoutBtn {
   font-family: "Novecentosan", Arial, sans-serif;
   color: #7f7f7f;
   background-color: Transparent;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   border: none;
-  cursor:pointer;
+  cursor: pointer;
   overflow: hidden;
-  margin-left: 15px; 
+  margin-left: 15px;
 }
 .router-link-active {
   color: #2ecc71 !important;
 }
-a svg{
+a svg {
   color: #dadada;
 }
 @media (max-width: 425px) {
@@ -187,9 +188,9 @@ a svg{
     margin-left: 50px;
   }
 }
-.adminMenu{
-  background: #F0EEED;
-  border: 1px solid #DADADA;
+.adminMenu {
+  background: #f0eeed;
+  border: 1px solid #dadada;
   font-family: "Novecentosan", Arial, sans-serif;
   color: #7f7f7f;
   text-decoration: none;

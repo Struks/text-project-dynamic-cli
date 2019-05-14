@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     feedback() {
-      return this.$store.getters.feedback;
+      return this.$store.getters["authentication/feedback"];
     }
   },
   methods: {
@@ -77,7 +77,7 @@ export default {
         return;
       }
       //login
-      this.$store.dispatch("login", {
+      this.$store.dispatch("authentication/login", {
         email: this.email,
         password: this.password
       });
