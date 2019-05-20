@@ -104,17 +104,17 @@
         </article>
 
         <button
-          v-if="!noMoreProjects"
+          v-if="!noMoreProjects && !loadMorePosts"
           type="button"
-          @click="loadMore(3)"
+          @click="loadMore(4)"
           class="btn btn-success mt-md-5 loadMoreButton"
         >Load More</button>
         <img
+          v-if="loadMorePosts"
           src="/img/spinner.gif"
           alt="spinner"
           class="img img-fluid"
-          id="loader"
-          style="display:none">
+          id="loader">
       </div>
     </div>
   </div>
@@ -132,6 +132,7 @@ export default {
   },
   data() {
     return {
+      loadMorePosts: false,
       showSpinner: true,
       headline: "My Pretty Blog",
       key: "",
@@ -141,57 +142,66 @@ export default {
     };
   },
   computed: {
+    //category
     blogCategories() {
       return this.$store.getters['blog/blogCategories'];
     },
+    //active category
     activeCategoryBlog() {
       return this.$store.getters['blog/activeCategoryBlog'];
     },
     blog() {
       return this.$store.getters['blog/blog'];
     },
+    //indicator for hide "load more" button
     noMoreProjects() {
       return this.$store.getters['blog/noMoreProjects'];
     },
+    //filter posts
     filteredPosts() {
       return this.$store.getters['blog/filteredPosts'];
     }
   },
   created() {
+    //load 3 post
     this.$store.dispatch("blog/getBlogs", 3);
   },
   methods: {
+    //path for new post
     newPost() {
       this.$router.push({ path: "/blog/newPost" });
     },
-    deletePost(id, event) {
+    //delete post
+    async deletePost(id, event) {
       event.preventDefault();
       if (confirm("Are you sure ? ")) {
         db.collection("blog")
           .doc(id)
           .delete();
-        setTimeout(() => {
-          this.$store.dispatch("blog/getBlogs", 3);
-        }, 400);
+        await this.$store.dispatch("blog/getBlogs", 3);
+        
       }
     },
+    //path to edit post
     editPost(id) {
       this.$router.push({ path: `/blog/${id}/edit` });
     },
-    loadMore(n) {
-      const loader = document.getElementById("loader");
-      const button = document.querySelector(".loadMoreButton");
-      button.style.display = "none";
-      loader.style.display = "block";
-      setTimeout(() => {
-        this.$store.dispatch("blog/getBlogs", n * 3);
-        button.style.display = "block";
-        loader.style.display = "none";
-      }, 1500);
+    //load more method
+    async loadMore(n) {
+      //indicator for show/hide spinner
+      //show spinner
+      this.loadMorePosts = true;
+      //promise dispatch
+      await this.$store.dispatch("blog/getBlogs", n*4);
+      //hide spinner
+      this.loadMorePosts = false;
+      
     },
+    //change category
     changeCategory(category) {
       this.$store.commit("blog/changeCategory", category);
     },
+    //active category
     activeBlog(category) {
       this.$store.commit("blog/activeBlog", category);
     }

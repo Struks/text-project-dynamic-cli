@@ -143,7 +143,6 @@
 
 <script>
 import Banner from "../components/banner/Banner.vue";
-import { mapGetters, mapMutations } from "vuex";
 export default {
   components: {
     "hero-banner": Banner

@@ -61,8 +61,6 @@ export default {
 
 
 <style scoped>
-.margin-bottom {
-}
 .grid-wrapper {
   margin-top: 30px;
 }

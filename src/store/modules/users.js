@@ -18,9 +18,10 @@ const mutations = {
 
 const actions = {
     //get user (main implementation)
-    setUser({ commit }, payload) {
+    async setUser({ commit }, payload) {
         if (payload) {
-            db.collection('users').where('user_id', '==', payload.uid).get().then(snapshot => {
+            commit('spinner/setLoading', true, {root:true})
+            await db.collection('users').where('user_id', '==', payload.uid).get().then(snapshot => {
                 let user = {};
                 snapshot.docs.forEach(doc => {
                     user = doc.data()
@@ -28,6 +29,7 @@ const actions = {
                 })
                 commit('authentication/setLogUser', user, { root: true })
             })
+            commit('spinner/setLoading', false, {root:true})
         }
     },
     //update edit profil acount
@@ -42,9 +44,10 @@ const actions = {
         },400)
     },
     //get users 
-    getUsers({commit}){
+    async getUsers({commit}){
         const users = []
-        db.collection('users').orderBy('firstname').onSnapshot(res =>{
+        commit('spinner/setLoading', false, {root:true});
+        await db.collection('users').orderBy('firstname').onSnapshot(res =>{
             const changes = res.docChanges();
             changes.forEach(change =>{
                 if(change.type === 'added'){
@@ -57,7 +60,8 @@ const actions = {
                 commit('setUsers', users);
             })
         })
-    }
+        commit('spinner/setLoading', false, {root:true});
+    },
 }
 
 export default{

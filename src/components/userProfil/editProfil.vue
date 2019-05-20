@@ -39,12 +39,12 @@ export default {
     };
   },
   computed: {
-    currentUser() {
-      return this.$store.getters["authentication/logUser"];
+    currentUser() { 
+      return this.$store.getters["authentication/logUser"]; 
     }
   },
   methods: {
-    saveEditProfil(editUser) {
+    saveEditProfil(editUser) { 
       this.$store.dispatch("users/saveEditProfil", editUser);
     }
   }

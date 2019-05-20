@@ -2,11 +2,11 @@
   <div class="margin-bottom">
     <hero-banner/>
     <div class="container">
-      <button type="button" class="btn btn-success mt-5 d-none d-md-block" @click="editProfil(currentUser.id)">EDIT PROFIL</button>
+      <button type="button" class="btn btn-success mt-5 d-none d-md-block" @click="editProfil(logUser.id)">EDIT PROFIL</button>
       <div class="profil">
         <div class="images align-center">
           <img
-            v-if="!currentUser.img"
+            v-if="!logUser.img"
             class="rounded-circle img img-fluid"
             :src="noimg"
             alt="no image"
@@ -14,20 +14,20 @@
             height="300px"
           >
           <img
-            v-if="currentUser.img"
+            v-if="logUser.img"
             class="rounded-circle img img-fluid"
-            :src="currentUser.img"
+            :src="logUser.img"
             alt="user image"
             width="250px"
             height="300px"
           >
         </div>
-        <h1 class="mt-3 mb-md-5">{{currentUser.firstname}} {{currentUser.lastname}}</h1>
-        <button type="button" class="btn btn-success d-sm-none" @click="editProfil(currentUser.id)">EDIT PROFIL</button>
+        <h1 class="mt-3 mb-md-5">{{logUser.firstname}} {{logUser.lastname}}</h1>
+        <button type="button" class="btn btn-success d-sm-none" @click="editProfil(logUser.id)">EDIT PROFIL</button>
 
         <h4 class="mb-4 bio">BIOGRAPHY</h4>
         <div class="paraph-container">
-          <p class="mb-5" v-html="currentUser.bio"></p>
+          <p class="mb-5" v-html="logUser.bio"></p>
         </div>
       </div>
     </div>
@@ -54,11 +54,14 @@ export default {
   //       next();
   //   });
   // },
+  // beforeUpdate(){
+  //   console.log(users.id);
+  // },
   computed: {
-    currentUser() {
+    logUser() {
       return this.$store.getters['authentication/logUser'];
     },
-    users() {
+    users(){
       return this.$store.getters['users/users'];
     }
   },

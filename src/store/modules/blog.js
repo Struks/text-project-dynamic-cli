@@ -32,6 +32,7 @@ const state = {
     activeCategoryBlog: 'all',
     blog: [],
     noMoreProjects: false,
+    
 
 
 
@@ -60,7 +61,7 @@ const getters = {
 const mutations = {
     setPosts: (state, payload) => state.posts = payload,
     activeBlog: (state, active) => state.activeCategoryBlog = active,
-    getBlogs: (state, payload) => state.blog = payload,
+    setBlogs: (state, payload) => state.blog = payload,
     changeCategory: (state, category) => state.selectedCategoryBlog = category
 
 }
@@ -79,17 +80,18 @@ const actions = {
                         id: change.doc.id
                     })
                 }
-                commit('getBlogs', blog)
+                commit('setBlogs', blog)
             })
             const sizeOfBlog = res.size
             if (payload !== sizeOfBlog) {
                 state.noMoreProjects = true
-            } else {
+            }else {  
                 state.noMoreProjects = false
             }
         })
         commit('spinner/setLoading', false, {root:true});
     }
+
 
 }
 

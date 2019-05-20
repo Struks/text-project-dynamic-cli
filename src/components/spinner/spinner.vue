@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="text-center">
         <img v-if="loading" src="/img/spinner.gif" alt="spinner" class="img img-fluid align-center" id="blogLoader">
     </div>
 </template>
