@@ -5,25 +5,19 @@ import router from '@/router'
 
 const state = {
     feedback: '',
-    logUser: null,
-    //users
-    // users:[],
+    currentUser: null,
 }
 
 const getters = {
     feedback: state => state.feedback,
-    logUser: state => state.logUser,
-    //users
-    // users:state => state.users,
+    currentUser: state => state.currentUser,
+
 }
 
 const mutations = {
     setFeedback: (state, payload) => state.feedback = payload,
-    setLogUser: (state, payload) => state.logUser = payload,
-    //set users
-    // setUsers(state, payload){
-    //     state.users = payload;
-    // }
+    setCurrentUser: (state, payload) => state.currentUser = payload,
+
 }
 
 const actions = {
@@ -49,25 +43,29 @@ const actions = {
             })
     },
     // login
-    login({
-        commit
-    }, payload) {
+    async login({commit}, payload) {
         commit('setFeedback', null)
-        firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
-            .then(() => {
-                const newUser = {
-                    id: firebase.auth().currentUser.uid,
-                    email: firebase.auth().currentUser.email
-                };
-                commit('setLogUser', newUser)
-            })
-            .then(() => {
-                commit('setFeedback', null)
+        await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+            .then(()=>{
                 router.push('/blog')
-            }).catch(err => {
+            })
+            .catch(err => {
                 commit('setFeedback', err.message)
             })
-
+    },
+    //get current user
+    async getCurrentUser({commit}, payload) {
+        if(payload) {
+            await db.collection('users').where('user_id', '==', payload.uid).get().then(snapshot => {
+                let user = {};
+                //  SET USER DATA
+                snapshot.docs.forEach(doc => {
+                    user = doc.data()
+                    user.id = doc.id
+                })
+                commit('setCurrentUser', user);
+            })
+        }
     },
     //logout
     logout({
@@ -75,7 +73,7 @@ const actions = {
     }) {
         commit('setFeedback', null)
         firebase.auth().signOut().then(() => {
-            commit('setLogUser', null)
+            commit('setCurrentUser', null)
             router.replace('login')
 
         })

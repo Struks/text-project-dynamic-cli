@@ -12,7 +12,8 @@ import login from '@/views/login.vue';
 import signup from '@/views/signup.vue';
 import profilUser from '@/views/profilUser.vue';
 import editProfil from '@/components/userProfil/editProfil.vue';
-// import firebase from 'firebase/app';
+import firebase from 'firebase/app';
+import "firebase/auth";
 import {store} from '@/store/index'
 import accessDenied from './components/blog/accessDenied.vue';
 import AdminMenu from '@/views/AdminMenu.vue';
@@ -91,7 +92,7 @@ const router = new Router({
       }
     },
     {
-      path: '/:uid',
+      path: '/:id',
       component: profilUser,
       name: 'profilUser',
       meta:{
@@ -99,7 +100,7 @@ const router = new Router({
       },
       beforeEnter: (to, from, next) => {
         const id = to.params.id
-        store.dispatch('users/setUser', id)
+        store.dispatch('users/getSingleUser', id)
         .then(() => {
           next();
         });
@@ -124,18 +125,18 @@ router.beforeEach((to, from, next) => {
   // if (requiresAuth && !currentUser) next('login');
   // else next();
 
-  const logUser = store.getters['authentication/logUser'];
+  const currentUser = store.getters['authentication/currentUser'];
   const roles = to.meta.roles || [];
 
   //if user is logged in
-  if (to.meta.requiresAuth && !logUser) {
+  if (to.meta.requiresAuth && !firebase.auth().currentUser) {
     next({
       name: 'login',
       query: {
         redirectTo: to.path
       }
     });
-  } else if (roles.length && logUser && !roles.includes(logUser.role) && logUser.role !== 'admin') {
+  } else if (roles.length && currentUser && !roles.includes(currentUser.role) && currentUser.role !== 'admin') {
     next({
       name: 'access-denied'
     });

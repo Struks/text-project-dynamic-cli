@@ -51,7 +51,7 @@ firebase.auth().onAuthStateChanged((user) => {
     }).$mount('#app')
   }
   if (user) {
-    store.dispatch('users/setUser', user);
+    store.dispatch('authentication/getCurrentUser', user);
   }
 })
 

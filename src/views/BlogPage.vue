@@ -91,7 +91,7 @@
                 class="group list-group-image mr-3 z-hovr"
               >
               <h2>{{post.title}}</h2>
-              <p class="text mt-3 d-none d-md-block" v-html="post.text"></p>
+              <div class="text mt-3 d-none d-md-block" v-html="post.text"></div>
             </div>
           </router-link>
           <span class="badge badge-primary">
@@ -133,7 +133,6 @@ export default {
   data() {
     return {
       loadMorePosts: false,
-      showSpinner: true,
       headline: "My Pretty Blog",
       key: "",
       loading: true,
@@ -178,8 +177,7 @@ export default {
         db.collection("blog")
           .doc(id)
           .delete();
-        await this.$store.dispatch("blog/getBlogs", 3);
-        
+        await this.$store.dispatch("blog/getBlogs", 3); 
       }
     },
     //path to edit post

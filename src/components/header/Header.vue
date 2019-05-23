@@ -46,7 +46,7 @@
             <li v-for="link in auth" :key="link.id">
               <router-link
                 class="nav-link mt-3"
-                v-if="!logUser"
+                v-if="!currentUser"
                 :to="link.link"
                 :exact="link.exact"
               >{{link.name}}</router-link>
@@ -54,12 +54,12 @@
             <li class>
               <router-link
                 class="nav-link mt-3"
-                v-if="logUser"
-                :to="'/' + logUser.id"
-              >{{logUser.username}}</router-link>
+                v-if="currentUser"
+                :to="'/' + currentUser.id"
+              >{{currentUser.username}}</router-link>
             </li>
             <li>
-              <button v-if="logUser" @click="logout()" class="logoutBtn m-0 p-0">LOGOUT</button>
+              <button v-if="currentUser" @click="logout()" class="logoutBtn m-0 p-0">LOGOUT</button>
             </li>
             <li class="hamburger-social-media nav-item d-md-none mt-2">
               <a
@@ -92,10 +92,10 @@
         </ul>
         <ul class="auth-links navbar-nav main-navigation">
           <li v-for="link in auth" :key="link.id">
-            <router-link v-if="!logUser" :to="link.link" :exact="link.exact">{{link.name}}</router-link>
+            <router-link v-if="!currentUser" :to="link.link" :exact="link.exact">{{link.name}}</router-link>
           </li>
-          <router-link v-if="logUser" :to="'/' + logUser.id">{{logUser.username}}</router-link>
-          <button v-if="logUser" @click="logout()" class="logoutBtn">LOGOUT</button>
+          <router-link v-if="currentUser" :to="'/' + currentUser.id">{{currentUser.username}}</router-link>
+          <button v-if="currentUser" @click="logout()" class="logoutBtn">LOGOUT</button>
         </ul>
       </div>
     </nav>
@@ -111,9 +111,6 @@ export default {
   data() {
     return {};
   },
-  created() {
-    this.$store.dispatch("users/setUser");
-  },
   computed: {
     menues() {
       return this.$store.getters["mainMenu/menues"];
@@ -124,8 +121,8 @@ export default {
     auth() {
       return this.$store.getters["mainMenu/auth"];
     },
-    logUser() {
-      return this.$store.getters["authentication/logUser"];
+    currentUser() {
+      return this.$store.getters["authentication/currentUser"];
     }
   },
   methods: {

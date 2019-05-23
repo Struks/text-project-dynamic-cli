@@ -18,7 +18,7 @@
           class="group list-group-image mr-3 float-left"
         >
         <h2 class="mb-4">{{title}}</h2>
-        <p class="paragraph" v-html="text"></p>
+        <div class="paragraph" v-html="text"></div>
         <span class="badge badge-secondary">Last modifed: {{timestamp | date}}</span>
       </article>
       <div class="afterbtn">

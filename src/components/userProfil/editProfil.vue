@@ -9,14 +9,23 @@
           <input
             id="url"
             class="url"
-            v-model="currentUser.img"
+            v-model="singleUser.img"
             type="text"
             placeholder="Account Image"
           >
-          <vue-ckeditor v-model="currentUser.bio"></vue-ckeditor>
-
+          <vue-ckeditor v-model="singleUser.bio"></vue-ckeditor>
+          <!-- role -->
+          <label for="role" class="mt-3 mb-1">Role:</label>
+          <br>
+          <select name="role" id="role" class="form-control custom-select" v-model="singleUser.role">
+            <option value="" selected disabled>Choose Role</option>
+            <option value="user">User</option>
+            <option value="blogger">Blogger</option>
+            <option value="moderator">Moderator</option>
+            <option value="admin">Admin</option>
+          </select>
           <div class="afterbtn">
-            <button type="button" class="btn btn-success" @click="saveEditProfil(currentUser)">SAVE</button>
+            <button type="button" class="btn btn-success" @click="saveEditProfil(singleUser)">SAVE</button>
           </div>
         </div>
       </div>
@@ -39,8 +48,8 @@ export default {
     };
   },
   computed: {
-    currentUser() { 
-      return this.$store.getters["authentication/logUser"]; 
+    singleUser() { 
+      return this.$store.getters["users/singleUser"]; 
     }
   },
   methods: {

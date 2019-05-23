@@ -4,46 +4,51 @@ import router from '@/router'
 
 const state = {
     users:[],
+    singleUser:''
 }
 
 const getters = {
     users:state => state.users,
+    singleUser:state => state.singleUser,
 }
 
 const mutations = {
     setUsers(state, payload){
         state.users = payload;
+    },
+    setSingleUser(state, payload){
+        state.singleUser = payload;
     }
 }
 
 const actions = {
     //get user (main implementation)
-    async setUser({ commit }, payload) {
+    async getSingleUser({ commit }, payload) {
         if (payload) {
+            
             commit('spinner/setLoading', true, {root:true})
-            await db.collection('users').where('user_id', '==', payload.uid).get().then(snapshot => {
-                let user = {};
-                snapshot.docs.forEach(doc => {
-                    user = doc.data()
-                    user.id = doc.id
+            let user = {};
+            await db.collection('users').doc(payload).get().then(doc => {
+                user = doc.data()
+                user.id = doc.id
+                commit('setSingleUser', user)
                 })
-                commit('authentication/setLogUser', user, { root: true })
-            })
+            }
             commit('spinner/setLoading', false, {root:true})
-        }
     },
     //update edit profil acount
     saveEditProfil({commit},payload){
         db.collection('users').doc(payload.id).update({
             bio:payload.bio,
-            img:payload.img
+            img:payload.img,
+            role: payload.role
         })
-        commit('authentication/setLogUser', payload, { root: true });
+        commit('setSingleUser', payload);
         setTimeout(()=>{
             router.push(`/${payload.id}`)
         },400)
     },
-    //get users 
+    //get single users 
     async getUsers({commit}){
         const users = []
         commit('spinner/setLoading', false, {root:true});
