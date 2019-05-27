@@ -32,8 +32,28 @@ Vue.use(SvgIcon, {
 //vuex
 Vue.use(Vuex);
 
+//-- GLOBAL FILTERS --//
+
 //moment
 Vue.filter('date', (created) => moment(created).format('MMMM Do YYYY'))
+
+//eliminate html tags (striphtml)
+Vue.filter('striphtml', value => {
+  // let div = document.createElement('div');
+  // div.innerHTML = value;
+  // let text = div.textContent || div.innerHTML || '';
+  let StrippedText = value.replace(/(<([^>]+)>)/ig,"");
+  return StrippedText;
+});
+
+//limited number of characters
+Vue.filter('limitChars', value => {
+  if(value.length > 150){
+    return value.substring(0,150) + '...'
+  }else{
+    return value;
+  }
+})
 
 //initialize the app only when 
 //we are sure Firebase Auth object is ready to use

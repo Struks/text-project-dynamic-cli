@@ -12,20 +12,26 @@
                         v-model="title"
                         type="text" 
                         placeholder="Title"
+                        @blur="$v.title.$touch()"
+                        :class="{error: $v.title.$error}"
                     ><br/>
-                    <label for="url">URL:</label><br/>
+                    <p class="error-message" v-if="!$v.title.required && $v.title.$dirty">Title field is required.</p>
+                    <label for="url">Img URL:</label><br/>
                     <input 
                         id="url"
                         class="url" 
                         v-model="url" 
                         type="text" 
                         placeholder="Thumbnails URL"
-                    >
-                    <vue-ckeditor v-model="text"></vue-ckeditor>
+                        @blur="$v.url.$touch()"
+                        :class="{error: $v.url.$error}"
+                    ><br/>
+                    <p class="error-message" id="content" v-if="!$v.url.url && $v.url.$dirty">URL is not valid.</p>
+                    <label for="text">Content:</label>
+                    <vue-ckeditor v-model="text" id="text"></vue-ckeditor>
 
-                    <!-- <textarea class="textarea" name="ckeditor" id="ckeditor" v-model="text"></textarea> -->
                     <div class="afterbtn">
-                        <button type="button" class="btn btn-success" @click="editPost(id)">EDIT POST</button>
+                        <button type="button" class="btn btn-success" @click="editPost(id)">SAVE</button>
                         <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(id)">DELETE</button>
                     </div>
                    
@@ -37,6 +43,7 @@
 
 
 <script>
+import { required,url } from "vuelidate/lib/validators";
 import VueCkeditor from 'vue-ckeditor2';
 import Banner from '@/components/banner/Banner.vue';
 import db from '@/firebase/init'
@@ -56,6 +63,10 @@ export default {
         timestamp:'',
         id:''       
         }
+    },
+    validations:{
+        title:{ required },
+        url:{ url },
     },
     created(){
         db.collection("blog").doc(this.$route.params.id)

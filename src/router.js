@@ -55,7 +55,7 @@ const router = new Router({
       name: 'new-post',
       meta: {
         requiresAuth: true,
-        roles: ['moderator', 'bloger']
+        roles: ['moderator', 'blogger']
       }
     },
     {
@@ -69,7 +69,7 @@ const router = new Router({
       name: 'edit-post',
       meta: {
         requiresAuth: true,
-        roles: ['moderator','bloger']
+        roles: ['moderator','blogger']
       }
     },
     {

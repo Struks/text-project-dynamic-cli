@@ -2,7 +2,7 @@
   <div class="margin-bottom">
     <hero-banner v-bind:headline="headline"/>
     <div class="container">
-      <button class="btn btn-success mt-4" type="button" @click="newPost()">ADD NEW POST</button>
+      <button v-show="currentUser.role == 'moderator' || currentUser.role == 'blogger' || currentUser.role == 'admin'" class="btn btn-success mt-4" type="button" @click="newPost()">ADD NEW POST</button>
       <!-- categories for mobile view -->
       <div class="content d-md-none mt-3" id="search-header">
         <div class="row">
@@ -64,11 +64,14 @@
       <div class="postList" id="postList">
         <article v-for="post in filteredPosts" :key="post.id" :class="'article ' + post.id">
           <button
+            v-show="post.author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
             type="button"
             class="float-right btn btn-danger btn-delete"
-            @click="deletePost(post.id,$event)"
+            title="Delete"
+            @click="deletePost(post.id, $event)"
           >X</button>
           <i
+            v-show="post.author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
             class="fa fa-edit float-right mr-1"
             style="font-size:30px"
             title="Edit"
@@ -91,7 +94,7 @@
                 class="group list-group-image mr-3 z-hovr"
               >
               <h2>{{post.title}}</h2>
-              <div class="text mt-3 d-none d-md-block" v-html="post.text"></div>
+              <p class="text mt-3 d-none d-md-block" >{{post.text | striphtml | limitChars}}</p>
             </div>
           </router-link>
           <span class="badge badge-primary">
@@ -159,6 +162,10 @@ export default {
     //filter posts
     filteredPosts() {
       return this.$store.getters['blog/filteredPosts'];
+    },
+    //current user
+    currentUser(){
+      return this.$store.getters['authentication/currentUser']
     }
   },
   created() {
@@ -193,7 +200,6 @@ export default {
       await this.$store.dispatch("blog/getBlogs", n*4);
       //hide spinner
       this.loadMorePosts = false;
-      
     },
     //change category
     changeCategory(category) {

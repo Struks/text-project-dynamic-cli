@@ -3,73 +3,123 @@ import db from '@/firebase/init'
 import router from '@/router'
 
 const state = {
-    users:[],
-    singleUser:''
+    users: [],
+    singleUser: '',
+    userPosts: [],
 }
 
 const getters = {
-    users:state => state.users,
-    singleUser:state => state.singleUser,
+    users: state => state.users,
+    singleUser: state => state.singleUser,
+    userPosts: state => state.userPosts
+
 }
 
 const mutations = {
-    setUsers(state, payload){
+    setUsers(state, payload) {
         state.users = payload;
     },
-    setSingleUser(state, payload){
+    setSingleUser(state, payload) {
         state.singleUser = payload;
-    }
+    },
+    setUserPosts(state, payload) {
+        state.userPosts = payload
+    },
 }
 
 const actions = {
     //get user (main implementation)
-    async getSingleUser({ commit }, payload) {
+    async getSingleUser({
+        commit,
+        dispatch
+    }, payload) {
         if (payload) {
-            
-            commit('spinner/setLoading', true, {root:true})
+            commit('spinner/setLoading', true, {
+                root: true
+            })
             let user = {};
             await db.collection('users').doc(payload).get().then(doc => {
                 user = doc.data()
                 user.id = doc.id
                 commit('setSingleUser', user)
-                })
-            }
-            commit('spinner/setLoading', false, {root:true})
+                dispatch('getUserPosts', payload)
+            })
+        }
+        commit('spinner/setLoading', false, {
+            root: true
+        })
     },
     //update edit profil acount
-    saveEditProfil({commit},payload){
+    saveEditProfil({
+        commit
+    }, payload) {
         db.collection('users').doc(payload.id).update({
-            bio:payload.bio,
-            img:payload.img,
+            bio: payload.bio,
+            img: payload.img,
             role: payload.role
         })
         commit('setSingleUser', payload);
-        setTimeout(()=>{
+        setTimeout(() => {
             router.push(`/${payload.id}`)
-        },400)
+        }, 400)
     },
     //get single users 
-    async getUsers({commit}){
+    async getUsers({
+        commit
+    }) {
         const users = []
-        commit('spinner/setLoading', false, {root:true});
-        await db.collection('users').orderBy('firstname').onSnapshot(res =>{
+        commit('spinner/setLoading', false, {
+            root: true
+        });
+        await db.collection('users').orderBy('firstname').onSnapshot(res => {
             const changes = res.docChanges();
-            changes.forEach(change =>{
-                if(change.type === 'added'){
-                   users.push({
-                       ...change.doc.data(),
-                       timestamp:change.doc.data().timestamp,
-                       id: change.doc.id,   
-                   }) 
+            changes.forEach(change => {
+                if (change.type === 'added') {
+                    users.push({
+                        ...change.doc.data(),
+                        timestamp: change.doc.data().timestamp,
+                        id: change.doc.id,
+                    })
                 }
                 commit('setUsers', users);
             })
         })
-        commit('spinner/setLoading', false, {root:true});
+        commit('spinner/setLoading', false, {
+            root: true
+        });
     },
+    //get user posts
+    async getUserPosts({
+        commit
+    }, payload) {
+        commit('spinner/setLoading', true, {
+            root: true
+        })
+        let post = [];
+        await db.collection('blog').where('uid', '==', payload).get().then(snapshot => {
+            if (snapshot.docs.length) {
+                snapshot.docs.forEach(doc => {
+                    post.push({
+                        ...doc.data(),
+                        id: doc.id
+                    })
+                    commit('setUserPosts', post)
+                    commit('spinner/setLoading', false, {
+                        root: true
+                    })
+                })
+            } else {
+                commit('setUserPosts', [])
+                commit('spinner/setLoading', false, {
+                    root: true
+                })
+            }
+        })
+    }
+
 }
 
-export default{
+export default {
     state,
     getters,
     mutations,

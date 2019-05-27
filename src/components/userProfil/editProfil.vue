@@ -12,8 +12,9 @@
             v-model="singleUser.img"
             type="text"
             placeholder="Account Image"
-          >
-          <vue-ckeditor v-model="singleUser.bio"></vue-ckeditor>
+          ><br/>
+          <label for="bio" class="mb-1">BIO:</label>
+          <vue-ckeditor v-model="singleUser.bio" id="bio"></vue-ckeditor>
           <!-- role -->
           <label for="role" class="mt-3 mb-1">Role:</label>
           <br>
@@ -67,7 +68,7 @@ label {
 }
 input {
   width: 70%;
-  margin: 10px 0px 30px 0px;
+  margin: 10px 0px 20px 0px;
   padding: 20px;
   border: 1px solid #212529;
 }

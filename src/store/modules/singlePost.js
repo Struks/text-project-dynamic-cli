@@ -33,6 +33,14 @@ const actions = {
             
     //     })
     // }
+
+    // async deletePost({commit, dispatch}, payload){
+    //     commit('setPost', payload)
+    //     await db.collection('blog').doc(payload).delete().then(() => {
+    //         dispatch('users/getUserPosts', payload, { root: true })
+    //     });
+
+    // }
 }
 
 export default{

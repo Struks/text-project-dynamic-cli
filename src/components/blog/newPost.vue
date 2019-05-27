@@ -26,7 +26,7 @@
                         :class="{error: $v.title.$error}"
                     ><br/>
                     <p class="error-message" v-if="!$v.title.required && $v.title.$dirty">Title field is required.</p>
-                    <label for="url">URL:</label><br/>
+                    <label for="url">Img URL:</label><br/>
                     <input 
                         id="url"
                         class="url" 
@@ -35,8 +35,9 @@
                         placeholder="Thumbnails URL"
                         @blur="$v.url.$touch()"
                         :class="{error: $v.url.$error}"
-                    >
-                    <p class="error-message" v-if="!$v.url.url && $v.url.$dirty">URL is not valid.</p>
+                    ><br/>
+                    <p class="error-message" id="content" v-if="!$v.url.url && $v.url.$dirty">URL is not valid.</p>
+                    <label for="content">Content:</label>
                     <vue-ckeditor v-model="text"></vue-ckeditor>
                     <div class="afterbtn"><button type="button" class="btn btn-success" @click="addPost">ADD POST</button></div>
                    
@@ -68,7 +69,9 @@ export default {
             src:true,
             timestamp:'',
             id:'',
-            category:''
+            category:'',
+            description:'',
+            uid:''
             
         }
     },
@@ -78,8 +81,11 @@ export default {
     },
     computed: {
         currentUser(){
-            return this.$store.getters['authentication/logUser'];
-        }
+            return this.$store.getters['authentication/currentUser'];
+        },
+        // description(){
+        //     return {{ this.text | limitChars}}
+        // },
     },
 
     methods:{
@@ -96,9 +102,12 @@ export default {
                 category: this.category,
                 author: this.currentUser.firstname + ' ' + this.currentUser.lastname,
                 timestamp: moment(Date.now()).utc().startOf('day').format(),
+                uid: this.currentUser.id
+                // description: this.description,
+
             }).then((docRef) =>{ 
                 this.id = docRef.id
-                console.log('Document written with ID: ', docRef.id);
+                // console.log('Document written with ID: ', docRef.id);
                 this.$router.push(`${docRef.id}`)
             })
             .catch((error) => console.error('Error adding document: ', error))
