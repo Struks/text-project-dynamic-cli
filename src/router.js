@@ -97,6 +97,7 @@ const router = new Router({
       name: 'profilUser',
       meta:{
         requiresAuth: true,
+        roles:['moderator','blogger']
       },
       beforeEnter: (to, from, next) => {
         const id = to.params.id

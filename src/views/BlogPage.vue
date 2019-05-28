@@ -62,7 +62,7 @@
       </div>
 
       <div class="postList" id="postList">
-        <article v-for="post in filteredPosts" :key="post.id" :class="'article ' + post.id">
+        <article v-for="(post, i) in filteredPosts" :key="i" :class="'article ' + post.id">
           <button
             v-show="post.author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
             type="button"

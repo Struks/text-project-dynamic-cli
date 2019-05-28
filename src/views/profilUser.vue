@@ -39,7 +39,7 @@
             type="button"
             class="float-right btn btn-danger btn-delete"
             title="Delete"
-            @click="deletePost(post.id)"
+            @click="deletePost($event,post.id)"
           >X</button>
           <router-link
             class="fa fa-edit float-right mr-1"
@@ -110,19 +110,22 @@ export default {
 
   methods:{
     //delete post
-    deletePost(id) {
-        db.collection("blog")
-          .doc(id)
-          .delete().then(()=>{
-            store.dispatch( 'users/getUserPosts', id );
-          }).catch(error => {
-            console.log("error!: ", error);
-          })      
-      },
-      editProfil(id) {
+    deletePost(event,id) {
+      event.preventDefault();
+      db.collection("blog")
+        .doc(id)
+        .delete().then( () => {
+          
+        })
+      
+     
+    },
+    //edit post
+    editProfil(id) {
       this.$router.push(`/${id}/edit`);
     }
   },
+
   beforeRouteUpdate : (to, from, next) => {
     store.dispatch('users/getSingleUser', null )
     store.commit('users/setUserPosts', [] )

@@ -8,7 +8,7 @@
         :sortable="true"
         :selectable="'multiple'"
         :selected-field="selectedField"
-        @change="userProfil"
+        @change="userProfil($event)"
         :editable="'inline'"
       >
         <kendo-grid-column :field="'id'" :title="'ID'" :width="250"></kendo-grid-column>
@@ -48,6 +48,7 @@ export default {
   methods: {
     //link to user profil.
     userProfil(event) {
+      event.preventDefault();
       const element = event.sender.select();
       const id = event.sender.dataItem(element[0]).id;
       this.$router.push("/" + id);

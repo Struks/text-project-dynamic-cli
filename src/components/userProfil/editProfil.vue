@@ -16,9 +16,9 @@
           <label for="bio" class="mb-1">BIO:</label>
           <vue-ckeditor v-model="singleUser.bio" id="bio"></vue-ckeditor>
           <!-- role -->
-          <label for="role" class="mt-3 mb-1">Role:</label>
+          <label  v-show="currentUser.role === 'admin'" for="role" class="mt-3 mb-1">Role:</label>
           <br>
-          <select name="role" id="role" class="form-control custom-select" v-model="singleUser.role">
+          <select v-show="currentUser.role === 'admin'" name="role" id="role" class="form-control custom-select" v-model="singleUser.role">
             <option value="" selected disabled>Choose Role</option>
             <option value="user">User</option>
             <option value="blogger">Blogger</option>
@@ -51,6 +51,9 @@ export default {
   computed: {
     singleUser() { 
       return this.$store.getters["users/singleUser"]; 
+    },
+    currentUser(){
+      return this.$store.getters["authentication/currentUser"];
     }
   },
   methods: {
