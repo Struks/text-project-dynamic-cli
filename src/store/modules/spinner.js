@@ -12,7 +12,7 @@ const mutations = {
     }
 }
 const actions = {
-    getLoading(commit, payload) {
+    getLoading({commit}, payload) {
         commit('setLoading', payload)
     }
 }

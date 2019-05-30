@@ -171,6 +171,7 @@ export default {
   created() {
     //load 3 post
     this.$store.dispatch("blog/getBlogs", 3);
+    this.$store.commit('modal/setModal', true)
   },
   methods: {
     //path for new post
@@ -217,6 +218,11 @@ export default {
 <style>
 .margin-bottom {
   margin-bottom: 220px;
+}
+@media (max-width: 425px) {
+  .margin-bottom {
+    margin-bottom: 150px;
+  }
 }
 label {
   font-family: "Novecentosan", Arial, sans-serif;

@@ -116,9 +116,44 @@ button {
   box-shadow: 3px 3px 5px 6px rgb(24, 223, 84);
   width: 500px;
   text-align: center;
-  margin-left: 240px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 50px;
 }
+@media(max-width: 768px){
+  
+}
+@media(max-width: 425px){
+  .form{
+    width: 380px;
+  }
+  .margin-bottom {
+    margin-bottom: 180px;
+  }
+} 
+@media(max-width: 375px){
+  .form{
+    width: 340px;
+  }
+  input{
+    width: 300px;
+  }
+  button {
+    width: 300px;
+  }
+}
+@media(max-width: 320px){
+  .form{
+    width: 290px;
+  }
+  input{
+    width: 250px;
+  }
+  button {
+    width: 250px;
+  }
+}
+
 
 .error {
   color: red;
