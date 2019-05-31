@@ -32,10 +32,6 @@ const state = {
     activeCategoryBlog: 'all',
     blog: [],
     noMoreProjects: false,
-    
-
-
-
 }
 
 const getters = {
@@ -55,14 +51,14 @@ const getters = {
             result = state.blog;
         }
         return result;
-    }
+    },
 }
 
 const mutations = {
-    setPosts: (state, payload) => state.posts = payload,
+    // setPosts: (state, payload) => state.posts = payload,
     activeBlog: (state, active) => state.activeCategoryBlog = active,
     setBlogs: (state, payload) => state.blog = payload,
-    changeCategory: (state, category) => state.selectedCategoryBlog = category
+    changeCategory: (state, category) => state.selectedCategoryBlog = category,
 
 }
 
@@ -90,7 +86,14 @@ const actions = {
             }
         })
         commit('spinner/setLoading', false, {root:true});
-    }
+    },
+    //delete post
+    async deletePost({dispatch}, payload) {
+        db.collection("blog")
+            .doc(payload)
+            .delete();
+        await dispatch("getBlogs", 3);  
+    },
 
 
 }

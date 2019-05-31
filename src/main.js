@@ -41,10 +41,6 @@ Vue.filter('date', (created) => moment(created).format('MMMM Do YYYY'))
 Vue.filter('striphtml', value => {
   let StrippedText = value.replace(/(<([^>]+)>)/ig,"");
   return StrippedText;
-
-  // let div = document.createElement('div');
-  // div.innerHTML = value;
-  // let text = div.textContent || div.innerHTML || '';
 });
 
 //limited number of characters

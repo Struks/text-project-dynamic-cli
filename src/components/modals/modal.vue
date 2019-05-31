@@ -8,17 +8,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Question Of Confirmation</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" @click="showModal = false">&times;</span>
+                    <span aria-hidden="true" @click="config.onCancel">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <p>Do you wanna really delete <b>{{config.message}}</b>?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="showModal = false">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" @click="config.onCancel">{{config.cancelLabel}}</button>
+                    <button type="button" class="btn btn-primary" @click="config.onConfirm">{{config.confirmationLabel}}</button>
                 </div>
             </div>
         </div>
@@ -27,33 +27,27 @@
       </div>
     </transition>
   </div>
-
-  <button @click="showModalOn">Click</button>
-
   </div>
 </template>
 
 <script>
+import router from '@/router';
+
 export default {
-  
     data(){
         return{
-            
+  
         }
     },
     computed:{
         showModal(){
-            this.$store.getters['modal/modal'];
-        }
-    },
-    methods: {
-        noShowModal(){
-            this.$store.dispatch('modal/getModal', false)
+            return this.$store.getters['modal/modal'];
         },
-        showModalOn(){
-            this.$store.commit('modal/setModal', true)
+        config() {
+            return this.$store.getters['modal/config'];
         }
     },
+
 }
 </script>
 

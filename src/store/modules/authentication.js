@@ -5,7 +5,7 @@ import router from '@/router'
 
 const state = {
     feedback: '',
-    currentUser: null,
+    currentUser: '',
 }
 
 const getters = {

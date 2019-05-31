@@ -2,7 +2,12 @@
   <div id="app">
     <header-view></header-view>
     <loader/>
-    <modal/>
+    <modal
+      :message="config.message"
+      :confirmationLabel="config.confirmationLabel"
+      :cancelLabel="config.cancelLabel"
+      :onConfirm="config.onConfirm"
+      :onCancel="config.onCancel"></modal>
     <router-view/>
     <footer-view></footer-view>
   </div>
@@ -16,6 +21,7 @@ import './css/media-queries.css';
 import '../node_modules/slick-carousel/slick/slick.css';
 import Spinner from '@/components/spinner/spinner.vue';
 import Modal from '@/components/modals/modal.vue';
+import { store } from '@/store/index'
 
 export default {
   components:{
@@ -28,6 +34,17 @@ export default {
   data(){
     return{
       
+    }
+  },
+  computed:{
+    loading: () => {
+      return store.getters['spinner/loading'];
+    },
+    modal: () => {
+      return store.getters['modal/modal'];
+    },
+    config: () => {
+      return store.getters['modal/config'];
     }
   }
 }

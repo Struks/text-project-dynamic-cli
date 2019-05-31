@@ -32,7 +32,7 @@
           v-show="author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
           type="button"
           class="float-right btn btn-danger btn-delete"
-          @click="deletePost(id)"
+          @click="deletePost(id,title)"
         >DELETE</button>
       </div>
     </div>
@@ -89,17 +89,22 @@ export default {
     editPost(id) {
       this.$router.push({ path: `/blog/${id}/edit` });
     },
-    deletePost(id) {
-      if (confirm("Are you sure ? ")) {
-        db.collection("blog")
-          .doc(id)
-          .delete()
-          .catch(error => conosle.log("Error: ", error));
-        setTimeout(() => {
-          this.$router.push({ path: `/blog` });
-        }, 400);
-      }
-    }
+    deletePost(id, title) {
+      this.$store.dispatch('modal/getConfig',{
+          message: title,
+          confirmationLabel: 'Yes',
+          cancelLabel: 'No',
+          onConfirm: () => {
+          this.$store.dispatch('blog/deletePost', id);
+          this.$store.dispatch('modal/getModal', false);
+          this.$router.push({ path: `/blog` }); 
+          },
+          onCancel: () => {
+          this.$store.dispatch('modal/getModal', false)
+          }
+      })
+      this.$store.dispatch('modal/getModal', true)
+    },
   }
 };
 </script>

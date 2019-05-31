@@ -39,7 +39,7 @@
             type="button"
             class="float-right btn btn-danger btn-delete"
             title="Delete"
-            @click="deletePost($event,post.id)"
+            @click="deletePost(post.id, post.title)"
           >X</button>
           <router-link
             class="fa fa-edit float-right mr-1"
@@ -110,15 +110,21 @@ export default {
 
   methods:{
     //delete post
-    deletePost(event,id) {
-      event.preventDefault();
-      db.collection("blog")
-        .doc(id)
-        .delete().then( () => {
-          
-        })
-      
-     
+    deletePost(id, title) {
+      this.$store.dispatch('modal/getConfig',{
+          message: title,
+          confirmationLabel: 'Yes',
+          cancelLabel: 'No',
+          onConfirm: () => {
+          this.$store.dispatch('blog/deletePost', id);
+          this.$store.dispatch('modal/getModal', false);
+          // this.$router.replace('profilUser')
+          },
+          onCancel: () => {
+          this.$store.dispatch('modal/getModal', false)
+          }
+      })
+      this.$store.dispatch('modal/getModal', true)
     },
     //edit post
     editProfil(id) {

@@ -1,6 +1,6 @@
 import 'firebase/auth';
-import db from '@/firebase/init'
-import router from '@/router'
+import db from '@/firebase/init';
+import router from '@/router';
 
 const state = {
     users: [],
@@ -50,7 +50,7 @@ const actions = {
         })
     },
     //update edit profil acount
-    saveEditProfil({
+    async saveEditProfil({
         commit
     }, payload) {
         db.collection('users').doc(payload.id).update({
@@ -59,9 +59,8 @@ const actions = {
             role: payload.role
         })
         commit('setSingleUser', payload);
-        setTimeout(() => {
-            router.push(`/${payload.id}`)
-        }, 400)
+        await router.push(`/${payload.id}`)
+
     },
     //get single users 
     async getUsers({

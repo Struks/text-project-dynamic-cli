@@ -32,7 +32,7 @@
 
                     <div class="afterbtn">
                         <button type="button" class="btn btn-success" @click="editPost(id)">SAVE</button>
-                        <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(id)">DELETE</button>
+                        <button type="button" class="float-right btn btn-danger btn-delete" @click="deletePost(id, title)">DELETE</button>
                     </div>
                    
                 </div>
@@ -46,7 +46,7 @@
 import { required,url } from "vuelidate/lib/validators";
 import VueCkeditor from 'vue-ckeditor2';
 import Banner from '@/components/banner/Banner.vue';
-import db from '@/firebase/init'
+import db from '@/firebase/init';
 export default {
     components:{
         'banner':Banner,
@@ -61,7 +61,7 @@ export default {
         text:'',
         url:'',
         timestamp:'',
-        id:''       
+        id:'',     
         }
     },
     validations:{
@@ -77,15 +77,6 @@ export default {
             this.timestamp = doc.data().timestamp,
             this.id = doc.id   
         })
-            // this.$store.dispatch('loadPostOnEditor',{
-        //     title:this.title,
-        //     text:this.text,
-        //     url:this.url,
-        //     timestamp:this.timestamp,
-        //     id:this.id
-        // },this.$route.params.id)
-        // console.log(this.$route.params.id)
-
     },
     methods:{
         editPost(id){       
@@ -98,15 +89,22 @@ export default {
             })
             this.$router.push(`/blog/${id}`)   
         },
-        deletePost(id){
-        if(confirm('Are you sure ? ')){
-          db.collection("blog").doc(id).delete();
-          setTimeout(() => {
-            document.querySelector('.article').remove()
-          }, 400); 
-          this.$router.push({path:`/blog`}) 
-        }
-      },
+        deletePost(id, title) {
+            this.$store.dispatch('modal/getConfig',{
+                message: title,
+                confirmationLabel: 'Yes',
+                cancelLabel: 'No',
+                onConfirm: () => {
+                this.$store.dispatch('blog/deletePost', id);
+                this.$store.dispatch('modal/getModal', false);
+                this.$router.push({ path: `/blog` }); 
+                },
+                onCancel: () => {
+                this.$store.dispatch('modal/getModal', false)
+                }
+            })
+            this.$store.dispatch('modal/getModal', true)
+        },
         
     }
 }

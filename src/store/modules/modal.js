@@ -1,19 +1,29 @@
 const state = {
-    modal: true,
+    modal: false,
+    config:{}
 }
 const getters = {
-    modal(state){
+    modal: state => {
         return state.modal
-    }
+    },
+    config: state => {
+        return state.config
+    },
 }
 const mutations = {
-    setModal(state, payload){
+    setModal: (state, payload) => {
         state.modal = payload
+    },
+    setConfig:(state,payload) => {
+        state.config = payload;
     }
 }
 const actions = {
-    getModal({commit}, payload){
-        commit('setModal', payload)
+    getModal: ({commit}, payload) => {
+        commit('setModal', payload);
+    },
+    getConfig({commit}, payload){
+        commit('setConfig', payload);
     }
 }
 export default {
