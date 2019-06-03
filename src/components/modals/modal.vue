@@ -1,33 +1,29 @@
 <template>
-<div>
    <div v-if="showModal">
-    <transition name="modal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Question Of Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" @click="config.onCancel">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Do you wanna really delete <b>{{config.message}}</b>?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="config.onCancel">{{config.cancelLabel}}</button>
-                    <button type="button" class="btn btn-primary" @click="config.onConfirm">{{config.confirmationLabel}}</button>
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Question Of Confirmation</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" @click="config.onCancel">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Do you wanna really delete <b>{{config.message}}</b>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="config.onCancel">{{config.cancelLabel}}</button>
+                                <button type="button" class="btn btn-primary" @click="config.onConfirm">{{config.confirmationLabel}}</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        </div>
-      </div>
-    </transition>
-  </div>
-  </div>
+        </transition>
+    </div>
 </template>
 
 <script>

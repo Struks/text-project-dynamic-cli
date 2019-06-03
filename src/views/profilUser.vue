@@ -2,7 +2,8 @@
   <div class="margin-bottom">
     <hero-banner/>
     <div class="container">
-      <button type="button" class="btn-edit btn btn-success mt-5 d-none d-md-block" @click="editProfil(singleUser.id)">EDIT PROFIL</button>
+      <button type="button" class="btn-edit btn pull-left btn-success mt-5 d-none d-md-block" @click="editProfil(singleUser.id)">EDIT PROFIL</button>
+      <button type="button" class="btn-add-new-post btn pull-right btn-success mt-5 d-none d-md-block" @click="newPost()">ADD NEW POST</button>
       <div class="profil"> 
         <div class="images align-center">
           <img
@@ -30,16 +31,16 @@
           <p class="mb-5" v-html="singleUser.bio"></p>
         </div>
         <hr/>
-        <h4 class="posts-title">POSTS:</h4>
+        <h4 v-if="posts != ''" class="posts-title">POSTS:</h4>
+        <h4 v-if="posts == ''" class="posts-title">{{singleUser.firstname}} {{singleUser.lastname}} have no posts.</h4>
       </div>
       <!-- articles -->
-      <!-- v-show="post.author === singleUser.firstname + ' ' + singleUser.lastname" -->
-        <article v-for="post in posts" :key="post.id"  :class="'article ' + post.id">
+        <article v-for="(post, index) in posts" :key="index"  :class="'article ' + post.id">
           <button
             type="button"
             class="float-right btn btn-danger btn-delete"
             title="Delete"
-            @click="deletePost(post.id, post.title)"
+            @click="deletePost(post.id, post.title, index)"
           >X</button>
           <router-link
             class="fa fa-edit float-right mr-1"
@@ -110,7 +111,7 @@ export default {
 
   methods:{
     //delete post
-    deletePost(id, title) {
+    deletePost(id, title, index) {
       this.$store.dispatch('modal/getConfig',{
           message: title,
           confirmationLabel: 'Yes',
@@ -118,7 +119,7 @@ export default {
           onConfirm: () => {
           this.$store.dispatch('blog/deletePost', id);
           this.$store.dispatch('modal/getModal', false);
-          // this.$router.replace('profilUser')
+          this.posts.splice(index, 1);
           },
           onCancel: () => {
           this.$store.dispatch('modal/getModal', false)
@@ -129,9 +130,13 @@ export default {
     //edit post
     editProfil(id) {
       this.$router.push(`/${id}/edit`);
-    }
+    },
+    //path for new post
+    newPost() {
+      this.$router.push({ path: "/blog/newPost" });
+    },
   },
-
+ 
   beforeRouteUpdate : (to, from, next) => {
     store.dispatch('users/getSingleUser', null )
     store.commit('users/setUserPosts', [] )
@@ -164,14 +169,14 @@ h4 {
   text-align: start;
 }
 .img {
-  margin-top: -120px;
+  margin-top: -50px;
 }
 .images{
   max-width: 500px;
   margin-right: auto;
   margin-left: auto
 }
-.btn-edit{
+.btn{
   padding: 1px;
   border-radius: 0px;
 }

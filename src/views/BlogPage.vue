@@ -62,13 +62,13 @@
       </div>
 
       <div class="postList" id="postList">
-        <article v-for="(post, i) in filteredPosts" :key="i" :class="'article ' + post.id">
+        <article v-for="(post, index) in filteredPosts" :key="index" :class="'article ' + post.id">
           <button
             v-show="post.author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
             type="button"
             class="float-right btn btn-danger btn-delete"
             title="Delete"
-            @click="deletePost(post.id, post.title)"
+            @click="deletePost(post.id, post.title, index)"
           >X</button>
           <i
             v-show="post.author === currentUser.firstname + ' ' + currentUser.lastname || currentUser.role == 'moderator' || currentUser.role == 'admin'"
@@ -109,7 +109,7 @@
         <button
           v-if="!noMoreProjects && !loadMorePosts"
           type="button"
-          @click="loadMore(4)"
+          @click="loadMore(filteredPosts.length)"
           class="btn btn-success mt-md-5 loadMoreButton"
         >Load More</button>
         <img
@@ -182,15 +182,18 @@ export default {
       this.$router.push({ path: "/blog/newPost" });
     },
     //delete post
-    deletePost(id, title) {
+    deletePost(id, title, index) {
+      // const numberOfPosts = this.filteredPosts.length;
+      console.log(this.filteredPosts.length);
       this.$store.dispatch('modal/getConfig',{
         message: title,
         confirmationLabel: 'Yes',
         cancelLabel: 'No',
         onConfirm: () => {
-          this.$store.dispatch('blog/deletePost', id);
-          this.$store.dispatch('modal/getModal', false)
-          // this.$router.push({ path: `/blog` }); 
+          this.$store.dispatch('blog/deletePost', id).then(() =>{
+            this.$store.dispatch('modal/getModal', false);
+            this.filteredPosts.splice(index, 1);
+          })
         },
         onCancel: () => {
           this.$store.dispatch('modal/getModal', false)
@@ -203,12 +206,12 @@ export default {
       this.$router.push({ path: `/blog/${id}/edit` });
     },
     //load more method
-    async loadMore(n) {
+    async loadMore(postsInShow) {
       //indicator for show/hide spinner
       //show spinner
       this.loadMorePosts = true;
       //promise dispatch
-      await this.$store.dispatch("blog/getBlogs", n*4);
+      await this.$store.dispatch("blog/getBlogs", postsInShow + 2);
       //hide spinner
       this.loadMorePosts = false;
     },

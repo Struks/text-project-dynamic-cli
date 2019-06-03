@@ -40,18 +40,21 @@ const getters = {
     blog: state => state.blog,
     noMoreProjects: state => state.noMoreProjects,
     selectedCategoryBlog: state => state.selectedCategoryBlog,
+    // filteredPosts: state => {
+    //     let category = state.selectedCategoryBlog;
+    //     let result = [];
+    //     if (category !== 'all') {
+    //         result = state.blog.filter(post => {
+    //             return post.category === category;
+    //         });
+    //     } else {
+    //         result = state.blog;
+    //     }
+    //     return result;
+    // },
     filteredPosts: state => {
-        let category = state.selectedCategoryBlog;
-        let result = [];
-        if (category !== 'all') {
-            result = state.blog.filter(post => {
-                return post.category === category;
-            });
-        } else {
-            result = state.blog;
-        }
-        return result;
-    },
+        return state.filteredPosts;
+    }
 }
 
 const mutations = {
@@ -59,7 +62,9 @@ const mutations = {
     activeBlog: (state, active) => state.activeCategoryBlog = active,
     setBlogs: (state, payload) => state.blog = payload,
     changeCategory: (state, category) => state.selectedCategoryBlog = category,
-
+    setFilteredPosts:(state, payload) => {
+        state.filteredPosts = payload;
+    },
 }
 
 const actions = {
@@ -88,12 +93,24 @@ const actions = {
         commit('spinner/setLoading', false, {root:true});
     },
     //delete post
-    async deletePost({dispatch}, payload) {
-        db.collection("blog")
+    deletePost({commit}, payload ) {
+        return db.collection("blog")
             .doc(payload)
-            .delete();
-        await dispatch("getBlogs", 3);  
+            .delete();    
     },
+    //get filtered post
+    getFilteredPosts:({commit}, payload) => {
+        let filteredPosts;
+        db.collection('blog').doc('category', '==', payload).then(snapshot => {
+            if(snapshot.docs.length) {
+                snapshot.docs.forEach(doc => {
+                    filteredPosts.push({
+                        ...doc.data()
+                    })
+                })
+            }
+        })
+    }
 
 
 }
