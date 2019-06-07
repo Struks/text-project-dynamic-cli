@@ -31,32 +31,33 @@ const state = {
     selectedCategoryBlog: "all",
     activeCategoryBlog: 'all',
     blog: [],
-    noMoreProjects: false,
+    lastVisiblePost: '',
+    filteredPosts: [],
+    noMorePosts: false,
+    blogInfo: [],
 }
-
 const getters = {
     blogCategories: state => state.blogCategories,
     activeCategoryBlog: state => state.activeCategoryBlog,
     blog: state => state.blog,
-    noMoreProjects: state => state.noMoreProjects,
+    noMorePosts: state => state.noMorePosts,
     selectedCategoryBlog: state => state.selectedCategoryBlog,
-    // filteredPosts: state => {
-    //     let category = state.selectedCategoryBlog;
-    //     let result = [];
-    //     if (category !== 'all') {
-    //         result = state.blog.filter(post => {
-    //             return post.category === category;
-    //         });
-    //     } else {
-    //         result = state.blog;
-    //     }
-    //     return result;
-    // },
     filteredPosts: state => {
-        return state.filteredPosts;
+        let category = state.selectedCategoryBlog;
+        if (category !== 'all'){
+            return state.filteredPosts
+        }else{
+            return state.blog;
+        }
+    },
+    lastVisiblePost: state => {
+        return state.lastVisiblePost;
+    },
+    blogInfo: state => {
+        return state.blogInfo;
     }
+   
 }
-
 const mutations = {
     // setPosts: (state, payload) => state.posts = payload,
     activeBlog: (state, active) => state.activeCategoryBlog = active,
@@ -65,11 +66,20 @@ const mutations = {
     setFilteredPosts:(state, payload) => {
         state.filteredPosts = payload;
     },
+    setLastVisiblePost:(state, payload) => {
+        state.lastVisiblePost = payload;
+    },
+    setNoMorePosts:(state, payload) => {
+        state.noMorePosts = payload;
+    },
+    setBlogInfo:(state, payload) => {
+        state.blogInfo = payload;
+    }
 }
-
 const actions = {
+    //all posts
     async getBlogs({commit}, payload) {
-        commit('spinner/setLoading', true, {root:true})
+        commit('spinner/setLoading', true, {root: true})
         const blog = []
         await db.collection('blog').limit(payload).orderBy('title', 'desc').onSnapshot(res => {
             const changes = res.docChanges();
@@ -81,40 +91,60 @@ const actions = {
                         id: change.doc.id
                     })
                 }
-                commit('setBlogs', blog)
+                commit('setBlogs', blog);               
             })
-            const sizeOfBlog = res.size
-            if (payload !== sizeOfBlog) {
-                state.noMoreProjects = true
-            }else {  
-                state.noMoreProjects = false
-            }
         })
         commit('spinner/setLoading', false, {root:true});
     },
     //delete post
-    deletePost({commit}, payload ) {
-        return db.collection("blog")
+    async deletePost({commit}, payload ) {
+        commit('spinner/setLoading', true, { root: true });
+        await db.collection("blog")
             .doc(payload)
             .delete();    
+        commit('spinner/setLoading', false, { root: true });
     },
     //get filtered post
-    getFilteredPosts:({commit}, payload) => {
-        let filteredPosts;
-        db.collection('blog').doc('category', '==', payload).then(snapshot => {
+    async getFilteredPosts({commit}, payload){
+        commit('spinner/setLoading', true, { root: true })
+        const filteredPosts = [];
+        await db.collection('blog').where('category', '==', payload).get().then(snapshot => {
             if(snapshot.docs.length) {
                 snapshot.docs.forEach(doc => {
                     filteredPosts.push({
-                        ...doc.data()
-                    })
-                })
-            }
+                        ...doc.data(),
+                        id: doc.id,
+                    });
+                    commit('setFilteredPosts', filteredPosts);
+                    commit('spinner/setLoading', false, { root: true });
+                })   
+            }else {
+                commit('setFilteredPosts', []);
+                commit('spinner/setLoading', false, { root: true });
+            }                    
         })
-    }
-
-
+    },
+    //load more
+    // loadMore({state, commit}){
+    //     db.collection('blog').orderBy('title', 'asc').startAfter(state.lastVisiblePost)
+    //     .limit(3).get().then(snapshot => {
+    //         const blogInfo = [];
+    //         let lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+    //           snapshot.forEach(doc =>{
+    //             blogInfo.push({
+    //                 ...doc.data(),
+    //                 id: doc.id,
+    //             });
+    //             if(snapshot.docs.length === 0){
+    //                 commit('setNoMorePosts', true);
+    //             }
+    //             commit('setBlogInfo', blogInfo);
+    //             commit('setLastVisiblePost', lastVisiblePost);
+                
+    //         })
+    //     })
+    // }
 }
-
 export default {
     state,
     getters,

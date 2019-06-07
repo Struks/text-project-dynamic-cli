@@ -29,14 +29,9 @@ const mutations = {
 
 const actions = {
     //get user (main implementation)
-    async getSingleUser({
-        commit,
-        dispatch
-    }, payload) {
+    async getSingleUser({ commit, dispatch }, payload) {
         if (payload) {
-            commit('spinner/setLoading', true, {
-                root: true
-            })
+            commit('spinner/setLoading', true, { root: true })
             let user = {};
             await db.collection('users').doc(payload).get().then(doc => {
                 user = doc.data()
@@ -50,9 +45,7 @@ const actions = {
         })
     },
     //update edit profil acount
-    async saveEditProfil({
-        commit
-    }, payload) {
+    async saveEditProfil({ commit }, payload) {
         db.collection('users').doc(payload.id).update({
             bio: payload.bio,
             img: payload.img,
