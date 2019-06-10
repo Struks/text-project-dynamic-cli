@@ -1,8 +1,13 @@
 <template>
   <div class="margin-bottom">
     <hero-banner v-bind:headline="headline"/>
-    <div class="container">
-      <button v-show="currentUser.role == 'moderator' || currentUser.role == 'blogger' || currentUser.role == 'admin'" class="btn btn-success mt-4" type="button" @click="newPost()">ADD NEW POST</button>
+    <div class="container mt-3">
+      <!-- new post -->
+      <button v-show="currentUser.role == 'moderator' || currentUser.role == 'blogger' || currentUser.role == 'admin'" class="btn btn-success" type="button" @click="newPost()">ADD NEW POST</button>
+      <!-- sort list -->
+      <i @click="orderByTitle()" title="sort by date" class="fa fa-sort sort btn" style="font-size:48px;color:green"></i>
+      <!-- input for search blogs -->
+      <input class="searchBlogs" type="text" v-model="search" placeholder="search blogs">
       <!-- categories for mobile view -->
       <div class="content d-md-none mt-3" id="search-header">
         <div class="row">
@@ -109,15 +114,9 @@
         <button
           v-if="!noMorePosts"
           type="button"
-          @click="loadMore(blog.length, filteredPosts.length)"
+          @click="loadMore()"
           class="btn btn-success mt-md-5 loadMoreButton"
         >Load More</button>
-        <!-- <img
-          v-if="loadMorePosts"
-          src="/img/spinner.gif"
-          alt="spinner"
-          class="img img-fluid"
-          id="loader"> -->
       </div>
     </div>
   </div>
@@ -169,23 +168,23 @@ export default {
     showModal(){
       return this.$store.getters['modal/modal'];
     },
-    blogInfo() {
-      return this.$store.getters['blog/blogInfo'];
-    },
+    orderBy(){
+      return this.$store.getters['blog/orderBy']
+    }
   },
   watch: {
     activeCategoryBlog() {
       if(this.activeCategoryBlog === 'all') {
         return 
       } else {
-        this.$store.dispatch('blog/getFilteredPosts', this.activeCategoryBlog, 2);
+        this.$store.dispatch('blog/getFilteredPosts', this.activeCategoryBlog);
       }
     }
   },
   created() {
-    this.$store.dispatch("blog/getBlogs", 2)
+    // this.$store.dispatch("blog/getBlogs", 3)
     //load 3 post
-    // this.$store.dispatch("blog/loadMore")
+    this.$store.dispatch("blog/loadMore")
   },
   methods: {
     //path for new post
@@ -217,15 +216,8 @@ export default {
       this.$router.push({ path: `/blog/${id}/edit` });
     },
     //load more method
-    loadMore(all, categoryPosts) {
-      if(this.activeCategoryBlog === 'all'){
-        this.$store.dispatch('blog/getBlogs', all + 2)
-      }
-      // else{ 
-      //   this.$store.dispatch('blog/getFilteredPosts', categoryPosts + 2)
-      // }
-      console.log(all, ': all');
-      console.log(categoryPosts, ': categoryPosts')
+    loadMore() {
+      this.$store.dispatch('blog/loadMore')
     },
     //change category
     changeCategory(category) {
@@ -234,9 +226,17 @@ export default {
     //active category
     activeBlog(category) {
       this.$store.commit("blog/activeBlog", category);
+    },
+    // sortable
+    orderByTitle(){
+      this.$store.commit('blog/setOrderBy');
+      // this.$store.state('blog/setBlogs');
+      this.blog.splice(0, this.blog.length-1 )
+      this.$store.dispatch("blog/loadMore");
+      if(this.noMorePosts === true) this.$store.commit('blog/setNoMorePosts', false);
     }
   }
-};
+}
 </script>
 
 
@@ -368,4 +368,14 @@ button {
 .badge {
   margin-top: 1 0px;
 }
+.sort {
+  margin-left: 50px;
+  padding-top: 10px; 
+}
+.searchBlogs{
+  width: 500px;
+  height: 40px;
+  padding-left: 10px;
+}
+
 </style>

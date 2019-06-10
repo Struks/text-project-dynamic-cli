@@ -34,7 +34,7 @@ const state = {
     lastVisiblePost: '',
     filteredPosts: [],
     noMorePosts: false,
-    blogInfo: [],
+    orderBy: 'asc',
 }
 const getters = {
     blogCategories: state => state.blogCategories,
@@ -50,12 +50,16 @@ const getters = {
             return state.blog;
         }
     },
+    // filteredPosts: state => {
+    //     return state.filteredPosts;
+    // },
     lastVisiblePost: state => {
         return state.lastVisiblePost;
     },
-    blogInfo: state => {
-        return state.blogInfo;
+    orderBy: state => {
+        return state.orderBy
     }
+
    
 }
 const mutations = {
@@ -72,30 +76,35 @@ const mutations = {
     setNoMorePosts:(state, payload) => {
         state.noMorePosts = payload;
     },
-    setBlogInfo:(state, payload) => {
-        state.blogInfo = payload;
+    setOrderBy:(state) => {
+        if(state.orderBy === 'asc'){
+            state.orderBy = 'desc';
+        }else{
+            state.orderBy = 'asc'
+        }
     }
+   
 }
 const actions = {
-    //all posts
-    async getBlogs({commit}, payload) {
-        commit('spinner/setLoading', true, {root: true})
-        const blog = []
-        await db.collection('blog').limit(payload).orderBy('title', 'desc').onSnapshot(res => {
-            const changes = res.docChanges();
-            changes.forEach(change => {
-                if (change.type === 'added') {
-                    blog.push({
-                        ...change.doc.data(),
-                        timestamp: change.doc.data().timestamp,
-                        id: change.doc.id
-                    })
-                }
-                commit('setBlogs', blog);               
-            })
-        })
-        commit('spinner/setLoading', false, {root:true});
-    },
+    // //all posts
+    // async getBlogs({commit}, payload) {
+    //     commit('spinner/setLoading', true, {root: true})
+    //     const blog = []
+    //     await db.collection('blog').limit(payload).orderBy('title', 'desc').onSnapshot(res => {
+    //         const changes = res.docChanges();
+    //         changes.forEach(change => {
+    //             if (change.type === 'added') {
+    //                 blog.push({
+    //                     ...change.doc.data(),
+    //                     timestamp: change.doc.data().timestamp,
+    //                     id: change.doc.id
+    //                 })
+    //             }
+    //             commit('setBlogs', blog);               
+    //         })
+    //     })
+    //     commit('spinner/setLoading', false, {root:true});
+    // },
     //delete post
     async deletePost({commit}, payload ) {
         commit('spinner/setLoading', true, { root: true });
@@ -124,26 +133,25 @@ const actions = {
             }                    
         })
     },
-    //load more
-    // loadMore({state, commit}){
-    //     db.collection('blog').orderBy('title', 'asc').startAfter(state.lastVisiblePost)
-    //     .limit(3).get().then(snapshot => {
-    //         const blogInfo = [];
-    //         let lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
-    //           snapshot.forEach(doc =>{
-    //             blogInfo.push({
-    //                 ...doc.data(),
-    //                 id: doc.id,
-    //             });
-    //             if(snapshot.docs.length === 0){
-    //                 commit('setNoMorePosts', true);
-    //             }
-    //             commit('setBlogInfo', blogInfo);
-    //             commit('setLastVisiblePost', lastVisiblePost);
-                
-    //         })
-    //     })
-    // }
+    // load more
+    loadMore({state, commit}){
+        db.collection('blog').orderBy('timestamp', state.orderBy).startAfter(state.lastVisiblePost)
+        .limit(2).get().then(snapshot => {
+            if(snapshot.docs.length === 0){
+                commit('setNoMorePosts', true);
+            } 
+            let lastVisiblePost = snapshot.docs[snapshot.docs.length - 1];
+              snapshot.forEach(doc =>{
+                state.blog.push({
+                    ...doc.data(),
+                    id: doc.id,
+                });
+                commit('setLastVisiblePost', lastVisiblePost);  
+            })
+        })
+    },
+    //sortable
+    
 }
 export default {
     state,
