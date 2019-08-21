@@ -35,6 +35,7 @@ const state = {
     filteredPosts: [],
     noMorePosts: false,
     orderBy: 'asc',
+    search:'',
 }
 const getters = {
     blogCategories: state => state.blogCategories,
@@ -45,9 +46,13 @@ const getters = {
     filteredPosts: state => {
         let category = state.selectedCategoryBlog;
         if (category !== 'all'){
-            return state.filteredPosts
+            return state.filteredPosts.filter(post => {
+                return post.title.match(state.search)
+            })
         }else{
-            return state.blog;
+            return state.blog.filter(post => {
+                return post.title.match(state.search)
+            })
         }
     },
     // filteredPosts: state => {
@@ -58,8 +63,10 @@ const getters = {
     },
     orderBy: state => {
         return state.orderBy
-    }
-
+    },
+    search: state => {
+        return state.search;
+    },
    
 }
 const mutations = {
@@ -82,7 +89,10 @@ const mutations = {
         }else{
             state.orderBy = 'asc'
         }
-    }
+    },
+    setSearch: (state, payload) => {
+        state.search = payload;
+    },
    
 }
 const actions = {

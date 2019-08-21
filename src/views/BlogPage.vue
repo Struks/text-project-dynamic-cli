@@ -5,7 +5,7 @@
       <!-- new post -->
       <button v-show="currentUser.role == 'moderator' || currentUser.role == 'blogger' || currentUser.role == 'admin'" class="btn btn-success" type="button" @click="newPost()">ADD NEW POST</button>
       <!-- sort list -->
-      <i @click="orderByTitle()" title="sort by date" class="fa fa-sort sort btn" style="font-size:48px;color:green"></i>
+      <i @click="orderByTitle()" title="sort by date" class="fa fa-sort sort btn" style="font-size:40px;color:green"></i>
       <!-- input for search blogs -->
       <input class="searchBlogs" type="text" v-model="search" placeholder="search blogs">
       <!-- categories for mobile view -->
@@ -169,7 +169,10 @@ export default {
       return this.$store.getters['modal/modal'];
     },
     orderBy(){
-      return this.$store.getters['blog/orderBy']
+      return this.$store.getters['blog/orderBy'];
+    },
+    search(){
+      return this.$store.getters['blog/search'];
     }
   },
   watch: {

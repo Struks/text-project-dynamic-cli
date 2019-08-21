@@ -68,9 +68,9 @@ p{
   font-size: 14px;
   color: #adacac;
 }
-  .container{
-    max-width: 970px;
-  }
+.container{
+  max-width: 970px;
+}
 .router-view{
   min-height: 100%;
   margin: 0;
