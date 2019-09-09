@@ -89,18 +89,20 @@ export default {
     editPost(id) {
       this.$router.push({ path: `/blog/${id}/edit` });
     },
+    // configure modal
     deletePost(id, title) {
       this.$store.dispatch('modal/getConfig',{
           message: title,
           confirmationLabel: 'Yes',
           cancelLabel: 'No',
           onConfirm: () => {
-          this.$store.dispatch('blog/deletePost', id);
-          this.$store.dispatch('modal/getModal', false);
-          this.$router.push({ path: `/blog` }); 
+            // action for delete post from Firestore
+            this.$store.dispatch('blog/deletePost', id);
+            this.$store.dispatch('modal/getModal', false);
+            this.$router.push({ path: `/blog` }); 
           },
           onCancel: () => {
-          this.$store.dispatch('modal/getModal', false)
+            this.$store.dispatch('modal/getModal', false)
           }
       })
       this.$store.dispatch('modal/getModal', true)

@@ -127,6 +127,7 @@ const actions = {
     async getFilteredPosts({commit}, payload){
         commit('spinner/setLoading', true, { root: true })
         const filteredPosts = [];
+        // query
         await db.collection('blog').where('category', '==', payload).get().then(snapshot => {
             if(snapshot.docs.length) {
                 snapshot.docs.forEach(doc => {

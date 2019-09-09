@@ -7,10 +7,13 @@ const getters = {
 }
 
 const mutations = {
-    editPost(state,payload){state.post = payload}
+    editPost(state,payload) {
+        state.post = payload
+    }
 }
 
 const actions = {
+    // payload is charging in editPost.vue 
     getEditPost({commit}, payload){   
         db.collection('blog').doc(payload.id)
         .update({

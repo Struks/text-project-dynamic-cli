@@ -89,12 +89,13 @@ export default {
     },
 
     methods:{
+        // add new post
         addPost() {
             this.$v.$touch();
             if(this.$v.$invalid) {
                 return
             }
-            //connection inputs on fire store
+            //connection inputs on Firestore
             db.collection('blog').add({
                 title: this.title,
                 text: this.text,
