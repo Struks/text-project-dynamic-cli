@@ -101,7 +101,9 @@ const router = new Router({
         roles:['moderator','blogger']
       },
       beforeEnter: (to, from, next) => {
+        
         const id = to.params.id
+        console.log(id)
         store.dispatch('users/getSingleUser', id)
         .then(() => {
           next();
